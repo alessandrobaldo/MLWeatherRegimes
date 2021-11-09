@@ -1,12 +1,8 @@
 from modeling.utils.models import *
 from modeling.utils.data import *
 from modeling.utils.sigma_vae import *
+from modeling.utils.config import *
 from modeling.utils.plotting import *
-
-reduction = "VAE"
-season = "WINTER"#"SUMMER"
-model = "gmm"
-training = False
 
 dt = build_data()
 dt = weighted_anomaly(dt)
@@ -47,6 +43,5 @@ elif model == 'bayesian_gmm' or model == 'gmm':
     labels = np.argmax(probas, axis=1)
     plot_KL(means, covariances)
     plot_mixtures(reduced_anomaly.values, labels, means, covariances)
-
 
 plot_regimes(pivot_anomaly, labels)

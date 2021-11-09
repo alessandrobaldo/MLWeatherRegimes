@@ -1,10 +1,12 @@
 import numpy as np
+import pandas as pd
 from scipy.spatial import distance
 from modeling.utils.tools import *
 from functools import wraps, partial
 from multiprocessing.dummy import Pool
 import pickle
 from copy import deepcopy
+import os
 
 from sklearn.model_selection import train_test_split, KFold, GridSearchCV
 from sklearn.cluster import KMeans, SpectralClustering, AgglomerativeClustering
@@ -292,7 +294,7 @@ def performance_matrix(estimator, train_X, val_X):
 
 
 @timing
-def cross_val(X, method="kmeans", scoring="score", season = "WINTER", verbose=True):
+def cross_val(X, method="kmeans", scoring="score", season = "WINTER", folder = '', verbose=True):
     '''
     Method to perform cross-validation of clustering methods
     Args
@@ -394,8 +396,31 @@ def cross_val(X, method="kmeans", scoring="score", season = "WINTER", verbose=Tr
         if np.mean(scores) > _best_score:
             _best_estimator, _best_score, _best_params = deepcopy(_est), np.mean(scores), _est.get_params()
 
-    with open("../models/" + season + "/" + method + '_model_' + scoring + '.pkl', 'wb') as f:
-        pickle.dump(_best_estimator, f)
+    try:
+        os.makedirs("../models/" + season + "/" + folder)
+    finally:
+        with open("../models/" + season + "/" + folder + '/' + method + '_model_' + scoring + '.pkl', 'wb') as f:
+            pickle.dump(_best_estimator, f)
 
     print("Validation process ended with score {}\nBest parameters: {}".format(_best_score, _best_params))
     return _best_estimator
+
+@timing
+def get_statistics(folder, train, test):
+    '''
+    Method to collect the statistics about the models' performances
+    Args:
+        folder: name of the folder where there are pickle files of the model
+        train: the train dataset used to fit the model
+        test: the test dataset used to evaluate the performance on
+
+    Returns:
+        A pandas DataFrame containing the statistics
+
+    '''
+
+    return pd.DataFrame.from_dict({model: performance_matrix(folder + '/' + model,
+                                                      train.values, test.values) \
+                            for model in os.listdir(folder) if
+                            model.endswith('pkl')},
+                           orient='index')

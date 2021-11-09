@@ -4,21 +4,11 @@ import pandas as pd
 import os
 from modeling.utils.tools import *
 from modeling.utils.sigma_vae import *
+from modeling.utils.config import *
 from sklearn_xarray import wrap
 from sklearn.decomposition import PCA
 import torch
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
-print(device)
-
-
-READ_PATH = 'P:\CH\Weather Data\ERA-5\GEOPOTENTIAL'
-#WRITE_PATH = '../dataset/'
-G = 9.80665
-freq = 'hourly' # 'monthly'
-months = 'MayJunJulAugSep'#'DecJanFeb'
-obs_years = '1979-2021'#'1979-2020'
-LAT, LONG = (20.,80.), (-90., 30.)
-
 
 @timing
 def read_nc(path_to_file):
@@ -57,8 +47,8 @@ def to_nc(dt, variable='z'):
     Args:
     - dt: an xarray Dataset
     '''
-    dt.to_netcdf(READ_PATH + '/ERA-5_{}_Geopotential-500hPa_{}_{}_{}.nc'. \
-                 format(freq if freq != 'hourly' else 'daily', months, obs_years, variable),
+    dt.to_netcdf(READ_PATH + '/ERA-5_{}_{}_{}_{}_{}.nc'. \
+                 format(freq if freq != 'hourly' else 'daily', physical_qty, months, obs_years, variable),
                  engine="netcdf4")
 
 
@@ -106,12 +96,12 @@ def hourly_to_daily(ds):
     #ds = read_nc(READ_PATH + '/ERA-5_{}_Geopotential-500hPa_{}_{}.nc'.format(freq, months, obs_years))
     ds.coords['time'] = ds.time.dt.floor('1D')
     ds = ds.groupby('time').mean()
-    ds.to_netcdf(READ_PATH + '/ERA-5_{}_Geopotential-500hPa_{}_{}.nc'.format('daily', months, obs_years))
+    ds.to_netcdf(READ_PATH + '/ERA-5_{}_{}_{}_{}.nc'.format('daily', physical_qty, months, obs_years))
     return ds
 
 
 @timing
-def evaluate_normal(dt, domain='local', mode='flat', freq = 'm', start_year=None):
+def evaluate_normal(dt, domain='local', mode='flat', freq = 'm', start_date=None, end_date = None):
     '''
     Args:
     - dt: an xarray Dataset containing historical data
@@ -127,8 +117,8 @@ def evaluate_normal(dt, domain='local', mode='flat', freq = 'm', start_year=None
     - a pandas DataFrame containing the historical series of the normal
     '''
 
-    if start_year is not None:
-        dt = dt.loc[dict(time=slice("01-01-{}".format(start_year), None))]
+    if start_date is not None:
+        dt = dt.loc[dict(time=slice(start_date, end_date))]
 
     if domain == 'local' and mode == 'dynamic':
         #month_day = pd.MultiIndex.from_arrays([dt['time.month'].values, dt['time.day'].values])
@@ -207,19 +197,19 @@ def build_data(normal='flat'):
     Returns:
     - a pandas DataFrame anomaly
     '''
-    if 'ERA-5_{}_Geopotential-500hPa_{}_{}_anomaly.nc'. \
-            format(freq if freq != 'hourly' else 'daily', months, obs_years) not in os.listdir(READ_PATH):
+    if 'ERA-5_{}_{}_{}_{}_anomaly.nc'. \
+            format(freq if freq != 'hourly' else 'daily', physical_qty, months, obs_years) not in os.listdir(READ_PATH):
 
         # read nc, eventually pass from hourly to daily, limit geography
         print("Reading nc file and converting to xarray Dataset")
         if freq == 'hourly':
-            if 'ERA-5_{}_Geopotential-500hPa_{}_{}.nc'.format('daily', months, obs_years) not in os.listdir(READ_PATH):
-                dt = read_nc(READ_PATH + '/ERA-5_{}_Geopotential-500hPa_{}_{}.nc'.format(freq, months, obs_years))
+            if 'ERA-5_{}_{}_{}_{}.nc'.format('daily', physical_qty,  months, obs_years) not in os.listdir(READ_PATH):
+                dt = read_nc(READ_PATH + '/ERA-5_{}_{}_{}_{}.nc'.format(freq, physical_qty, months, obs_years))
                 dt = hourly_to_daily(dt)
             else:
-                dt = read_nc(READ_PATH + '/ERA-5_{}_Geopotential-500hPa_{}_{}.nc'.format('daily', months, obs_years))
+                dt = read_nc(READ_PATH + '/ERA-5_{}_{}_{}_{}.nc'.format('daily', physical_qty, months, obs_years))
         else:
-            dt = read_nc(READ_PATH + '/ERA-5_{}_Geopotential-500hPa_{}_{}.nc'.format(freq, months, obs_years))
+            dt = read_nc(READ_PATH + '/ERA-5_{}_{}_{}_{}.nc'.format(freq, physical_qty, months, obs_years))
 
         if 'expver' in dt.indexes:
             dt = xr.concat([dt.sel(time=slice("2021-07-31"), expver=1),
@@ -227,15 +217,16 @@ def build_data(normal='flat'):
                            dim="time")
 
         dt = limit_geography(dt, LAT, LONG)
-        dt = dt / G
+        if physical_qty == 'Geopotential-500hPa':
+            dt = dt / G
         print("Evaluating the normal")
 
         if normal != 'flat':
-            normal_dt = evaluate_normal(dt, domain='local', mode='dynamic', freq = 'm',start_year=1991)
+            normal_dt = evaluate_normal(dt, domain='local', mode='dynamic', freq = 'm',start_date="01-01-1991")
             print("Evaluating the anomaly")
             anomaly_dt = evaluate_anomaly(dt, normal_dt, mode='dynamic')
         else:
-            normal_dt = evaluate_normal(dt, domain='local', mode='flat', freq = 'm', start_year=1991)
+            normal_dt = evaluate_normal(dt, domain='local', mode='flat', freq = 'm', start_date="01-01-1991")
             # anomaly_dt = xr.apply_ufunc(lambda x, normal: x - normal, dt.groupby('time'), normal_dt)
             print("Evaluating the anomaly")
             anomaly_dt = evaluate_anomaly(dt, normal_dt, mode='flat', freq = 'm')
@@ -249,8 +240,8 @@ def build_data(normal='flat'):
 
     else:
         print("Reading anomaly from file")
-        return read_nc(READ_PATH + '/ERA-5_{}_Geopotential-500hPa_{}_{}_anomaly.nc'. \
-                       format(freq if freq != 'hourly' else 'daily', months, obs_years))
+        return read_nc(READ_PATH + '/ERA-5_{}_{}_{}_{}_anomaly.nc'. \
+                       format(freq if freq != 'hourly' else 'daily', physical_qty, months, obs_years))
 
 
 class Compresser(object):
@@ -324,7 +315,7 @@ def reduce_dim(dt, reshape='latlon', method='PCA', **kwargs):
     Args:
     - df: an xarray Dataset
     - method: the method used to perform dimensionality reduction, if not specified PCA is used
-    - **kwargs: a dictionary of further parameters, like the percentage of explained variance used to retain the components
+    - **kwargs: a dictionary of further parameters, like the percentage of explained variance used to retain the components or the name of the VAE model file
 
     Returns:
     - a numpy.array reduced in the feature space
@@ -339,7 +330,7 @@ def reduce_dim(dt, reshape='latlon', method='PCA', **kwargs):
     elif method == "VAE":
         time_idx = dt.coords['time']
         vae = ConvVAE(args = Args())
-        vae.load_state_dict(torch.load('../models/'+kwargs['season']+'/sigma_vae_statedict_5', map_location='cpu'))
+        vae.load_state_dict(torch.load('../models/'+kwargs['season']+'/' + kwargs['model'], map_location='cpu'))
         dt = np.swapaxes(dt.to_array().values, 0, 1)
         dt = torch.from_numpy(dt).type(torch.FloatTensor)
         stack = []
@@ -350,7 +341,8 @@ def reduce_dim(dt, reshape='latlon', method='PCA', **kwargs):
             batch = dt[i:i + 256, ...]
             with torch.no_grad():
                 stack.append(vae(batch)[1])
-        reduced_dt = xr.DataArray(torch.cat(stack).squeeze().detach().numpy(), coords=[time_idx, range(1, 6)])
+        reduced_dt = torch.cat(stack).squeeze().detach().numpy()
+        reduced_dt = xr.DataArray(reduced_dt, coords=[time_idx, range(1, reduced_dt.shape[1])])
 
     else:
         pass

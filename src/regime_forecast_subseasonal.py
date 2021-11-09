@@ -104,7 +104,7 @@ def plot_forecast(df, forecast, short_term, predictions, countries, variables, d
 country = 'GE'
 model = 'GMM'
 variables = ['Wind Load Factor']
-date_forecast = datetime(2021, 11, 1).date()
+date_forecast = datetime(2021, 11, 8).date()
 month = date_forecast.month if date_forecast.month in [1, 2, 12] else min([1, 2, 12], key=lambda x: abs(x - date_forecast.month))
 
 forecast = filter_forecast.__wrapped__(subseasonal_df, date_forecast, backward = False)

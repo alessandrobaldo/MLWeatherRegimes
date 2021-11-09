@@ -14,10 +14,11 @@ def softclip(tensor, min):
     return result_tensor
 
 class Args():
-    def __init__(self, batch_size = 64, model = 'sigma_vae', log_interval = 10):
+    def __init__(self, batch_size = 64, model = 'sigma_vae', log_interval = 10, z_dim = 5):
         self.batch_size = batch_size
         self.model = model
         self.log_interval = log_interval
+        self.z_dim = z_dim
 
 class Flatten(nn.Module):
     def forward(self, input):
@@ -40,7 +41,7 @@ class ConvVAE(nn.Module):
         super().__init__()
         self.batch_size = args.batch_size
         self.device = device
-        self.z_dim = 5
+        self.z_dim = args.z_dim
         self.img_channels = img_channels
         self.model = args.model
         img_size = (241, 481)

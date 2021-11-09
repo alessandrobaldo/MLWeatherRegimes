@@ -1,0 +1,13 @@
+{
+  "readpath": "P:/CH/Weather Data/ERA-5/SLP",
+  "variable": "SLP",
+  "frequency": "hourly",
+  "months": "JunJulAug",
+  "years": "1979-2021",
+  "lat": [20 ,80],
+  "long": [-90, 20],
+  "reduction": "pca",
+  "model": "gmm",
+  "season": "SUMMER",
+  "training": "True"
+}

@@ -425,7 +425,7 @@ def load_shortterm():
 
 
 @st.cache
-def load_MF_targets(filter_dates = True):
+def load_MF_targets(season = 'Winter', filter_dates = False):
     '''
     Method to loas the Meteo-France historical predictions from the repository
     Args:
@@ -435,14 +435,54 @@ def load_MF_targets(filter_dates = True):
         A pandas DataFrame containing predictions of historical daily weather regimes as predicted by Meteo-France
 
     '''
-    targets = pd.read_csv('W:/UK/Research/Private/WEATHER/STAGE_ABALDO/dataset/targets_MF.csv', index_col=0,
-                          header=[0, 1])
-    targets.index = pd.to_datetime(targets.index)
-    #if filter_dates:
-    #    targets = targets[targets[('Distance', 'Prediction')] == targets[('Correlation', 'Prediction')]]
-    targets = targets[targets.index.month.isin([1, 2, 12])]
-    targets = targets.reindex(sorted(targets.columns, key=lambda x: (x[0], x[1])), axis=1)
 
+    if 'targets_MF.csv' in os.listdir('W:/UK/Research/Private/WEATHER/STAGE_ABALDO/dataset'):
+        targets = pd.read_csv('W:/UK/Research/Private/WEATHER/STAGE_ABALDO/dataset/targets_MF.csv', index_col=0,
+                              header=[0, 1, 2])
+        targets.index = pd.to_datetime(targets.index)
+        targets = targets.xs(season, axis = 1, level = 0)
+        if filter_dates:
+            targets = targets[targets[('Distance', 'Prediction')] == targets[('Correlation', 'Prediction')]]
+    else:
+        path = 'W:/UK/Research/Private/WEATHER/STAGE_ABALDO/dataset/MeteoFrance'
+        dist_df, corr_df = [], []
+        for file in os.listdir(path):
+            if any(col in file for col in ['EQM', 'COREL']):
+                temp_df = pd.read_csv(os.path.join(path, file), sep=r'\s+',
+                                      index_col=None)
+                col_names = {"H_ZO": ("Winter", "NAO+"), "H_AR": ("Winter", "AR"),
+                             "H_EA": ("Winter", "SB"), "H_AL": ("Winter", "NAO-"),
+                             "E_GA": ("Summer", "NAO-"), "E_AL": ("Summer", "AL"),
+                             "E_EA": ("Summer", "SB"), "E_ZO": ("Summer", "Zonal")}
+                temp_df = temp_df[col_names.keys()]
+                temp_df.dropna(how='all', axis=1, inplace=True)
+                temp_df.rename(columns=col_names, inplace=True)
+                temp_df.index = temp_df.index.map(lambda x: datetime.strptime(str(x), "%Y%m%d"))
+                if 'EQM' in file:
+                    dist_df.append(temp_df)
+                else:
+                    corr_df.append(temp_df)
+        dist_df, corr_df = pd.concat(dist_df), pd.concat(corr_df)
+        dist_df.columns = pd.MultiIndex.from_tuples(dist_df.columns)
+        dist_df = pd.concat([dist_df], axis=1, keys=['Distance']).swaplevel(0, 1, 1)
+        corr_df.columns = pd.MultiIndex.from_tuples(corr_df.columns)
+        corr_df = pd.concat([corr_df], axis=1, keys=['Correlation']).swaplevel(0, 1, 1)
+        targets = pd.concat([dist_df, corr_df], axis=1)
+        for targets in ['Winter', 'Summer']:
+            targets[(season, 'Distance', 'Prediction')] = targets.xs(season, axis=1, level=0).xs('Distance', axis=1, level=0). \
+                apply(lambda x: df.xs(season, axis=1, level=0).xs('Distance', axis=1, level=0). \
+                      columns[np.argmin(x)], axis=1)
+        for season in ['Winter', 'Summer']:
+            targets[(season, 'Correlation', 'Prediction')] = targets.xs(season, axis=1, level=0).xs('Correlation', axis=1,
+                                                                                          level=0). \
+                apply(lambda x: targets.xs(season, axis=1, level=0).xs('Correlation', axis=1, level=0). \
+                      columns[np.argmax(x)], axis=1)
+        targets.to_csv('W:/UK/Research/Private/WEATHER/STAGE_ABALDO/dataset/targets_MF.csv')
+    if season == 'Winter':
+        targets = targets[targets.index.month.isin([1, 2, 12])]
+    else:
+        targets = targets[targets.index.month.isin([6, 7, 8])]
+    targets = targets.reindex(sorted(targets.columns, key=lambda x: (x[0], x[1])), axis=1)
     return targets
 
 @st.cache
