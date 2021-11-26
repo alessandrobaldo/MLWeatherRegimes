@@ -1,3 +1,4 @@
+from dashboard.utils.config import *
 import numpy as np
 import pandas as pd
 import os
@@ -77,6 +78,7 @@ def filter_by_country(df, country):
     country_df.dropna(how='all', inplace=True, axis=1)
     country_df.dropna(how='all', inplace=True, axis=0)
 
+
     return country_df
 
 @st.cache(allow_output_mutation=True)
@@ -118,7 +120,7 @@ def get_state_transitions(predictions, window=1):
         A pandas DataFrame containing the transition probabilities between each pair of regimes, under each model
 
     '''
-    stats = pd.DataFrame(columns=list(itertools.product(('NAO+', 'NAO-', 'SB', 'AR'), ('NAO+', 'NAO-', 'SB', 'AR'))),
+    stats = pd.DataFrame(columns=list(itertools.product(REGIMES, REGIMES)),
                          index=['K-Means', 'Bayesian-GMM', 'GMM']
                          )
     stats.columns = pd.MultiIndex.from_tuples(stats.columns)
@@ -127,7 +129,7 @@ def get_state_transitions(predictions, window=1):
     for method in stats.index:
         tmp = predictions[method].copy()
         # tmp['Prediction'] = tmp.apply(lambda x: tmp.columns[np.argmax(x)], axis = 1)
-        tmp['Pred'] = tmp['Prediction'].map({"NAO+": 0, "NAO-": 1, "SB": 2, "AR": 3})
+        tmp['Pred'] = tmp['Prediction'].map({k:v for v, k in enumerate(REGIMES)})
         tmp['mask'] = tmp['Pred'].shift() - tmp['Pred'] == 0
         tmp['inv_mask'] = ~tmp['mask']
         tmp['cumsum'] = tmp['inv_mask'].cumsum()
@@ -274,7 +276,7 @@ def load_synthetic_data():
         A pandas DataFrame containing the synthetic measurements of energy variables, indexed by date and country
 
     '''
-    if 'synthetic.csv' not in os.listdir('./dashboard'):
+    if 'synthetic.csv' not in os.listdir('W:/UK/Research/Private/WEATHER/STAGE_ABALDO/scripts/src/dashboard'):
         READ_PATH = 'W:/UK/Reserach/Private/WEATHER/STAGE_ABALDO/dataset/Energy_Indicators_Copernicus'
         FOLDERS = ['dataset-sis-energy-derived-reanalysis_ENERGY', 'dataset-sis-energy-derived-reanalysis_WEATHER']
         COUNTRIES = ['BE', 'ES', 'FR', 'DE', 'IT', 'NL', 'UK']
@@ -327,7 +329,7 @@ def load_synthetic_data():
         synthetic_df['Total Solar Capacity'] = synthetic_df['Solar Photo Obs'] / synthetic_df['Solar Load Factor']
         synthetic_df['Total Solar Obs'] = synthetic_df['Solar Photo Obs']
     else:
-        synthetic_df = pd.read_csv("dashboard/synthetic.csv", index_col = [0,1], parse_dates = True)
+        synthetic_df = pd.read_csv("W:/UK/Research/Private/WEATHER/STAGE_ABALDO/scripts/src/dashboard/synthetic.csv", index_col = [0,1], parse_dates = True)
     return synthetic_df
 
 @st.cache
@@ -470,7 +472,7 @@ def load_MF_targets(season = 'Winter', filter_dates = False):
         targets = pd.concat([dist_df, corr_df], axis=1)
         for targets in ['Winter', 'Summer']:
             targets[(season, 'Distance', 'Prediction')] = targets.xs(season, axis=1, level=0).xs('Distance', axis=1, level=0). \
-                apply(lambda x: df.xs(season, axis=1, level=0).xs('Distance', axis=1, level=0). \
+                apply(lambda x: targets.xs(season, axis=1, level=0).xs('Distance', axis=1, level=0). \
                       columns[np.argmin(x)], axis=1)
         for season in ['Winter', 'Summer']:
             targets[(season, 'Correlation', 'Prediction')] = targets.xs(season, axis=1, level=0).xs('Correlation', axis=1,
@@ -478,10 +480,8 @@ def load_MF_targets(season = 'Winter', filter_dates = False):
                 apply(lambda x: targets.xs(season, axis=1, level=0).xs('Correlation', axis=1, level=0). \
                       columns[np.argmax(x)], axis=1)
         targets.to_csv('W:/UK/Research/Private/WEATHER/STAGE_ABALDO/dataset/targets_MF.csv')
-    if season == 'Winter':
-        targets = targets[targets.index.month.isin([1, 2, 12])]
-    else:
-        targets = targets[targets.index.month.isin([6, 7, 8])]
+
+    targets = targets[targets.index.month.isin(MONTHS)]
     targets = targets.reindex(sorted(targets.columns, key=lambda x: (x[0], x[1])), axis=1)
     return targets
 

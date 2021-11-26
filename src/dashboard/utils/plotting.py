@@ -1,3 +1,4 @@
+from dashboard.utils.config import *
 import numpy as np
 import pandas as pd
 import scipy
@@ -45,11 +46,11 @@ def plot_density(start_date, end_date, x, y, z=None, regimes=True, **kwargs):
     '''
     Method to plot the density of two variables
     Args:
-    - start_date: str indicating the start date to consider
-    - end_date: str indicating the end date to consider
-    - x: pd.Series containing the elements to plot for the variable x
-    - y: pd.Series containing the elements to plot for the variable y
-    - regimes: boolean indicating whether the reference of the regimes must be inserted
+        start_date: str indicating the start date to consider
+        end_date: str indicating the end date to consider
+        x: pd.Series containing the elements to plot for the variable x
+        y: pd.Series containing the elements to plot for the variable y
+        regimes: boolean indicating whether the reference of the regimes must be inserted
     '''
 
     if 'ax' not in kwargs:
@@ -390,10 +391,11 @@ def get_distribution_by_regime(df, cols, predictions, model, **kwargs):
                 regime: scipy.stats.gaussian_kde(variable_df.loc[predictions.index.intersection(variable_df.index)],
                                                  weights=predictions.loc[predictions.index.intersection(variable_df.index), (model, regime)].values,
                                                  bw_method=.1)
-                for regime in sorted(['AR', 'NAO+', 'NAO-', 'SB'])}
+                for regime in sorted(REGIMES)}
 
             points = np.linspace(variable_df.min(), variable_df.max(), 1000)
             normal = variable_df.mean()
+            print(col,country,normal)
 
             means = {k: sum(points * v.pdf(points)) / sum(v.pdf(points))
                      for k, v in distributions_regimes.items()}
@@ -433,7 +435,7 @@ def plot_distribution_by_regime_days(df, cols, predictions, model, title = None,
     if len(axs.shape) < 2:
         axs = np.array([axs])
     for i, col in enumerate(cols):
-        for j, regime in enumerate(['AR','NAO+','NAO-','SB']):
+        for j, regime in enumerate(REGIMES):
             bdays = df.loc[df.index.map(pd.tseries.offsets.BDay().onOffset)]
             sns.kdeplot(x=bdays[col], weights=predictions.loc[bdays.index, (model, regime)].values,
                         label=regime, ax=axs[i,0], bw_adjust=kwargs['bw_adjust'] if 'bw_adjust' in kwargs else 1)
@@ -477,7 +479,7 @@ def plot_distribution_by_regime(df, cols, predictions, model, title = None, **kw
     if not hasattr(axs,"flat"):
         axs = np.array([axs])
     for i, (col, ax) in enumerate(zip(cols, axs.flat)):
-        for j, regime in enumerate(['AR','NAO+','NAO-','SB']):
+        for j, regime in enumerate(REGIMES):
             sns.kdeplot(x=df[col], weights=predictions.loc[df.index, (model, regime)].values,
                         label=regime, ax=ax, bw_adjust=kwargs['bw_adjust'] if 'bw_adjust' in kwargs else 1)
         '''
@@ -841,7 +843,7 @@ def plot_maps_by_regime(df, country, cols, title = None, **kwargs):
         print(col, normal)
         df[col] = (df[col] - normal) * 100 / normal
         color = mpl.cm.ScalarMappable(
-            norm=mpl.colors.Normalize(vmin=df[col].values.min(), vmax=df[col].values.max()),
+            norm=mpl.colors.TwoSlopeNorm(vmin=df[col].values.min(), vcenter = 0., vmax=df[col].values.max()),
             cmap="RdBu_r")
         for ax, regime in (zip(axs[i*len(regimes): (i+1)*len(regimes)], sorted(regimes))):
             bounds = {"x0": [], "y0": [], "x1": [], "y1": []}
@@ -899,7 +901,7 @@ def plot_dynamics(stats):
 
 
     '''
-    states = ['NAO+', 'NAO-', 'SB', 'AR']
+    states = REGIMES
     fig, axs = plt.subplots(1, 3, figsize=(22.5, 7))
     for ax, method in zip(axs.flat, stats.index):
         Q = stats.loc[method].values.reshape((4, 4))
@@ -1010,7 +1012,7 @@ def get_forecast_distributions(variable_df, forecast, predictions, model, thresh
     points = np.linspace(variable_df.min(), variable_df.max(), 100)
     variable_df.dropna(inplace = True)
     distributions_regimes = dict()
-    for regime in sorted(['AR', 'NAO+', 'NAO-', 'SB']):
+    for regime in sorted(REGIMES):
         weights = predictions.loc[:,(model, regime)]
         if thresh is not None:
             weights = weights[weights >= thresh]
@@ -1079,10 +1081,10 @@ def get_forecast_errors(subseasonal_df, predictions, model, title = None, **kwar
     forecast_errors = forecast_errors.groupby('Weeks').mean()
     '''
     forecast_errors = forecast_errors.groupby(forecast_errors.index.get_level_values(2)).mean() #by step
-    fig, ax = plt.subplots(1,1, figsize = (7,7))
+    fig, ax = plt.subplots(1,1, figsize = (15,7))
     forecast_errors.loc[:,sorted(forecast.columns)].plot(kind = 'line', marker = 'o', linewidth = 2, ax = ax)
     forecast_errors.loc[:,'AVG'].plot(kind = 'line', linestyle = '--', linewidth = 1, color = 'k', ax = ax)
-    ax.set_xlabel('Weeks forward')
+    ax.set_xlabel('Step')
     ax.set_ylabel('Error')
     if title:
         fig.savefig(title + ".png")
@@ -1106,8 +1108,9 @@ def get_average_weights_forecast(subseasonal_df, predictions, model):
                               result_type='broadcast')
     weights = weights.drop('Unknown', axis=1).apply(lambda x: x / x.sum(), axis=1)
     weights = weights.groupby(weights.index.get_level_values(2)).mean()
-    fig, ax = plt.subplots(1,1, figsize = (7,7))
+    fig, ax = plt.subplots(1,1, figsize = (15,7))
     weights.plot(kind = 'line', marker = 'o', linewidth = 2, ax = ax)
+    ax.set_ylabel('Average Weight')
 
     '''
     preds = predictions.xs(model, level = 0, axis = 1).drop('Prediction', axis = 1)
@@ -1418,6 +1421,26 @@ def plot_conf_matrix(predictions, targets, models, **kwargs):
         A matplotlib figure
 
     '''
+    fig, axs = plt.subplots(1, len(models), figsize=(7.5*len(models), 7), sharey = True)
+    cbar_ax = fig.add_axes([.91, .1, .02, .9])
+    for i, (model, ax)  in enumerate(zip(models, axs)):
+        conf_matrix = confusion_matrix(
+            np.argmin(targets.values, axis=1),
+            np.argmax(predictions.xs(model, level=0, axis=1).values, axis=1),
+            normalize='true') * 100
+        sns.heatmap(conf_matrix, ax = ax, cbar = i == 0, vmin = 0, vmax = 100, cbar_ax = None if i else cbar_ax,
+                    cbar_kws={'format': '%.0f%%'}, annot = True, annot_kws={"size": 20}, cmap='Blues',
+                    yticklabels=sorted(np.unique(predictions.columns.get_level_values(1))),
+                    xticklabels=sorted(np.unique(predictions.columns.get_level_values(1)))
+                    )
+        if i == 0:
+            ax.set_ylabel("Metéo-France", fontsize = 18, fontdict = {'fontweight': 'bold'})
+        ax.set_xlabel(model, fontsize = 18, fontdict = {'fontweight': 'bold'})
+        ax.tick_params(axis='x', rotation=0, labelsize = 16)
+        ax.tick_params(axis='y', rotation=0, labelsize = 16)
+
+    fig.tight_layout(rect = [0,0,.9,1])
+    '''
     conf_matrix = np.concatenate(
         [confusion_matrix(
             np.argmin(targets.values, axis=1),
@@ -1426,8 +1449,8 @@ def plot_conf_matrix(predictions, targets, models, **kwargs):
          for model in models
          ], axis=1)
 
-    fig, ax = plt.subplots(1, 1, figsize=(22.5, 7))
-    sns.heatmap(conf_matrix, annot=True, ax=ax, cbar_kws={'format': '%.0f%%'}, annot_kws={"size": 16},
+    fig, ax = plt.subplots(1, 1, figsize=(7.5*len(models), 7))
+    sns.heatmap(conf_matrix, annot=True, ax=ax, cbar_kws={'format': '%.0f%%'}, annot_kws={"size": 16}, cmap = 'Blues',
                 yticklabels=sorted(np.unique(predictions.columns.get_level_values(1))),
                 xticklabels=["\n".join(list(e)[::-1]) for e in
                              list(itertools.product(
@@ -1436,9 +1459,10 @@ def plot_conf_matrix(predictions, targets, models, **kwargs):
                 )
     ax.tick_params(axis='x', rotation=0)
     ax.tick_params(axis='y', rotation=0)
+    ax.set_ylabel("Metéo-France")
     for i in range(conf_matrix.shape[0], conf_matrix.shape[1] + 1, conf_matrix.shape[0]):
         ax.axvline(i, color='white')
-
+    '''
     return fig
 
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
@@ -1459,11 +1483,11 @@ def plot_multiclass_roc(predictions, targets, models, **kwargs):
     targets = label_binarize(np.argmin(targets.values, axis=1), classes=range(len(cols)))
     n_classes = targets.shape[1]
 
-    fig, axs = plt.subplots(1, len(models), figsize=(22.5, 7))
+    fig, axs = plt.subplots(1, len(models), figsize=(len(models)*7.5, 7), sharey = True)
     if not hasattr(axs, 'flat'):
         axs = np.array([axs])
 
-    for ax, model in zip(axs.flat, models):
+    for j, (ax, model) in enumerate(zip(axs.flat, models)):
         roc_auc, tpr, fpr = dict(), dict(), dict()
         for i in range(n_classes):
             fpr[i], tpr[i], _ = roc_curve(targets[:, i], predictions.xs(model, level=0, axis=1).iloc[:, i])
@@ -1485,23 +1509,26 @@ def plot_multiclass_roc(predictions, targets, models, **kwargs):
         tpr["macro"] = mean_tpr
         roc_auc["macro"] = auc(fpr["macro"], tpr["macro"])
 
-        ax.plot(fpr["micro"], tpr["micro"], label="micro-average ROC curv (area = {0:0.2f})".format(roc_auc["micro"]),
+        '''
+        ax.plot(fpr["micro"], tpr["micro"], label="micro-average ROC curve (area = {0:0.2f})".format(roc_auc["micro"]),
                 color='deeppink', linestyle=":", linewidth=4)
 
-        ax.plot(fpr["macro"], tpr["macro"], label="micro-average ROC curv (area = {0:0.2f})".format(roc_auc["macro"]),
+        ax.plot(fpr["macro"], tpr["macro"], label="micro-average ROC curve (area = {0:0.2f})".format(roc_auc["macro"]),
                 color='navy', linestyle=":", linewidth=4)
-
+        '''
         for i in range(n_classes):
-            ax.plot(fpr[i], tpr[i], linewidth=2.1, label="ROC curve of class {0} (area: {1:0.2f})". \
+            ax.plot(fpr[i], tpr[i], linewidth=2.1, label="ROC curve {0}\n(area: {1:0.2f})". \
                     format(cols[i], roc_auc[i]))
 
         ax.plot([0, 1], [0, 1], 'k--', linewidth=2.1)
         ax.set_xlim([0.0, 1.0])
         ax.set_ylim([0.0, 1.05])
-        ax.set_xlabel('False Positive Rate (FPR)')
-        ax.set_ylabel('True Positive Rate (TPR)')
-        ax.legend(loc="lower right")
-        ax.set_title(model)
+        ax.set_xlabel('False Positive Rate (FPR)', fontsize = 18)
+        if j == 0:
+            ax.set_ylabel('True Positive Rate (TPR)', fontsize = 18)
+        ax.legend(loc="lower center", fontsize = 14, bbox_to_anchor = (.5, -.37), ncol = 2)
+
+        ax.set_title(model, fontdict = {'fontsize': 18, 'fontweight': 'bold'})
     return fig
 
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
@@ -1523,7 +1550,7 @@ def plot_historical_probabilities(targets, pivot = False, title = None, **kwargs
         targets = targets.pivot_table(index=targets.index, columns='Prediction',
                                         aggfunc=dict(Prediction='count'))
     targets = targets.fillna(0).resample('MS').sum()
-    targets = targets[targets.index.month.isin([1, 2, 12])]
+    targets = targets[targets.index.month.isin(MONTHS)]
 
     fig, ax = plt.subplots(1, 1, figsize=(30, 7))
     targets = targets.apply(lambda x: x / x.sum(), axis=1)
@@ -1555,10 +1582,10 @@ def get_historical_counts(targets, pivot = False):
 
     '''
     def get_season(year, month):
-        if month in [1,2,12]:
+        if month in MONTHS:
             if month == 12:
-                return year+1, "DJF"
-            return year, "DJF"
+                return year+1, MONTHS_STR
+            return year, MONTHS_STR
         return year,"_"
 
     if pivot:
@@ -1569,7 +1596,7 @@ def get_historical_counts(targets, pivot = False):
     targets = targets.groupby(lambda x: get_season(x.year, x.month)).sum()
 
     targets.index = pd.MultiIndex.from_tuples(targets.index, names=["year", "season"])
-    targets = targets.xs('DJF', level=1)
+    targets = targets.xs(MONTHS_STR, level=1)
     if targets.columns.nlevels == 2:
         targets.columns = targets.columns.droplevel()
     return targets
@@ -1638,7 +1665,7 @@ def plot_hydro_corr(targets, reservoir, inflow, groundwater, pivot = False):
     axs[0].tick_params(axis='x', labelrotation = 45)
     sns.scatterplot(data = totals, x = 'Inflow', y = 'NAO+', hue = totals.index, ax = axs[1])
 
-    groundwater = groundwater.loc[groundwater.index.month.isin([1,2,12])]
+    groundwater = groundwater.loc[groundwater.index.month.isin(MONTHS)]
     totals = groundwater.groupby(lambda x: x.year if x.month!=12 else x.year+1).max() - groundwater.groupby(lambda x: x.year if x.month!=12 else x.year+1).min()
     print(totals)
     totals['NAO+'] = targets.loc[totals.index, 'NAO+']

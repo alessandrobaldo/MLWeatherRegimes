@@ -22,10 +22,10 @@ def load_estimator(path_to_file):
     '''
     Method to load an estimator from the pickle file
     Args:
-    - path_to_file: file path to the pickle file
+        path_to_file: file path to the pickle file
 
     Returns:
-    - the loaded estimator
+        the loaded estimator
     '''
     with open(path_to_file, 'rb') as pickle_file:
         estimator = pickle.load(pickle_file)
@@ -142,13 +142,13 @@ def extract_regimes(anomaly, method='kmeans', nb_regimes=5, **kwargs):
     '''
     Method clustering anomalies in different weather regimes
     Args:
-    - anomaly: a pandas DataFrame containing an historical series of anomalies
-    - clustering_algo: clustering algorithm to adopt. The class should expose the methods .fit(), .predict(), .fit_predict(), .fit_transform()
-    - nb_regimes: number of different weather regimes to be identified, if 'estimator' in **kwargs, this parameter is ignored
-    - **kwargs: a dictionary of further parameters, like the a pre_trained estimator, or the possibility to do directly inference
+        anomaly: a pandas DataFrame containing an historical series of anomalies
+        clustering_algo: clustering algorithm to adopt. The class should expose the methods .fit(), .predict(), .fit_predict(), .fit_transform()
+        nb_regimes: number of different weather regimes to be identified, if 'estimator' in **kwargs, this parameter is ignored
+        **kwargs: a dictionary of further parameters, like the a pre_trained estimator, or the possibility to do directly inference
 
     Returns:
-    - an array of regimes associated to each grid in the time series
+        an array of regimes associated to each grid in the time series
     '''
     if method == 'kmeans':
         if 'estimator' not in kwargs:
@@ -224,12 +224,12 @@ def bic_score(X, labels, centroids):
     '''
     Method to compute the BIC (Bayesian Information Criterion)
     Args:
-    - X: the dataset on which evaluating the BIC
-    - labels: labels associated to the samples in X
-    - centroids: the centroids associated to X
+        X: the dataset on which evaluating the BIC
+        labels: labels associated to the samples in X
+        centroids: the centroids associated to X
 
     Returns:
-    - the BIC score associated to the estimator
+        the BIC score associated to the estimator
     '''
     eps = 1e-7
     m = centroids.shape[0]
@@ -254,9 +254,9 @@ def get_inertia(X, labels, centroids):
     '''
     Method to compute the Sum of Squared Errors (SSE)
     Args:
-    - X: the dataset of clustered points
-    - labels: the clustering assignments
-    - centroids: the centroids associated to X
+        X: the dataset of clustered points
+        labels: the clustering assignments
+        centroids: the centroids associated to X
     '''
     m = centroids.shape[0]
     return np.sum(
@@ -267,17 +267,16 @@ def performance_matrix(estimator, train_X, val_X):
     '''
     Method to evaluate an estimator, on different evaluation metrics
     Args:
-    - estimator: the clustering algorithm to be tested, or the path to the pickle file to load the estimator
+        estimator: the clustering algorithm to be tested, or the path to the pickle file to load the estimator
 
     Returns:
-    - a pandas DataFrame comparing several estimators
+        a pandas DataFrame comparing several estimators
     '''
 
     if isinstance(estimator, str):
         estimator = load_estimator(estimator)
 
     labels = estimator.fit(train_X).predict(val_X)
-
     return {
         # "Internal score": estimator.score(val_X, labels),
         "Number of Clusters": estimator.get_params()['n_clusters'
@@ -298,11 +297,11 @@ def cross_val(X, method="kmeans", scoring="score", season = "WINTER", folder = '
     '''
     Method to perform cross-validation of clustering methods
     Args
-    - X: pandas DataFrame containing data
-    - method: clustering method to be validated
-    - scoring
-    - season:
-    - verbose
+        X: pandas DataFrame containing data
+        method: clustering method to be validated
+        scoring
+        season:
+        verbose
     '''
 
     if method == 'kmeans':
@@ -340,7 +339,7 @@ def cross_val(X, method="kmeans", scoring="score", season = "WINTER", folder = '
         '''
         Method creating a generator on the fly returning all the combinations given the passed parameters
         Args:
-        - parameters: a dictionary containing the parameters to be passed
+            parameters: a dictionary containing the parameters to be passed
         '''
         if not parameters:
             yield dict()
@@ -397,7 +396,9 @@ def cross_val(X, method="kmeans", scoring="score", season = "WINTER", folder = '
             _best_estimator, _best_score, _best_params = deepcopy(_est), np.mean(scores), _est.get_params()
 
     try:
-        os.makedirs("../models/" + season + "/" + folder)
+        os.makedirs(os.path.join("../models",season,folder))
+    except OSError as oserr:
+        pass
     finally:
         with open("../models/" + season + "/" + folder + '/' + method + '_model_' + scoring + '.pkl', 'wb') as f:
             pickle.dump(_best_estimator, f)

@@ -4,6 +4,7 @@ import pandas as pd
 import os
 from modeling.utils.tools import *
 from modeling.utils.sigma_vae import *
+from modeling.utils.loaders import *
 from modeling.utils.config import *
 from sklearn_xarray import wrap
 from sklearn.decomposition import PCA
@@ -14,10 +15,10 @@ device = "cuda:0" if torch.cuda.is_available() else "cpu"
 def read_nc(path_to_file):
     '''
     Args:
-    - path_to_file: string of the file path
+        path_to_file: string of the file path
 
     Returns:
-    - an nc.Dataset variable
+        an xr.Dataset variable
     '''
     # return nc.Dataset(path_to_file)
     return xr.open_dataset(path_to_file)
@@ -27,10 +28,10 @@ def read_nc(path_to_file):
 def to_df(dataset, col_name='z'):
     '''
     Args:
-    - dataset: an xr.Dataset
+        dataset: an xr.Dataset
 
     Returns:
-    - a Pandas df
+        a Pandas df
     '''
     df = dataset.to_dataframe().reset_index()
     df = df.astype({'latitude': 'float32', 'longitude': 'float32', col_name: 'float32'})
@@ -45,7 +46,7 @@ def to_nc(dt, variable='z'):
     '''
     Method to push a pandas DataFrame to a .nc file
     Args:
-    - dt: an xarray Dataset
+        dt: an xarray Dataset
     '''
     dt.to_netcdf(READ_PATH + '/ERA-5_{}_{}_{}_{}_{}.nc'. \
                  format(freq if freq != 'hourly' else 'daily', physical_qty, months, obs_years, variable),
@@ -56,12 +57,12 @@ def to_nc(dt, variable='z'):
 def limit_geography(dt, lats, longs):
     '''
     Args:
-    - dt: an xarray Dataset containing data
-    - lats: extreme values of latitude
-    - longs: extreme values of longitude
+        dt: an xarray Dataset containing data
+        lats: extreme values of latitude
+        longs: extreme values of longitude
 
     Returns:
-    - a Pandas df containing the retained rows falling in the geographical area
+        a Pandas df containing the retained rows falling in the geographical area
     '''
     return dt.where(lambda x: ((lats[0] <= x.latitude) & (x.latitude <= lats[1]) &
                                (longs[0] <= x.longitude) & (x.longitude <= longs[1])), drop=True)
@@ -72,11 +73,11 @@ def limit_geography(dt, lats, longs):
 def limit_years(df, start_year=1991):
     '''
     Args:
-    - df: a pandas DataFrame  containing historical data
-    - start_year: the year from which to start to compute the normal
+        df: a pandas DataFrame  containing historical data
+        start_year: the year from which to start to compute the normal
 
     Returns:
-    - a pandas DataFrame containing the historical series of the normal starting from start_year
+        a pandas DataFrame containing the historical series of the normal starting from start_year
     '''
     print("Dataframe length before limiting years: %d" % len(df))
     new_df = df[df['year'] >= start_year]
@@ -88,10 +89,10 @@ def limit_years(df, start_year=1991):
 def hourly_to_daily(ds):
     '''
     Args:
-    - df: an xarray Dataset containing hourly historical data
+        df: an xarray Dataset containing hourly historical data
 
     Returns:
-    - an xarray Dataset containing daily historical data
+        an xarray Dataset containing daily historical data
     '''
     #ds = read_nc(READ_PATH + '/ERA-5_{}_Geopotential-500hPa_{}_{}.nc'.format(freq, months, obs_years))
     ds.coords['time'] = ds.time.dt.floor('1D')
@@ -104,17 +105,17 @@ def hourly_to_daily(ds):
 def evaluate_normal(dt, domain='local', mode='flat', freq = 'm', start_date=None, end_date = None):
     '''
     Args:
-    - dt: an xarray Dataset containing historical data
-    - domain: either 'local'  or 'global'. In the first case a normal for each location is computed, in the latter
-      the normal is computed averaging all the positions
-    - mode: either 'flat' or 'dynamic'. In the first case the normal is the same for each day, in the latter
-      a normal for each day is computed
-    - freq:
-    - start_year: the starting year to consider for evaluating the normal.
-      If not specified, all the dates in the passed DataFrame are used
+        dt: an xarray Dataset containing historical data
+        domain: either 'local'  or 'global'. In the first case a normal for each location is computed, in the latter
+        the normal is computed averaging all the positions
+        mode: either 'flat' or 'dynamic'. In the first case the normal is the same for each day, in the latter
+        a normal for each day is computed
+        freq: the time frequency at which evaluating the dynamic normal
+        start_year: the starting year to consider for evaluating the normal.
+        If not specified, all the dates in the passed DataFrame are used
 
     Returns:
-    - a pandas DataFrame containing the historical series of the normal
+        a pandas DataFrame containing the historical series of the normal
     '''
 
     if start_date is not None:
@@ -152,13 +153,14 @@ def evaluate_normal(dt, domain='local', mode='flat', freq = 'm', start_date=None
 def evaluate_anomaly(observation, normal, mode='flat', freq = 'm'):
     '''
     Args:
-    - observation: an xarray Dataset containing observation data
-    - normal: an xarray Datasete containing the historical series of the normal
-    - mode:
-    - freq:
+        observation: an xarray Dataset containing observation data
+        normal: an xarray Datasete containing the historical series of the normal
+        mode: either 'flat' or 'dynamic'. In the first case the normal is the same for each day, in the latter
+        a normal for each day is computed
+        freq: the time frequency at which evaluating the dynamic normal
 
     Returns:
-    - an xarray Dataset containing the anomalous data
+        an xarray Dataset containing the anomalous data
     '''
 
     if mode == 'flat':
@@ -179,10 +181,10 @@ def weighted_anomaly(dt):
     '''
     Method to compute the weighted anomaly, by eliminating the bias along the latitude
     Args:
-    - dt: an xarray Dataset
+        dt: an xarray Dataset
 
     Returns:
-    - the weighted anomaly
+        the weighted anomaly
     '''
     wgts = np.sqrt(np.cos(np.deg2rad(dt.latitude.values)).clip(0., 1.))
     wgts = wgts[np.newaxis, ..., np.newaxis]
@@ -194,8 +196,11 @@ def weighted_anomaly(dt):
 def build_data(normal='flat'):
     '''
     Method to build dataframe, including normal and anomaly for each timeframe
+    Args:
+        normal: an xarray Datasete containing the historical series of the normal
+
     Returns:
-    - a pandas DataFrame anomaly
+        a pandas DataFrame anomaly
     '''
     if 'ERA-5_{}_{}_{}_{}_anomaly.nc'. \
             format(freq if freq != 'hourly' else 'daily', physical_qty, months, obs_years) not in os.listdir(READ_PATH):
@@ -219,6 +224,11 @@ def build_data(normal='flat'):
         dt = limit_geography(dt, LAT, LONG)
         if physical_qty == 'Geopotential-500hPa':
             dt = dt / G
+        elif physical_qty == 'SLP':
+            dt = dt / 100.
+        else:
+            pass
+
         print("Evaluating the normal")
 
         if normal != 'flat':
@@ -283,10 +293,10 @@ class Compresser(object):
 def flat_table(dt):
     '''
     Args:
-    - dt: an xarray Dataset containing data to be flattened. The index remains the same as the input dataset
+        dt: an xarray Dataset containing data to be flattened. The index remains the same as the input dataset
 
     Returns:
-    - an xarray flattened
+        an xarray flattened
     '''
     return dt.stack(latlon=('latitude', 'longitude')).to_array().squeeze()
 
@@ -295,10 +305,10 @@ def flat_table(dt):
 def eofs(dt, **kwargs):
     '''
     Args:
-    - dt: an xarray Dataset
+        dt: an xarray Dataset
 
     Returns:
-    - an xr.DataArray containing the EOFs, a numpy.array containing the PCs
+        an xr.DataArray containing the EOFs, a numpy.array containing the PCs
     '''
     A, Lh, E = np.linalg.svd(dt, full_matrices=False)
     L = (Lh * Lh) / (len(dt) - 1)
@@ -313,12 +323,12 @@ def eofs(dt, **kwargs):
 def reduce_dim(dt, reshape='latlon', method='PCA', **kwargs):
     '''
     Args:
-    - df: an xarray Dataset
-    - method: the method used to perform dimensionality reduction, if not specified PCA is used
-    - **kwargs: a dictionary of further parameters, like the percentage of explained variance used to retain the components or the name of the VAE model file
+        df: an xarray Dataset
+        method: the method used to perform dimensionality reduction, if not specified PCA is used
+        **kwargs: a dictionary of further parameters, like the percentage of explained variance used to retain the components or the name of the VAE model file
 
     Returns:
-    - a numpy.array reduced in the feature space
+        a numpy.array reduced in the feature space
     '''
 
     if method == 'PCA':
@@ -329,20 +339,21 @@ def reduce_dim(dt, reshape='latlon', method='PCA', **kwargs):
 
     elif method == "VAE":
         time_idx = dt.coords['time']
-        vae = ConvVAE(args = Args())
+        dt = dt.to_array()[0].values
+        tfs = torchvision.transforms.Compose([
+            torchvision.transforms.Resize((240, 480)),
+            ToTensor()])
+        loader = torch.utils.data.DataLoader(GeoDataset(dt, transforms = tfs), batch_size = 256, shuffle = False)
+        vae = ConvVAE(args = Args(z_dim = 5 if '5' in kwargs['model'] else 7))
         vae.load_state_dict(torch.load('../models/'+kwargs['season']+'/' + kwargs['model'], map_location='cpu'))
-        dt = np.swapaxes(dt.to_array().values, 0, 1)
-        dt = torch.from_numpy(dt).type(torch.FloatTensor)
         stack = []
-        for i in range(0, len(dt), 256):
+        for i, batch in enumerate(loader):
             print("\r", end="")
-            print("Processing batch %d" % (i // 256 + 1), end="")
-
-            batch = dt[i:i + 256, ...]
+            print("Processing batch %d" % (i+ 1), end="")
             with torch.no_grad():
                 stack.append(vae(batch)[1])
         reduced_dt = torch.cat(stack).squeeze().detach().numpy()
-        reduced_dt = xr.DataArray(reduced_dt, coords=[time_idx, range(1, reduced_dt.shape[1])])
+        reduced_dt = xr.DataArray(reduced_dt, coords=[time_idx, range(1, reduced_dt.shape[1]+1)])
 
     else:
         pass

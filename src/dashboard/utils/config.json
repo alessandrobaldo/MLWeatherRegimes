@@ -1,0 +1,7 @@
+{
+  "season": "Winter",
+  "predictions": "predictions_winter",
+  "months": [1,2,12],
+  "months_str": "DJF",
+  "regimes": ["AR", "NAO+", "NAO-", "SB"]
+}

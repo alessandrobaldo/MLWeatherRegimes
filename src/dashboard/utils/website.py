@@ -130,7 +130,7 @@ def plot_EU7(df, predictions, pcs):
 
     st.subheader("Regimes")
     with st.expander('', expanded = True):
-        model = st.selectbox("Select the model", predictions.columns.get_level_values(0).unique(), index = 2)
+        model = st.selectbox("Select the model", predictions.columns.get_level_values(0).unique())
         try:
             os.makedirs(os.path.join(path, 'EU-7', model))
         except OSError as oserr:
@@ -220,7 +220,6 @@ def plot_country(country, df, predictions, pcs):
     except OSError as oserr:
         print(oserr)
 
-
     country_df = filter_by_country(df, country)
     columns = country_df.columns
 
@@ -256,7 +255,7 @@ def plot_country(country, df, predictions, pcs):
 
     st.subheader("Regimes")
     with st.expander('', expanded = True):
-        model = st.selectbox("Select the model", predictions.columns.get_level_values(0).unique(), index = 2)
+        model = st.selectbox("Select the model", predictions.columns.get_level_values(0).unique())
         try:
             os.makedirs(os.path.join(path, country, model))
         except OSError as oserr:
@@ -342,7 +341,7 @@ def plot_country(country, df, predictions, pcs):
                       os.path.join(path, country, model, f'maps_{"_".join(selected_cols)}_regimes.png')))
 
 def plot_subseasonal_forecasts(df, subseasonal_df, shortterm_df, predictions):
-    model = st.selectbox("Select the model", predictions.columns.get_level_values(0).unique(), index = 2)
+    model = st.selectbox("Select the model", predictions.columns.get_level_values(0).unique())
     col1, col2 = st.columns(2)
     countries = col1.selectbox("Select the coutry", df.index.get_level_values(0).unique().tolist() + ['EU-7'], key = "countries_subseasonal")
     try:
@@ -362,7 +361,7 @@ def plot_subseasonal_forecasts(df, subseasonal_df, shortterm_df, predictions):
     date = st.slider("Select a forecast date",
                      min_value=dates[0].date()+timedelta(7), max_value=dates[-1].date(), step=timedelta(1))
     st.subheader("Historical distributions")
-    month = date.month if date.month in [1,2,12] else min([1,2,12], key=lambda x: abs(x-date.month))
+    month = date.month if date.month in MONTHS else min(MONTHS, key=lambda x: abs(x-date.month))
 
     filtered_df = filter_by_country(df, countries).loc[
         filter_by_country(df, countries).index.intersection(predictions.loc[predictions.index.month == month].index)]
@@ -371,8 +370,8 @@ def plot_subseasonal_forecasts(df, subseasonal_df, shortterm_df, predictions):
 
     forecast = filter_forecast(subseasonal_df, date, backward = False)
     st.write(plot_weights_forecast(forecast, date,  os.path.join(path, "Subseasonal_forecast","ECMWF_weights", date.strftime("%Y%m%d")+".png")))
-    forecast = bayesian_forecasts(subseasonal_df, forecast, predictions, model)
-    st.write(plot_weights_forecast(forecast, date,  os.path.join(path, "Subseasonal_forecast","ECMWF_weights", date.strftime("%Y%m%d")+".png")))
+    #forecast = bayesian_forecasts(subseasonal_df, forecast, predictions, model)
+    #st.write(plot_weights_forecast(forecast, date,  os.path.join(path, "Subseasonal_forecast","ECMWF_weights", date.strftime("%Y%m%d")+".png")))
 
     try:
         short_term = shortterm_df.xs(date.strftime("%Y-%m-%d"), level = 1)
@@ -396,19 +395,20 @@ def plot_MF(df, predictions, targets, reservoir, inflow, groundwater):
 
     targets = targets.xs('Distance', level=0, axis=1)
     predictions = predictions.loc[predictions.index.intersection(targets.index)]
+    #predictions = predictions.drop('K-Means', axis = 1)
     models = predictions.columns.get_level_values(0).unique().tolist()
 
     st.write(
-        plot_conf_matrix(predictions.loc[:, (models, ['AR', 'NAO+', 'NAO-', 'SB'])], targets.drop('Prediction', axis=1),
+        plot_conf_matrix(predictions.loc[:, (models, REGIMES)], targets.drop('Prediction', axis=1),
                          models))
     st.caption(f"Confusion matrices of the {', '.join(models)} against Metéo-France targets")
 
     st.write(
-        plot_multiclass_roc(predictions.loc[:, (models, ['AR', 'NAO+', 'NAO-', 'SB'])],
+        plot_multiclass_roc(predictions.loc[:, (models, REGIMES)],
                             targets.drop('Prediction', axis=1), models))
     st.caption(f"ROC curves of the {', '.join(models)} against Metéo-France targets")
 
-    model = st.selectbox("Select one or more models", models, index = 2, key = 'model_multiselect')
+    model = st.selectbox("Select one or more models", models, key = 'model_multiselect')
     predictions = predictions.xs(model, level=0, axis=1).reindex(sorted(targets.columns), axis=1)
     targets = targets.loc[targets.index.intersection(predictions.index)]
 
@@ -425,15 +425,15 @@ def plot_MF(df, predictions, targets, reservoir, inflow, groundwater):
     st.write(
         plot_historical_counts(predictions.drop('Prediction', axis = 1), title = '../imgs/count_winter_predictionsVAE.png'))
 
-
-    f1, f2, f3 = plot_hydro_corr(predictions.drop('Prediction', axis = 1), reservoir, inflow, groundwater)
-    st.write(f1)
-    st.write(f2)
-    st.write(f3)
+    if SEASON == 'Winter':
+        f1, f2, f3 = plot_hydro_corr(predictions.drop('Prediction', axis = 1), reservoir, inflow, groundwater)
+        st.write(f1)
+        st.write(f2)
+        st.write(f3)
 
 def plot_dynamics_model(predictions, targets):
     st.subheader("Dynamics")
-    model = st.selectbox("Select a model", predictions.columns.get_level_values(0).unique().tolist(), index = 2)
+    model = st.selectbox("Select a model", predictions.columns.get_level_values(0).unique().tolist())
     days = st.slider("Select a range of days to evaluate the transitions", min_value = 1, max_value= 30, step = 1)
     stats = get_state_transitions(predictions,days)
     plot_dynamics(stats)
@@ -441,10 +441,15 @@ def plot_dynamics_model(predictions, targets):
     st.image(image, caption=f"{model} dynamics")
 
     model = st.selectbox("Select a model", ['GMM', 'Bayesian-GMM'])
+    target = st.selectbox("Select a target model", ['Meteo-France','K-Means'])
+    if target == 'Meteo-France':
+        targets = targets.xs('Distance', level = 0, axis = 1)
+    else:
+        targets = predictions.xs('K-Means', level = 0, axis = 1)
     year = st.selectbox("Select a winter", predictions.index.year.unique()[:-1])
     st.write(
         compare_dynamics(predictions.loc[str(year)+"-12-01":].iloc[:90],
-                         targets.xs('Distance', level = 0, axis = 1).loc[str(year)+"-12-01":].iloc[:90],
+                         targets.loc[str(year)+"-12-01":].iloc[:90],
                          model, '../imgs/compare_dynamics_MF.png'))
 
 
@@ -452,16 +457,16 @@ def build_webpage(true_df, synthetic_df, synthetic_mapped, subseasonal_df, short
     st.title("Energy and Weather Variables Dashboard")
     countries = synthetic_df.index.get_level_values(0).unique().tolist()
     options = ['EU-7'] + countries + ['Sub-seasonal Forecasts', 'Metéo-France', 'Model Dynamics', 'Comparison True Measurements and Synthetic Data']
-    sel_opt = st.selectbox("Select an option", options)
+    sel_opt = st.selectbox("Select an option", options, index=10)
 
     if sel_opt in countries:
-        plot_country(sel_opt, true_df, predictions, pcs)
+        plot_country(sel_opt, synthetic_df, predictions, pcs)
 
     else:
         if sel_opt == "Comparison True Measurements and Synthetic Data":
             plot_comparison(true_df, synthetic_mapped)
         elif sel_opt == "EU-7":
-            plot_EU7(synthetic_mapped, predictions, pcs)
+            plot_EU7(synthetic_df, predictions, pcs)
         elif sel_opt == "Sub-seasonal Forecasts":
             plot_subseasonal_forecasts(synthetic_df, subseasonal_df, shortterm_df, predictions)
         elif sel_opt == "Metéo-France":
