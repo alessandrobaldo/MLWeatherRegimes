@@ -1,0 +1,1389 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>modeling.utils.plotting API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>modeling.utils.plotting</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from modeling.utils.data import *
+from modeling.utils.models import *
+import math
+from datetime import datetime
+from sklearn.metrics import silhouette_score
+
+import matplotlib as mpl
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+from mpl_toolkits.axes_grid1 import AxesGrid
+import matplotlib.pyplot as plt
+from matplotlib import animation
+import plotly.graph_objects as go
+import cartopy.crs as ccrs
+from cartopy.mpl.geoaxes import GeoAxes
+from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
+import seaborn as sns
+mpl.rcParams[&#39;axes.labelsize&#39;] = 14
+mpl.rcParams[&#39;legend.fontsize&#39;] = 14
+mpl.rcParams[&#39;axes.titlesize&#39;] = 14
+mpl.rcParams[&#39;mpl_toolkits.legacy_colorbar&#39;] = False
+PATH = &#34;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/scripts/imgs/&#34;
+
+
+def save_anomalies(dt, title):
+    fig, ax = plt.subplots(1, 1, figsize=(7, 7), subplot_kw={&#39;projection&#39;: ccrs.PlateCarree()})
+    ax.coastlines()
+    lats, longs = np.unique(dt.latitude.values), np.unique(dt.longitude.values)
+    gphs = dt.to_array().values.squeeze()
+    cset = ax.contourf(longs, lats, gphs, cmap=&#39;coolwarm&#39;, transform=ccrs.PlateCarree(), levels=100, alpha=.7)
+    cset = ax.contour(longs, lats, gphs, transform=ccrs.PlateCarree(), colors=&#39;k&#39;)
+    plt.savefig(title, bbox_inches=&#39;tight&#39;, pad_inches=0)
+    plt.close()
+
+&#34;&#34;&#34;
+def plot_gph(dt, **kwargs):
+    &#39;&#39;&#39;
+    Method to plot geopotential height
+    Args:
+    - dt: an xarray DataArray
+    &#39;&#39;&#39;
+    if &#39;ax&#39; not in kwargs:
+        fig, ax = plt.subplots(1, 1, figsize=(7, 7), subplot_kw={&#39;projection&#39;: ccrs.PlateCarree()})
+    else:
+        ax = kwargs[&#39;ax&#39;]
+
+    if &#39;ax&#39; not in kwargs:
+        axins = inset_axes(ax,
+                           width=&#34;3%&#34;,  # width = 10% of parent_bbox width
+                           height=&#34;100%&#34;,  # height : 50%
+                           loc=6,
+                           bbox_to_anchor=(1.05, 0., 1, 1),
+                           bbox_transform=ax.transAxes,
+                           borderpad=0,
+                           )
+    if &#39;title&#39; in kwargs:
+        ax.set_title(kwargs[&#39;title&#39;])
+
+    ax.coastlines()
+    lats, longs = np.unique(dt.latitude.values), np.unique(dt.longitude.values)
+    gphs = np.squeeze(dt.values)
+    if &#39;reshape&#39; in kwargs:
+        gphs = np.reshape(gphs, (len(lats), len(longs)))
+
+    cset = ax.contourf(longs, lats, gphs, cmap=&#39;RdBu_r&#39;, transform=ccrs.PlateCarree(), levels=50, alpha=.7,
+                       norm=kwargs[&#39;norm&#39;] if &#39;norm&#39; in kwargs else None)
+    if &#39;ax&#39; not in kwargs:
+        plt.colorbar(cset, cax=axins)
+    cset = ax.contour(longs, lats, gphs, transform=ccrs.PlateCarree(), colors=&#39;k&#39;)
+
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(kwargs[&#34;savefig&#34;], bbox_inches=&#39;tight&#39;)
+
+    if &#39;ax&#39; not in kwargs:
+        plt.show()
+    else:
+        return cset
+&#34;&#34;&#34;
+
+
+def plot_gph(dt, **kwargs):
+    &#39;&#39;&#39;
+    Method to plot geopotential height
+    Args:
+    - dt: an xarray DataArray
+    &#39;&#39;&#39;
+    xlim, ylim = (dt[&#39;longitude&#39;].values.min(), dt[&#39;longitude&#39;].values.max()), \
+                 (dt[&#39;latitude&#39;].values.min(), dt[&#39;latitude&#39;].values.max())
+    trans = ccrs.PlateCarree()
+    proj = ccrs.LambertConformal((xlim[1] + xlim[0]) / 2, (ylim[1] + ylim[0]) / 2)
+    vmin = dt.quantile(.05).values
+    vmax = dt.quantile(.95).values
+    fig, ax = plt.subplots(1, 1, figsize=(7, 7),
+                           subplot_kw={&#39;projection&#39;: proj})
+    cset = dt.plot.contourf(x=&#34;longitude&#34;, y=&#34;latitude&#34;, ax=ax, levels=50, alpha=.7,
+                                transform=trans, cmap=&#34;RdBu_r&#34;,
+                                norm=mpl.colors.SymLogNorm(vmin=vmin, vmax=vmax,
+                                linthresh=max(dt.quantile(.85), 10), base=10),
+                                cbar_kwargs=dict(orientation=&#39;horizontal&#39;, extend=&#39;both&#39;,
+                                                 ticks=[vmin, vmax], format=&#34;%d&#34;))
+
+    ax.coastlines()
+    rect = mpl.path.Path([[xlim[0], ylim[0]],
+                          [xlim[1], ylim[0]],
+                          [xlim[1], ylim[1]],
+                          [xlim[0], ylim[1]],
+                          [xlim[0], ylim[0]],
+                          ]).interpolated(20)
+    proj_to_data = trans._as_mpl_transform(ax) - ax.transData
+    rect_in_target = proj_to_data.transform_path(rect)
+    ax.set_boundary(rect_in_target)
+    ax.set_extent([xlim[0], xlim[1], ylim[0] - 10, ylim[1]])
+
+    if &#39;title&#39; in kwargs:
+        ax.set_title(kwargs[&#39;title&#39;])
+
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(kwargs[&#39;savefig&#39;])
+
+    plt.show()
+
+def plot_normal(dt, locations, freq = &#39;m&#39;, **kwargs):
+    &#39;&#39;&#39;
+    Method to plot the values of the normal across one year for different locations
+    Args:
+    - dt: an xarray Dataset containing observation values
+    - locations: a dictionary containing different locations to be illustrated
+        - key: a str containing the location name
+        - value: a tuple containing the coordinates of the location
+    &#39;&#39;&#39;
+
+    # fig, ax = plt.subplots(1,len(locations), figsize=(len(locations)*7,7), sharey = True)
+    fig, ax = plt.subplots(len(locations), 1, figsize=(len(locations) * 7, len(locations) * 7))
+    if freq == &#39;m&#39;:
+        key = &#39;month&#39;
+    elif freq == &#39;w&#39;:
+        key = &#39;week&#39;
+    else:
+        key = &#39;day&#39;
+
+    for i, (loc, coords) in enumerate(locations.items()):
+
+        lat, lon = coords
+        abslat = np.abs(dt.latitude - lat)
+        abslon = np.abs(dt.longitude - lon)
+        pos = np.maximum(abslon, abslat)
+
+        ([lonloc], [latloc]) = np.where(pos == np.min(pos))
+        local_dt = dt.isel(latitude=latloc, longitude=lonloc)
+
+        for start_year in [1991, 2011]:
+            normal_loc = evaluate_normal.__wrapped__(local_dt, domain=&#39;local&#39;, mode=&#39;dynamic&#39;, freq = freq,
+                                                     start_year=start_year).to_array().squeeze()
+            # normal_loc = normal_loc.unstack(&#39;month_day&#39;)
+            # print(normal_loc)
+            normal_loc = normal_loc.loc[{
+                key: sorted(normal_loc[key].values, key = lambda x: x%12),
+            }]
+            ax[i].plot(normal_loc[key].to_series().astype(str),
+                       normal_loc.values, &#39;--&#39;,
+                       linewidth=1.2, label=loc + &#34; - &#34; + str(start_year))
+
+            normal_min, normal_mean, normal_max = evaluate_normal.__wrapped__(local_dt, domain=&#39;global&#39;, mode=&#39;dynamic&#39;,
+                                                                              freq = freq, start_year=start_year)
+            normal_min, normal_mean, normal_max = normal_min.to_array().squeeze(), \
+                                                  normal_mean.to_array().squeeze(), \
+                                                  normal_max.to_array().squeeze()
+            ax[i].plot(normal_loc[key].to_series().astype(str),
+                       normal_mean.values, &#39;--&#39;, linewidth=1.2,
+                       label=&#34;Normal - &#34; + str(start_year))
+            ax[i].fill_between(normal_loc[key].to_series().astype(str),
+                               normal_min.values, normal_max.values,
+                               label=&#39;min-max dev - &#39; + str(start_year), alpha=.3)
+        ax[i].grid(which=&#39;both&#39;, axis=&#39;x&#39;)
+        ax[i].legend()
+
+        #months = mpl.dates.MonthLocator()
+        #days = mpl.dates.DayLocator(bymonthday=(10, 20))
+        #formatter_months = mpl.dates.DateFormatter(&#39;%b&#39;)
+        #formatter_days = mpl.dates.DateFormatter(&#39;%d&#39;)
+        #ax[i].xaxis.set_major_locator(months)
+        #ax[i].xaxis.set_major_formatter(formatter_months)
+        #ax[i].xaxis.set_minor_formatter(formatter_days)
+        #ax[i].xaxis.set_minor_locator(days)
+        for tick in ax[i].get_xaxis().get_major_ticks():
+            tick.set_pad(15)
+
+        ax[i].set_xlabel(&#34;Date&#34;)
+        ax[i].set_ylabel(&#34;Geopotential Height [m]&#34;)
+
+    fig.tight_layout()
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(&#34;imgs/Normal.png&#34;)
+    plt.show()
+
+
+def plot_PC(pc, col_name, **kwargs):
+    &#39;&#39;&#39;
+    Method to plot the NAO index, corresponding to the first Principal Component of the Anomaly
+    Args:
+    - pc: pandas DataFrame containing the PC
+    - col_name: the name of the column containing the values to be plotted
+    &#39;&#39;&#39;
+    vmin, vmax = pc[col_name].values.min(), pc[col_name].values.max()
+    pc = pd.pivot_table(pc, values=[col_name], index=pc.index.year,
+                        columns=pc.index.month, aggfunc=np.mean)
+
+    nao = pd.read_csv(&#34;../files/nao.csv&#34;, sep=&#34;;&#34;, names=[&#34;year&#34;, &#34;month&#34;, &#34;idx&#34;])
+    nao[&#34;day&#34;] = 1
+    nao.index = pd.to_datetime(nao[[&#34;year&#34;, &#34;month&#34;, &#34;day&#34;]])
+    nao = nao[np.logical_and(nao[&#34;month&#34;].isin([1, 2, 12]), nao[&#34;year&#34;] &gt;= 1979)]
+    nao.drop([&#34;year&#34;, &#34;month&#34;, &#34;day&#34;], axis=1, inplace=True)
+
+    fig, ax = plt.subplots(1, 1, figsize=(20, 7))
+
+    pc.plot(kind=&#39;bar&#39;, ax=ax)
+    cmap_red = mpl.cm.get_cmap(&#39;Reds&#39;)
+    cmap_blue = mpl.cm.get_cmap(&#39;Blues&#39;)
+    bars = [bar for bar in ax.containers if isinstance(bar, mpl.container.BarContainer)]
+    pos = []
+    for i, group in enumerate(bars):
+        for j, bar in enumerate(group):
+            if bar.get_height() &gt; 0:
+                color = (bar.get_height() - 0) / (vmax - 0)
+                cmap = cmap_blue
+            else:
+                color = 1 - (bar.get_height() - vmin) / (0 - vmin)
+                cmap = cmap_red
+            group.patches[j].set_facecolor(cmap(2 * color))
+            if not math.isnan(pc.values[j, i]):
+                pos.append(bar.get_x())
+
+    ax.minorticks_on()
+    ax.plot(sorted(pos), nao[&#39;idx&#39;], zorder=0, marker=&#39;o&#39;, linestyle=&#39;dashed&#39;)
+    ax.set_xlabel(&#34;Time&#34;)
+    ax.set_ylabel(col_name)
+    ax.get_legend().remove()
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(&#34;../imgs/&#34; + col_name + &#34;.png&#34;)
+    plt.show()
+
+
+&#34;&#34;&#34;
+def plot_EOFS(eofs, **kwargs):
+    &#39;&#39;&#39;
+    Method to plot the 4 EOFs
+    Args:
+    - eofs: xr.DataArray containing the EOFs
+    &#39;&#39;&#39;
+    vmin, vmax = eofs[:4,:].quantile(.05).values, eofs[:4,:].quantile(.95).values
+    norm = mpl.colors.SymLogNorm(vmin=eofs[:4,:].min(), vmax=eofs[:4,:].max(), linthresh=6e-8, base = 10)   
+
+    projection = ccrs.PlateCarree()
+    axes_class = (GeoAxes,dict(map_projection=projection))
+    fig = plt.figure(figsize=(15,15))
+    axs = AxesGrid(fig, 111, axes_class=axes_class, nrows_ncols=(2, 2), axes_pad=1, label_mode=&#39;&#39;)
+    for neofs in range(4):
+        cset = plot_gph(eofs[neofs,:], reshape = True, norm = norm,
+                 ax = axs[neofs], title = &#39;EOF{}&#39;.format(neofs+1))
+    cax = fig.add_axes([0.26, 0.25, 0.5, 0.02])
+    cb = mpl.colorbar.ColorbarBase(cax, cmap=plt.get_cmap(&#39;RdBu_r&#39;), norm=norm, spacing=&#39;uniform&#39;,
+                                  orientation = &#39;horizontal&#39;, extend = &#39;both&#39;, extendfrac=&#39;auto&#39;,
+                                  ticklocation =&#39;bottom&#39;, format = &#34;%.0e&#34;,
+                                  ticks = [-9e-7, -2e-7, -5e-8, 0., 5e-8, 2e-7, 9e-7])
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(PATH + &#34;eofs.png&#34;)
+    plt.show()
+&#34;&#34;&#34;
+
+
+def plot_EOFS(eofs, **kwargs):
+    &#39;&#39;&#39;
+    Method to plot the 4 EOFs
+    Args:
+    - eofs: xr.DataArray containing the EOFs
+    &#39;&#39;&#39;
+
+    xlim, ylim = (eofs[&#39;longitude&#39;].values.min(), eofs[&#39;longitude&#39;].values.max()), \
+                 (eofs[&#39;latitude&#39;].values.min(), eofs[&#39;latitude&#39;].values.max())
+    trans = ccrs.PlateCarree()
+    proj = ccrs.LambertConformal((xlim[1] + xlim[0]) / 2, (ylim[1] + ylim[0]) / 2)
+
+    eofs = eofs[:4, :].unstack(&#39;latlon&#39;).assign_coords(neofs=(&#39;time&#39;, range(0, 4)))
+    eofs = eofs.groupby(&#39;neofs&#39;).mean()
+    vmin, vmax = eofs.quantile(.05).values, eofs.quantile(.95).values
+
+    cset = eofs.plot.contourf(x=&#34;longitude&#34;, y=&#34;latitude&#34;, col=&#34;neofs&#34;, levels=50, col_wrap=2,
+                              transform=trans, alpha=.7, cmap=&#34;RdBu_r&#34;, robust=True,
+                              norm=mpl.colors.SymLogNorm(vmin=vmin, vmax=vmax,
+                                                         linthresh=eofs.quantile(.85).values, base=10),
+                              subplot_kws=dict(projection=proj), figsize=(15, 15),
+                              cbar_kwargs=dict(orientation=&#39;horizontal&#39;, extend=&#39;both&#39;,
+                                               ticks=[vmin, vmax], format=&#34;%.0e&#34;))
+
+    for i, ax in enumerate(cset.axes.flat):
+        ax.coastlines()
+        rect = mpl.path.Path([[xlim[0], ylim[0]],
+                              [xlim[1], ylim[0]],
+                              [xlim[1], ylim[1]],
+                              [xlim[0], ylim[1]],
+                              [xlim[0], ylim[0]],
+                              ]).interpolated(20)
+        proj_to_data = trans._as_mpl_transform(ax) - ax.transData
+        rect_in_target = proj_to_data.transform_path(rect)
+        ax.set_boundary(rect_in_target)
+        ax.set_extent([xlim[0], xlim[1], ylim[0] - 10, ylim[1]])
+
+        ax.set_title(f&#34;EOF-{i + 1}&#34;, y=-0.2 if i &gt; 1 else 1)
+
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(PATH + &#34;eofs.png&#34;)
+    plt.show()
+
+
+def plot_density(start_date, end_date, x, y, regimes=True, **kwargs):
+    &#39;&#39;&#39;
+    Method to plot the density of two variables
+    Args:
+    - start_date: str indicating the start date to consider
+    - end_date: str indicating the end date to consider
+    - x: pd.Series containing the elements to plot for the variable x
+    - y: pd.Series containing the elements to plot for the variable y
+    - regimes: boolean indicating whether the reference of the regimes must be inserted
+    &#39;&#39;&#39;
+
+    x, y = np.squeeze(x.loc[start_date:end_date]), np.squeeze(y.loc[start_date:end_date])
+
+    if &#39;ax&#39; not in kwargs:
+        fig, ax = plt.subplots(figsize=(7, 7))  # subplot_kw={&#39;projection&#39;: &#39;polar&#39;})
+
+    else:
+        ax = kwargs[&#39;ax&#39;]
+    sns.kdeplot(x, y, shade=True, ax=ax, cmap=&#39;RdBu_r&#39;, levels=50, alpha=.7, )
+    ax.vlines(0, -3, 3, linewidth=.1, colors=&#39;k&#39;, zorder=100)
+    ax.hlines(0, -3, 3, linewidth=.1, colors=&#39;k&#39;, zorder=100)
+    ax.plot([-3, 3], [-3, 3], linewidth=.1, c=&#39;k&#39;, zorder=100)
+    ax.plot([-3, 3], [3, -3], linewidth=.1, c=&#39;k&#39;, zorder=100)
+    circle = plt.Circle((0, 0), 1, linewidth=.1, edgecolor=&#39;k&#39;, facecolor=None, fill=False)
+    ax.add_patch(circle)
+    if regimes:
+        ax.text(-2.95, 0., &#34;NAO-&#34;, size=&#39;large&#39;, weight=&#39;bold&#39;)
+        ax.text(0., -2.95, &#34;BL-&#34;, size=&#39;large&#39;, weight=&#39;bold&#39;)
+        ax.text(0., 2.85, &#34;BL+&#34;, size=&#39;large&#39;, weight=&#39;bold&#39;)
+        ax.text(2.4, 0., &#34;NAO+&#34;, size=&#39;large&#39;, weight=&#39;bold&#39;)
+        ax.set_xlim(-3, 3)
+        ax.set_ylim(-3, 3)
+
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(kwargs[&#39;savefig&#39;])
+
+    if &#39;ax&#39; not in kwargs:
+        plt.show()
+
+
+&#34;&#34;&#34;
+def plot_regimes(pivot_dt, labels, **kwargs):
+    &#39;&#39;&#39;
+    Method to plot centroids after applying clustering algorithm
+    Args:
+    - pivot_dt: an xarray Dataset with size time x (lat_lon)
+    - labels: an array containing the labels after the clustering
+    - kwargs: additional parameters such as filename for saving the figure
+    &#39;&#39;&#39;
+    vmin, vmax = pivot_dt.quantile(.05).values, pivot_dt.quantile(.95).values
+    norm = mpl.colors.SymLogNorm(vmin=pivot_dt.min(), vmax=pivot_dt.max(), linthresh=20, base=10)
+
+    projection = ccrs.PlateCarree()
+    axes_class = (GeoAxes, dict(map_projection=projection))
+    nb_clusters = max(labels) + 1
+    fig = plt.figure(figsize=(15, 7.5 * math.ceil(nb_clusters / 2)))
+    axs = AxesGrid(fig, 111, axes_class=axes_class, nrows_ncols=(math.ceil(nb_clusters / 2), 2), axes_pad=1,
+                   label_mode=&#39;&#39;)
+    # cbar_mode=&#39;single&#39;,cbar_location=&#39;bottom&#39;,cbar_pad=0.1)
+    if (nb_clusters % 2) != 0:
+        axs[-1].remove()
+
+    for cluster_nb in range(nb_clusters):
+        centroid_df = pivot_dt.isel(time=labels == cluster_nb).mean(dim=&#39;time&#39;)
+        cset = plot_gph(centroid_df, reshape=True, ax=axs[cluster_nb], title=&#39;Cluster {}&#39;.format(cluster_nb),
+                        norm=norm, **kwargs)
+    cax = fig.add_axes([0.26, 0.25, 0.5, 0.02])
+    cb = mpl.colorbar.ColorbarBase(cax, cmap=plt.get_cmap(&#39;RdBu_r&#39;), norm=norm, spacing=&#39;uniform&#39;,
+                                   orientation=&#39;horizontal&#39;, extend=&#39;both&#39;, extendfrac=&#39;auto&#39;,
+                                   ticklocation=&#39;bottom&#39;, format=&#34;%d&#34;,
+                                   ticks=[-200., -50., -15, 0., 15., 50., 200.])
+    plt.show()
+&#34;&#34;&#34;
+
+
+def plot_regimes(pivot_dt, labels, **kwargs):
+    &#39;&#39;&#39;
+    Method to plot centroids after applying clustering algorithm
+    Args:
+    - pivot_dt: an xarray Dataset with size time x (lat_lon)
+    - labels: an array containing the labels after the clustering
+    - kwargs: additional parameters such as filename for saving the figure
+    &#39;&#39;&#39;
+    xlim, ylim = (pivot_dt[&#39;longitude&#39;].values.min(), pivot_dt[&#39;longitude&#39;].values.max()), \
+                 (pivot_dt[&#39;latitude&#39;].values.min(), pivot_dt[&#39;latitude&#39;].values.max())
+    trans = ccrs.PlateCarree()
+    proj = ccrs.LambertConformal((xlim[1] + xlim[0]) / 2, (ylim[1] + ylim[0]) / 2)
+
+    pivot_dt = pivot_dt.unstack(&#39;latlon&#39;).assign_coords(labels=(&#39;time&#39;, labels))
+    pivot_dt = pivot_dt.groupby(&#39;labels&#39;).mean()
+    vmin, vmax = pivot_dt.quantile(.05).values, pivot_dt.quantile(.95).values
+
+    cset = pivot_dt.plot.contourf(x=&#34;longitude&#34;, y=&#34;latitude&#34;, col=&#34;labels&#34;, levels=50, col_wrap=2,
+                                  transform=trans, alpha=.7, cmap=&#34;RdBu_r&#34;, robust=True,
+                                  norm=mpl.colors.SymLogNorm(vmin=vmin, vmax=vmax,
+                                                             linthresh=pivot_dt.quantile(.85).values, base=10),
+                                  subplot_kws=dict(projection=proj), figsize=(15, 15),
+                                  cbar_kwargs=dict(
+                                      orientation=&#39;horizontal&#39; if len(np.unique(labels)) &lt;= 4 else &#34;vertical&#34;,
+                                      extend=&#39;both&#39;, ticks=[vmin, vmax], format=&#34;%d&#34;))
+
+    for i, ax in enumerate(cset.axes.flat):
+        ax.coastlines()
+        rect = mpl.path.Path([[xlim[0], ylim[0]],
+                              [xlim[1], ylim[0]],
+                              [xlim[1], ylim[1]],
+                              [xlim[0], ylim[1]],
+                              [xlim[0], ylim[0]],
+                              ]).interpolated(20)
+        proj_to_data = trans._as_mpl_transform(ax) - ax.transData
+        rect_in_target = proj_to_data.transform_path(rect)
+        ax.set_boundary(rect_in_target)
+        ax.set_extent([xlim[0], xlim[1], ylim[0] - 10, ylim[1]])
+
+        # ax.set_title(f&#34;Cluster-{i+1}&#34;,y = -0.2 if i&gt;1 else 1)
+        ax.set_title(&#34;&#34;)
+
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(&#34;../imgs/&#34; + kwargs[&#39;savefig&#39;])
+    plt.show()
+
+def plot_elbow(anomaly, **kwargs):
+    &#39;&#39;&#39;
+    Method to show the elbow of the sum of squared distance, to evaluate the correct number of clusters to be adopted
+    Args:
+    - anomaly: a pandas DataFrame containing the historical series of anomalies
+    &#39;&#39;&#39;
+    if &#39;ax&#39; not in kwargs:
+        fig, ax = plt.subplots(1, 1, figsize=(7, 7))
+    else:
+        ax = kwargs[&#39;ax&#39;]
+
+    inertias = [extract_regimes(anomaly, method=&#39;kmeans&#39;, nb_regimes=k)[1] for k in range(1, 8)]
+
+    ax.plot(range(1, 8), inertias, marker=&#39;o&#39;, linewidth=1.2)
+    # set text box to illustrate the position of 5 clusters, as Cassou et al
+
+    ax.set_xlabel(&#34;Number of regimes&#34;)
+    ax.set_ylabel(&#34;Inertia&#34;)
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(&#34;Elbow.png&#34;)
+
+    if &#39;ax&#39; not in kwargs:
+        plt.show()
+
+
+def plot_silhouette(anomaly_train, anomaly_test, method=&#39;kmeans&#39;, **kwargs):
+    &#39;&#39;&#39;
+    Method to show the silhouette score, to evaluate the correct number of clusters to be adopted
+    Args:
+    - anomaly_train: a pandas DataFrame containing the historical series of anomalies
+    - anomaly_test: a pandas DataFrame containing the historical series of anomalies
+    - method: the clustering method adopted to evaluate the labels
+    &#39;&#39;&#39;
+    if &#39;ax&#39; not in kwargs:
+        fig, ax = plt.subplots(1, 1, figsize=(7, 7))
+    else:
+        ax = kwargs[&#39;ax&#39;]
+
+    scores = [silhouette_score(anomaly_test,
+                               extract_regimes(anomaly_train, method=method,
+                                               nb_regimes=k, test=anomaly_test)) for k in range(2, 8)]
+
+    ax.plot(range(2, 8), scores, marker=&#39;o&#39;, linewidth=1.2)
+    # set text box to illustrate the position of 5 clusters, as Cassou et al
+
+    ax.set_xlabel(&#34;Number of regimes&#34;)
+    ax.set_ylabel(&#34;Silhouette score&#34;)
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(&#34;Silhouette.png&#34;)
+    if &#39;ax&#39; not in kwargs:
+        plt.show()
+
+
+def plot_elbo(anomaly, **kwargs):
+    &#39;&#39;&#39;
+    Method to show the ELBO (evidence lower bound), to evaluate the correct number of clusters to be adopted
+    Args:
+    - anomaly: a pandas DataFrame containing the historical series of anomalies
+    &#39;&#39;&#39;
+
+    if &#39;ax&#39; not in kwargs:
+        fig, ax = plt.subplots(1, 1, figsize=(7, 7))
+    else:
+        ax = kwargs[&#39;ax&#39;]
+
+    elbos = [extract_regimes(anomaly, method=&#39;bayesian_gmm&#39;, nb_regimes=k)[1] for k in range(1, 8)]
+
+    ax.plot(range(1, 8), elbos, marker=&#39;o&#39;, linewidth=1.2)
+    # set text box to illustrate the position of 5 clusters, as Cassou et al
+
+    ax.set_xlabel(&#34;Number of regimes&#34;)
+    ax.set_ylabel(&#34;ELBO&#34;)
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(&#34;Elbo.png&#34;)
+
+    if &#39;ax&#39; not in kwargs:
+        plt.show()
+
+
+def plot_score(anomaly_train, anomaly_test, method=&#39;kmeans&#39;, **kwargs):
+    &#39;&#39;&#39;
+    Method to plot the score of a method (as defined by .score() method of sklearn), to evaluate the correct number of clusters to be adopted
+    Args:
+    Args:
+    - anomaly_train: a pandas DataFrame containing the historical series of anomalies
+    - anomaly_test: a pandas DataFrame containing the historical series of anomalies
+    - method: the clustering method adopted to evaluate the labels
+    &#39;&#39;&#39;
+
+    if &#39;ax&#39; not in kwargs:
+        fig, ax = plt.subplots(1, 1, figsize=(7, 7))
+    else:
+        ax = kwargs[&#39;ax&#39;]
+
+    scores = [extract_regimes(anomaly_train, method=method, nb_regimes=k)[-1].score(anomaly_test) for k in range(1, 8)]
+
+    ax.plot(range(1, 8), scores, marker=&#39;o&#39;, linewidth=1.2)
+    # set text box to illustrate the position of 5 clusters, as Cassou et al
+
+    ax.set_xlabel(&#34;Number of regimes&#34;)
+    ax.set_ylabel(&#34;Score&#34;)
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(&#34;Score.png&#34;)
+
+    if &#39;ax&#39; not in kwargs:
+        plt.show()
+
+
+def plot_mixtures(X, Y, means, covariances, **kwargs):
+    &#39;&#39;&#39;
+    Method to display mixture distributions as estimated from a mixture model
+    Args:
+    - means: the mean vectors of the N mixtures
+    - covariances: the covariance matrices of the N mixtures
+    &#39;&#39;&#39;
+    n = means.shape[1]
+    s = n - 1
+    fig, axs = plt.subplots(s, s, figsize=(10 * s, 10 * s))
+    _x, _y = -1, -1
+    for i in range(s):
+        _x += 1
+        _y = -1
+        for j in range(s):
+            _y += 1
+            if _x == _y:
+                _y += 1
+            mean = means[:, [_x, _y]]
+            covariance = covariances[:, [_x, _y]][:, :, [_x, _y]]
+
+            for c, (m, var) in enumerate(zip(mean, covariance)):
+                if not np.any(Y == c):
+                    continue
+                else:
+
+                    xs = X[:,[_x, _y]]
+                    xs = xs[Y==c]
+                    sc = axs[i,j].scatter(xs[:,0], xs[:,1], edgecolor=&#39;k&#39;, s=30, label = &#39;Mixture {}&#39;.format(c))
+                    &#39;&#39;&#39;
+                    xx, yy = np.meshgrid(xs[:,0], xs[:,1])
+                    Xplot = np.vstack((xx.flatten(), yy.flatten())).T
+                    preds = scipy.stats.multivariate_normal(mean = m, cov = var).pdf(Xplot)
+                    #print(xx.shape, Xplot.shape, preds.shape, preds.reshape(*xx.shape).shape)
+
+                    Multivariate distributions
+
+                    cs = axs[i,j].contour(xs[:,0], xs[:,1], preds.reshape(*xx.shape), levels = np.linspace(0,1,10),
+                                          colors=sc.get_facecolors(), linewidths=1.2, zorder=0, alpha =0.3)
+                    &#39;&#39;&#39;
+
+                    &#39;&#39;&#39;
+                    Contour levels
+
+                    levels = [0, 0.5, 0.75, 0.9, 1]
+                    cs = axs[i,j].contour(xx,yy, preds.reshape(*xx.shape), levels,
+                                          colors=&#39;k&#39;, linewidths=1.8, zorder=100)
+                    axs[i,j].clabel(cs, inline=1)
+                    cs = axs[i,j].contourf(xx, yy, preds.reshape(*xx.shape), levels,
+                                    cmap=&#39;Purples_r&#39;, linewidths=0, zorder=0, alpha=.5)
+                    &#39;&#39;&#39;
+
+                    # &#39;&#39;&#39;
+                    # Ellipses
+
+                    v, w = np.linalg.eigh(var)
+                    v = 2. * np.sqrt(2.) * np.sqrt(v)
+                    u = w[0] / np.linalg.norm(w[0])
+
+                    angle = np.arctan(u[1] / u[0])
+                    angle = 180. * angle / np.pi  # convert to degrees
+                    ell = mpl.patches.Ellipse(m, v[0], v[1], 180. + angle, color=sc.get_facecolors()[0])
+                    ell.set_clip_box(axs[i, j].bbox)
+                    ell.set_alpha(0.5)
+                    axs[i, j].add_artist(ell)
+                    # &#39;&#39;&#39;
+
+            axs[i, j].legend(loc=&#39;upper right&#39;)
+            axs[i, j].text(0.05, 0.85, &#39;Component {} vs. {}&#39;.format(_x, _y), style=&#39;italic&#39;,
+                           transform=axs[i, j].transAxes, fontsize=14, family=&#39;fantasy&#39;,
+                           bbox={&#39;facecolor&#39;: &#39;tomato&#39;, &#39;alpha&#39;: .8, &#39;pad&#39;: 5})
+
+    plt.tight_layout()
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(&#34;Elbo.png&#34;)
+    plt.show()
+
+
+def plot_KL(means, covariances):
+    &#39;&#39;&#39;
+    Method to plot the KL-divergences between the generative distributions of the clusters
+    Args:
+    - means: the mean vectors of the N mixtures
+    - covariances: the covariance matrices of the N mixtures
+    &#39;&#39;&#39;
+    kls = np.zeros((means.shape[0], means.shape[0]))
+
+    for i in range(means.shape[0]):
+        for j in range(means.shape[0]):
+            kls[i, j] = 0.5 * (
+                    np.log(np.linalg.det(covariances[j]) / np.linalg.det(covariances[i])) - means.shape[1] +
+                    np.matrix.trace(np.linalg.inv(covariances[j]).dot(covariances[i])) +
+                    (means[j] - means[i]).T.dot(np.linalg.inv(covariances[j])).dot(means[j] - means[i])
+            )
+
+    fig, ax = plt.subplots(1, 1, figsize=(7, 7))
+    sns.heatmap(kls, cmap=&#39;coolwarm&#39;, annot=True, cbar=True, ax=ax)
+    plt.show()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="modeling.utils.plotting.plot_EOFS"><code class="name flex">
+<span>def <span class="ident">plot_EOFS</span></span>(<span>eofs, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to plot the 4 EOFs
+Args:
+- eofs: xr.DataArray containing the EOFs</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_EOFS(eofs, **kwargs):
+    &#39;&#39;&#39;
+    Method to plot the 4 EOFs
+    Args:
+    - eofs: xr.DataArray containing the EOFs
+    &#39;&#39;&#39;
+
+    xlim, ylim = (eofs[&#39;longitude&#39;].values.min(), eofs[&#39;longitude&#39;].values.max()), \
+                 (eofs[&#39;latitude&#39;].values.min(), eofs[&#39;latitude&#39;].values.max())
+    trans = ccrs.PlateCarree()
+    proj = ccrs.LambertConformal((xlim[1] + xlim[0]) / 2, (ylim[1] + ylim[0]) / 2)
+
+    eofs = eofs[:4, :].unstack(&#39;latlon&#39;).assign_coords(neofs=(&#39;time&#39;, range(0, 4)))
+    eofs = eofs.groupby(&#39;neofs&#39;).mean()
+    vmin, vmax = eofs.quantile(.05).values, eofs.quantile(.95).values
+
+    cset = eofs.plot.contourf(x=&#34;longitude&#34;, y=&#34;latitude&#34;, col=&#34;neofs&#34;, levels=50, col_wrap=2,
+                              transform=trans, alpha=.7, cmap=&#34;RdBu_r&#34;, robust=True,
+                              norm=mpl.colors.SymLogNorm(vmin=vmin, vmax=vmax,
+                                                         linthresh=eofs.quantile(.85).values, base=10),
+                              subplot_kws=dict(projection=proj), figsize=(15, 15),
+                              cbar_kwargs=dict(orientation=&#39;horizontal&#39;, extend=&#39;both&#39;,
+                                               ticks=[vmin, vmax], format=&#34;%.0e&#34;))
+
+    for i, ax in enumerate(cset.axes.flat):
+        ax.coastlines()
+        rect = mpl.path.Path([[xlim[0], ylim[0]],
+                              [xlim[1], ylim[0]],
+                              [xlim[1], ylim[1]],
+                              [xlim[0], ylim[1]],
+                              [xlim[0], ylim[0]],
+                              ]).interpolated(20)
+        proj_to_data = trans._as_mpl_transform(ax) - ax.transData
+        rect_in_target = proj_to_data.transform_path(rect)
+        ax.set_boundary(rect_in_target)
+        ax.set_extent([xlim[0], xlim[1], ylim[0] - 10, ylim[1]])
+
+        ax.set_title(f&#34;EOF-{i + 1}&#34;, y=-0.2 if i &gt; 1 else 1)
+
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(PATH + &#34;eofs.png&#34;)
+    plt.show()</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.plotting.plot_KL"><code class="name flex">
+<span>def <span class="ident">plot_KL</span></span>(<span>means, covariances)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to plot the KL-divergences between the generative distributions of the clusters
+Args:
+- means: the mean vectors of the N mixtures
+- covariances: the covariance matrices of the N mixtures</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_KL(means, covariances):
+    &#39;&#39;&#39;
+    Method to plot the KL-divergences between the generative distributions of the clusters
+    Args:
+    - means: the mean vectors of the N mixtures
+    - covariances: the covariance matrices of the N mixtures
+    &#39;&#39;&#39;
+    kls = np.zeros((means.shape[0], means.shape[0]))
+
+    for i in range(means.shape[0]):
+        for j in range(means.shape[0]):
+            kls[i, j] = 0.5 * (
+                    np.log(np.linalg.det(covariances[j]) / np.linalg.det(covariances[i])) - means.shape[1] +
+                    np.matrix.trace(np.linalg.inv(covariances[j]).dot(covariances[i])) +
+                    (means[j] - means[i]).T.dot(np.linalg.inv(covariances[j])).dot(means[j] - means[i])
+            )
+
+    fig, ax = plt.subplots(1, 1, figsize=(7, 7))
+    sns.heatmap(kls, cmap=&#39;coolwarm&#39;, annot=True, cbar=True, ax=ax)
+    plt.show()</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.plotting.plot_PC"><code class="name flex">
+<span>def <span class="ident">plot_PC</span></span>(<span>pc, col_name, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to plot the NAO index, corresponding to the first Principal Component of the Anomaly
+Args:
+- pc: pandas DataFrame containing the PC
+- col_name: the name of the column containing the values to be plotted</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_PC(pc, col_name, **kwargs):
+    &#39;&#39;&#39;
+    Method to plot the NAO index, corresponding to the first Principal Component of the Anomaly
+    Args:
+    - pc: pandas DataFrame containing the PC
+    - col_name: the name of the column containing the values to be plotted
+    &#39;&#39;&#39;
+    vmin, vmax = pc[col_name].values.min(), pc[col_name].values.max()
+    pc = pd.pivot_table(pc, values=[col_name], index=pc.index.year,
+                        columns=pc.index.month, aggfunc=np.mean)
+
+    nao = pd.read_csv(&#34;../files/nao.csv&#34;, sep=&#34;;&#34;, names=[&#34;year&#34;, &#34;month&#34;, &#34;idx&#34;])
+    nao[&#34;day&#34;] = 1
+    nao.index = pd.to_datetime(nao[[&#34;year&#34;, &#34;month&#34;, &#34;day&#34;]])
+    nao = nao[np.logical_and(nao[&#34;month&#34;].isin([1, 2, 12]), nao[&#34;year&#34;] &gt;= 1979)]
+    nao.drop([&#34;year&#34;, &#34;month&#34;, &#34;day&#34;], axis=1, inplace=True)
+
+    fig, ax = plt.subplots(1, 1, figsize=(20, 7))
+
+    pc.plot(kind=&#39;bar&#39;, ax=ax)
+    cmap_red = mpl.cm.get_cmap(&#39;Reds&#39;)
+    cmap_blue = mpl.cm.get_cmap(&#39;Blues&#39;)
+    bars = [bar for bar in ax.containers if isinstance(bar, mpl.container.BarContainer)]
+    pos = []
+    for i, group in enumerate(bars):
+        for j, bar in enumerate(group):
+            if bar.get_height() &gt; 0:
+                color = (bar.get_height() - 0) / (vmax - 0)
+                cmap = cmap_blue
+            else:
+                color = 1 - (bar.get_height() - vmin) / (0 - vmin)
+                cmap = cmap_red
+            group.patches[j].set_facecolor(cmap(2 * color))
+            if not math.isnan(pc.values[j, i]):
+                pos.append(bar.get_x())
+
+    ax.minorticks_on()
+    ax.plot(sorted(pos), nao[&#39;idx&#39;], zorder=0, marker=&#39;o&#39;, linestyle=&#39;dashed&#39;)
+    ax.set_xlabel(&#34;Time&#34;)
+    ax.set_ylabel(col_name)
+    ax.get_legend().remove()
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(&#34;../imgs/&#34; + col_name + &#34;.png&#34;)
+    plt.show()</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.plotting.plot_density"><code class="name flex">
+<span>def <span class="ident">plot_density</span></span>(<span>start_date, end_date, x, y, regimes=True, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to plot the density of two variables
+Args:
+- start_date: str indicating the start date to consider
+- end_date: str indicating the end date to consider
+- x: pd.Series containing the elements to plot for the variable x
+- y: pd.Series containing the elements to plot for the variable y
+- regimes: boolean indicating whether the reference of the regimes must be inserted</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_density(start_date, end_date, x, y, regimes=True, **kwargs):
+    &#39;&#39;&#39;
+    Method to plot the density of two variables
+    Args:
+    - start_date: str indicating the start date to consider
+    - end_date: str indicating the end date to consider
+    - x: pd.Series containing the elements to plot for the variable x
+    - y: pd.Series containing the elements to plot for the variable y
+    - regimes: boolean indicating whether the reference of the regimes must be inserted
+    &#39;&#39;&#39;
+
+    x, y = np.squeeze(x.loc[start_date:end_date]), np.squeeze(y.loc[start_date:end_date])
+
+    if &#39;ax&#39; not in kwargs:
+        fig, ax = plt.subplots(figsize=(7, 7))  # subplot_kw={&#39;projection&#39;: &#39;polar&#39;})
+
+    else:
+        ax = kwargs[&#39;ax&#39;]
+    sns.kdeplot(x, y, shade=True, ax=ax, cmap=&#39;RdBu_r&#39;, levels=50, alpha=.7, )
+    ax.vlines(0, -3, 3, linewidth=.1, colors=&#39;k&#39;, zorder=100)
+    ax.hlines(0, -3, 3, linewidth=.1, colors=&#39;k&#39;, zorder=100)
+    ax.plot([-3, 3], [-3, 3], linewidth=.1, c=&#39;k&#39;, zorder=100)
+    ax.plot([-3, 3], [3, -3], linewidth=.1, c=&#39;k&#39;, zorder=100)
+    circle = plt.Circle((0, 0), 1, linewidth=.1, edgecolor=&#39;k&#39;, facecolor=None, fill=False)
+    ax.add_patch(circle)
+    if regimes:
+        ax.text(-2.95, 0., &#34;NAO-&#34;, size=&#39;large&#39;, weight=&#39;bold&#39;)
+        ax.text(0., -2.95, &#34;BL-&#34;, size=&#39;large&#39;, weight=&#39;bold&#39;)
+        ax.text(0., 2.85, &#34;BL+&#34;, size=&#39;large&#39;, weight=&#39;bold&#39;)
+        ax.text(2.4, 0., &#34;NAO+&#34;, size=&#39;large&#39;, weight=&#39;bold&#39;)
+        ax.set_xlim(-3, 3)
+        ax.set_ylim(-3, 3)
+
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(kwargs[&#39;savefig&#39;])
+
+    if &#39;ax&#39; not in kwargs:
+        plt.show()</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.plotting.plot_elbo"><code class="name flex">
+<span>def <span class="ident">plot_elbo</span></span>(<span>anomaly, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to show the ELBO (evidence lower bound), to evaluate the correct number of clusters to be adopted
+Args:
+- anomaly: a pandas DataFrame containing the historical series of anomalies</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_elbo(anomaly, **kwargs):
+    &#39;&#39;&#39;
+    Method to show the ELBO (evidence lower bound), to evaluate the correct number of clusters to be adopted
+    Args:
+    - anomaly: a pandas DataFrame containing the historical series of anomalies
+    &#39;&#39;&#39;
+
+    if &#39;ax&#39; not in kwargs:
+        fig, ax = plt.subplots(1, 1, figsize=(7, 7))
+    else:
+        ax = kwargs[&#39;ax&#39;]
+
+    elbos = [extract_regimes(anomaly, method=&#39;bayesian_gmm&#39;, nb_regimes=k)[1] for k in range(1, 8)]
+
+    ax.plot(range(1, 8), elbos, marker=&#39;o&#39;, linewidth=1.2)
+    # set text box to illustrate the position of 5 clusters, as Cassou et al
+
+    ax.set_xlabel(&#34;Number of regimes&#34;)
+    ax.set_ylabel(&#34;ELBO&#34;)
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(&#34;Elbo.png&#34;)
+
+    if &#39;ax&#39; not in kwargs:
+        plt.show()</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.plotting.plot_elbow"><code class="name flex">
+<span>def <span class="ident">plot_elbow</span></span>(<span>anomaly, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to show the elbow of the sum of squared distance, to evaluate the correct number of clusters to be adopted
+Args:
+- anomaly: a pandas DataFrame containing the historical series of anomalies</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_elbow(anomaly, **kwargs):
+    &#39;&#39;&#39;
+    Method to show the elbow of the sum of squared distance, to evaluate the correct number of clusters to be adopted
+    Args:
+    - anomaly: a pandas DataFrame containing the historical series of anomalies
+    &#39;&#39;&#39;
+    if &#39;ax&#39; not in kwargs:
+        fig, ax = plt.subplots(1, 1, figsize=(7, 7))
+    else:
+        ax = kwargs[&#39;ax&#39;]
+
+    inertias = [extract_regimes(anomaly, method=&#39;kmeans&#39;, nb_regimes=k)[1] for k in range(1, 8)]
+
+    ax.plot(range(1, 8), inertias, marker=&#39;o&#39;, linewidth=1.2)
+    # set text box to illustrate the position of 5 clusters, as Cassou et al
+
+    ax.set_xlabel(&#34;Number of regimes&#34;)
+    ax.set_ylabel(&#34;Inertia&#34;)
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(&#34;Elbow.png&#34;)
+
+    if &#39;ax&#39; not in kwargs:
+        plt.show()</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.plotting.plot_gph"><code class="name flex">
+<span>def <span class="ident">plot_gph</span></span>(<span>dt, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to plot geopotential height
+Args:
+- dt: an xarray DataArray</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_gph(dt, **kwargs):
+    &#39;&#39;&#39;
+    Method to plot geopotential height
+    Args:
+    - dt: an xarray DataArray
+    &#39;&#39;&#39;
+    xlim, ylim = (dt[&#39;longitude&#39;].values.min(), dt[&#39;longitude&#39;].values.max()), \
+                 (dt[&#39;latitude&#39;].values.min(), dt[&#39;latitude&#39;].values.max())
+    trans = ccrs.PlateCarree()
+    proj = ccrs.LambertConformal((xlim[1] + xlim[0]) / 2, (ylim[1] + ylim[0]) / 2)
+    vmin = dt.quantile(.05).values
+    vmax = dt.quantile(.95).values
+    fig, ax = plt.subplots(1, 1, figsize=(7, 7),
+                           subplot_kw={&#39;projection&#39;: proj})
+    cset = dt.plot.contourf(x=&#34;longitude&#34;, y=&#34;latitude&#34;, ax=ax, levels=50, alpha=.7,
+                                transform=trans, cmap=&#34;RdBu_r&#34;,
+                                norm=mpl.colors.SymLogNorm(vmin=vmin, vmax=vmax,
+                                linthresh=max(dt.quantile(.85), 10), base=10),
+                                cbar_kwargs=dict(orientation=&#39;horizontal&#39;, extend=&#39;both&#39;,
+                                                 ticks=[vmin, vmax], format=&#34;%d&#34;))
+
+    ax.coastlines()
+    rect = mpl.path.Path([[xlim[0], ylim[0]],
+                          [xlim[1], ylim[0]],
+                          [xlim[1], ylim[1]],
+                          [xlim[0], ylim[1]],
+                          [xlim[0], ylim[0]],
+                          ]).interpolated(20)
+    proj_to_data = trans._as_mpl_transform(ax) - ax.transData
+    rect_in_target = proj_to_data.transform_path(rect)
+    ax.set_boundary(rect_in_target)
+    ax.set_extent([xlim[0], xlim[1], ylim[0] - 10, ylim[1]])
+
+    if &#39;title&#39; in kwargs:
+        ax.set_title(kwargs[&#39;title&#39;])
+
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(kwargs[&#39;savefig&#39;])
+
+    plt.show()</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.plotting.plot_mixtures"><code class="name flex">
+<span>def <span class="ident">plot_mixtures</span></span>(<span>X, Y, means, covariances, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to display mixture distributions as estimated from a mixture model
+Args:
+- means: the mean vectors of the N mixtures
+- covariances: the covariance matrices of the N mixtures</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_mixtures(X, Y, means, covariances, **kwargs):
+    &#39;&#39;&#39;
+    Method to display mixture distributions as estimated from a mixture model
+    Args:
+    - means: the mean vectors of the N mixtures
+    - covariances: the covariance matrices of the N mixtures
+    &#39;&#39;&#39;
+    n = means.shape[1]
+    s = n - 1
+    fig, axs = plt.subplots(s, s, figsize=(10 * s, 10 * s))
+    _x, _y = -1, -1
+    for i in range(s):
+        _x += 1
+        _y = -1
+        for j in range(s):
+            _y += 1
+            if _x == _y:
+                _y += 1
+            mean = means[:, [_x, _y]]
+            covariance = covariances[:, [_x, _y]][:, :, [_x, _y]]
+
+            for c, (m, var) in enumerate(zip(mean, covariance)):
+                if not np.any(Y == c):
+                    continue
+                else:
+
+                    xs = X[:,[_x, _y]]
+                    xs = xs[Y==c]
+                    sc = axs[i,j].scatter(xs[:,0], xs[:,1], edgecolor=&#39;k&#39;, s=30, label = &#39;Mixture {}&#39;.format(c))
+                    &#39;&#39;&#39;
+                    xx, yy = np.meshgrid(xs[:,0], xs[:,1])
+                    Xplot = np.vstack((xx.flatten(), yy.flatten())).T
+                    preds = scipy.stats.multivariate_normal(mean = m, cov = var).pdf(Xplot)
+                    #print(xx.shape, Xplot.shape, preds.shape, preds.reshape(*xx.shape).shape)
+
+                    Multivariate distributions
+
+                    cs = axs[i,j].contour(xs[:,0], xs[:,1], preds.reshape(*xx.shape), levels = np.linspace(0,1,10),
+                                          colors=sc.get_facecolors(), linewidths=1.2, zorder=0, alpha =0.3)
+                    &#39;&#39;&#39;
+
+                    &#39;&#39;&#39;
+                    Contour levels
+
+                    levels = [0, 0.5, 0.75, 0.9, 1]
+                    cs = axs[i,j].contour(xx,yy, preds.reshape(*xx.shape), levels,
+                                          colors=&#39;k&#39;, linewidths=1.8, zorder=100)
+                    axs[i,j].clabel(cs, inline=1)
+                    cs = axs[i,j].contourf(xx, yy, preds.reshape(*xx.shape), levels,
+                                    cmap=&#39;Purples_r&#39;, linewidths=0, zorder=0, alpha=.5)
+                    &#39;&#39;&#39;
+
+                    # &#39;&#39;&#39;
+                    # Ellipses
+
+                    v, w = np.linalg.eigh(var)
+                    v = 2. * np.sqrt(2.) * np.sqrt(v)
+                    u = w[0] / np.linalg.norm(w[0])
+
+                    angle = np.arctan(u[1] / u[0])
+                    angle = 180. * angle / np.pi  # convert to degrees
+                    ell = mpl.patches.Ellipse(m, v[0], v[1], 180. + angle, color=sc.get_facecolors()[0])
+                    ell.set_clip_box(axs[i, j].bbox)
+                    ell.set_alpha(0.5)
+                    axs[i, j].add_artist(ell)
+                    # &#39;&#39;&#39;
+
+            axs[i, j].legend(loc=&#39;upper right&#39;)
+            axs[i, j].text(0.05, 0.85, &#39;Component {} vs. {}&#39;.format(_x, _y), style=&#39;italic&#39;,
+                           transform=axs[i, j].transAxes, fontsize=14, family=&#39;fantasy&#39;,
+                           bbox={&#39;facecolor&#39;: &#39;tomato&#39;, &#39;alpha&#39;: .8, &#39;pad&#39;: 5})
+
+    plt.tight_layout()
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(&#34;Elbo.png&#34;)
+    plt.show()</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.plotting.plot_normal"><code class="name flex">
+<span>def <span class="ident">plot_normal</span></span>(<span>dt, locations, freq='m', **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to plot the values of the normal across one year for different locations
+Args:
+- dt: an xarray Dataset containing observation values
+- locations: a dictionary containing different locations to be illustrated
+- key: a str containing the location name
+- value: a tuple containing the coordinates of the location</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_normal(dt, locations, freq = &#39;m&#39;, **kwargs):
+    &#39;&#39;&#39;
+    Method to plot the values of the normal across one year for different locations
+    Args:
+    - dt: an xarray Dataset containing observation values
+    - locations: a dictionary containing different locations to be illustrated
+        - key: a str containing the location name
+        - value: a tuple containing the coordinates of the location
+    &#39;&#39;&#39;
+
+    # fig, ax = plt.subplots(1,len(locations), figsize=(len(locations)*7,7), sharey = True)
+    fig, ax = plt.subplots(len(locations), 1, figsize=(len(locations) * 7, len(locations) * 7))
+    if freq == &#39;m&#39;:
+        key = &#39;month&#39;
+    elif freq == &#39;w&#39;:
+        key = &#39;week&#39;
+    else:
+        key = &#39;day&#39;
+
+    for i, (loc, coords) in enumerate(locations.items()):
+
+        lat, lon = coords
+        abslat = np.abs(dt.latitude - lat)
+        abslon = np.abs(dt.longitude - lon)
+        pos = np.maximum(abslon, abslat)
+
+        ([lonloc], [latloc]) = np.where(pos == np.min(pos))
+        local_dt = dt.isel(latitude=latloc, longitude=lonloc)
+
+        for start_year in [1991, 2011]:
+            normal_loc = evaluate_normal.__wrapped__(local_dt, domain=&#39;local&#39;, mode=&#39;dynamic&#39;, freq = freq,
+                                                     start_year=start_year).to_array().squeeze()
+            # normal_loc = normal_loc.unstack(&#39;month_day&#39;)
+            # print(normal_loc)
+            normal_loc = normal_loc.loc[{
+                key: sorted(normal_loc[key].values, key = lambda x: x%12),
+            }]
+            ax[i].plot(normal_loc[key].to_series().astype(str),
+                       normal_loc.values, &#39;--&#39;,
+                       linewidth=1.2, label=loc + &#34; - &#34; + str(start_year))
+
+            normal_min, normal_mean, normal_max = evaluate_normal.__wrapped__(local_dt, domain=&#39;global&#39;, mode=&#39;dynamic&#39;,
+                                                                              freq = freq, start_year=start_year)
+            normal_min, normal_mean, normal_max = normal_min.to_array().squeeze(), \
+                                                  normal_mean.to_array().squeeze(), \
+                                                  normal_max.to_array().squeeze()
+            ax[i].plot(normal_loc[key].to_series().astype(str),
+                       normal_mean.values, &#39;--&#39;, linewidth=1.2,
+                       label=&#34;Normal - &#34; + str(start_year))
+            ax[i].fill_between(normal_loc[key].to_series().astype(str),
+                               normal_min.values, normal_max.values,
+                               label=&#39;min-max dev - &#39; + str(start_year), alpha=.3)
+        ax[i].grid(which=&#39;both&#39;, axis=&#39;x&#39;)
+        ax[i].legend()
+
+        #months = mpl.dates.MonthLocator()
+        #days = mpl.dates.DayLocator(bymonthday=(10, 20))
+        #formatter_months = mpl.dates.DateFormatter(&#39;%b&#39;)
+        #formatter_days = mpl.dates.DateFormatter(&#39;%d&#39;)
+        #ax[i].xaxis.set_major_locator(months)
+        #ax[i].xaxis.set_major_formatter(formatter_months)
+        #ax[i].xaxis.set_minor_formatter(formatter_days)
+        #ax[i].xaxis.set_minor_locator(days)
+        for tick in ax[i].get_xaxis().get_major_ticks():
+            tick.set_pad(15)
+
+        ax[i].set_xlabel(&#34;Date&#34;)
+        ax[i].set_ylabel(&#34;Geopotential Height [m]&#34;)
+
+    fig.tight_layout()
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(&#34;imgs/Normal.png&#34;)
+    plt.show()</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.plotting.plot_regimes"><code class="name flex">
+<span>def <span class="ident">plot_regimes</span></span>(<span>pivot_dt, labels, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to plot centroids after applying clustering algorithm
+Args:
+- pivot_dt: an xarray Dataset with size time x (lat_lon)
+- labels: an array containing the labels after the clustering
+- kwargs: additional parameters such as filename for saving the figure</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_regimes(pivot_dt, labels, **kwargs):
+    &#39;&#39;&#39;
+    Method to plot centroids after applying clustering algorithm
+    Args:
+    - pivot_dt: an xarray Dataset with size time x (lat_lon)
+    - labels: an array containing the labels after the clustering
+    - kwargs: additional parameters such as filename for saving the figure
+    &#39;&#39;&#39;
+    xlim, ylim = (pivot_dt[&#39;longitude&#39;].values.min(), pivot_dt[&#39;longitude&#39;].values.max()), \
+                 (pivot_dt[&#39;latitude&#39;].values.min(), pivot_dt[&#39;latitude&#39;].values.max())
+    trans = ccrs.PlateCarree()
+    proj = ccrs.LambertConformal((xlim[1] + xlim[0]) / 2, (ylim[1] + ylim[0]) / 2)
+
+    pivot_dt = pivot_dt.unstack(&#39;latlon&#39;).assign_coords(labels=(&#39;time&#39;, labels))
+    pivot_dt = pivot_dt.groupby(&#39;labels&#39;).mean()
+    vmin, vmax = pivot_dt.quantile(.05).values, pivot_dt.quantile(.95).values
+
+    cset = pivot_dt.plot.contourf(x=&#34;longitude&#34;, y=&#34;latitude&#34;, col=&#34;labels&#34;, levels=50, col_wrap=2,
+                                  transform=trans, alpha=.7, cmap=&#34;RdBu_r&#34;, robust=True,
+                                  norm=mpl.colors.SymLogNorm(vmin=vmin, vmax=vmax,
+                                                             linthresh=pivot_dt.quantile(.85).values, base=10),
+                                  subplot_kws=dict(projection=proj), figsize=(15, 15),
+                                  cbar_kwargs=dict(
+                                      orientation=&#39;horizontal&#39; if len(np.unique(labels)) &lt;= 4 else &#34;vertical&#34;,
+                                      extend=&#39;both&#39;, ticks=[vmin, vmax], format=&#34;%d&#34;))
+
+    for i, ax in enumerate(cset.axes.flat):
+        ax.coastlines()
+        rect = mpl.path.Path([[xlim[0], ylim[0]],
+                              [xlim[1], ylim[0]],
+                              [xlim[1], ylim[1]],
+                              [xlim[0], ylim[1]],
+                              [xlim[0], ylim[0]],
+                              ]).interpolated(20)
+        proj_to_data = trans._as_mpl_transform(ax) - ax.transData
+        rect_in_target = proj_to_data.transform_path(rect)
+        ax.set_boundary(rect_in_target)
+        ax.set_extent([xlim[0], xlim[1], ylim[0] - 10, ylim[1]])
+
+        # ax.set_title(f&#34;Cluster-{i+1}&#34;,y = -0.2 if i&gt;1 else 1)
+        ax.set_title(&#34;&#34;)
+
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(&#34;../imgs/&#34; + kwargs[&#39;savefig&#39;])
+    plt.show()</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.plotting.plot_score"><code class="name flex">
+<span>def <span class="ident">plot_score</span></span>(<span>anomaly_train, anomaly_test, method='kmeans', **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to plot the score of a method (as defined by .score() method of sklearn), to evaluate the correct number of clusters to be adopted
+Args:
+Args:
+- anomaly_train: a pandas DataFrame containing the historical series of anomalies
+- anomaly_test: a pandas DataFrame containing the historical series of anomalies
+- method: the clustering method adopted to evaluate the labels</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_score(anomaly_train, anomaly_test, method=&#39;kmeans&#39;, **kwargs):
+    &#39;&#39;&#39;
+    Method to plot the score of a method (as defined by .score() method of sklearn), to evaluate the correct number of clusters to be adopted
+    Args:
+    Args:
+    - anomaly_train: a pandas DataFrame containing the historical series of anomalies
+    - anomaly_test: a pandas DataFrame containing the historical series of anomalies
+    - method: the clustering method adopted to evaluate the labels
+    &#39;&#39;&#39;
+
+    if &#39;ax&#39; not in kwargs:
+        fig, ax = plt.subplots(1, 1, figsize=(7, 7))
+    else:
+        ax = kwargs[&#39;ax&#39;]
+
+    scores = [extract_regimes(anomaly_train, method=method, nb_regimes=k)[-1].score(anomaly_test) for k in range(1, 8)]
+
+    ax.plot(range(1, 8), scores, marker=&#39;o&#39;, linewidth=1.2)
+    # set text box to illustrate the position of 5 clusters, as Cassou et al
+
+    ax.set_xlabel(&#34;Number of regimes&#34;)
+    ax.set_ylabel(&#34;Score&#34;)
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(&#34;Score.png&#34;)
+
+    if &#39;ax&#39; not in kwargs:
+        plt.show()</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.plotting.plot_silhouette"><code class="name flex">
+<span>def <span class="ident">plot_silhouette</span></span>(<span>anomaly_train, anomaly_test, method='kmeans', **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to show the silhouette score, to evaluate the correct number of clusters to be adopted
+Args:
+- anomaly_train: a pandas DataFrame containing the historical series of anomalies
+- anomaly_test: a pandas DataFrame containing the historical series of anomalies
+- method: the clustering method adopted to evaluate the labels</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_silhouette(anomaly_train, anomaly_test, method=&#39;kmeans&#39;, **kwargs):
+    &#39;&#39;&#39;
+    Method to show the silhouette score, to evaluate the correct number of clusters to be adopted
+    Args:
+    - anomaly_train: a pandas DataFrame containing the historical series of anomalies
+    - anomaly_test: a pandas DataFrame containing the historical series of anomalies
+    - method: the clustering method adopted to evaluate the labels
+    &#39;&#39;&#39;
+    if &#39;ax&#39; not in kwargs:
+        fig, ax = plt.subplots(1, 1, figsize=(7, 7))
+    else:
+        ax = kwargs[&#39;ax&#39;]
+
+    scores = [silhouette_score(anomaly_test,
+                               extract_regimes(anomaly_train, method=method,
+                                               nb_regimes=k, test=anomaly_test)) for k in range(2, 8)]
+
+    ax.plot(range(2, 8), scores, marker=&#39;o&#39;, linewidth=1.2)
+    # set text box to illustrate the position of 5 clusters, as Cassou et al
+
+    ax.set_xlabel(&#34;Number of regimes&#34;)
+    ax.set_ylabel(&#34;Silhouette score&#34;)
+    if &#39;savefig&#39; in kwargs:
+        plt.savefig(&#34;Silhouette.png&#34;)
+    if &#39;ax&#39; not in kwargs:
+        plt.show()</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.plotting.save_anomalies"><code class="name flex">
+<span>def <span class="ident">save_anomalies</span></span>(<span>dt, title)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save_anomalies(dt, title):
+    fig, ax = plt.subplots(1, 1, figsize=(7, 7), subplot_kw={&#39;projection&#39;: ccrs.PlateCarree()})
+    ax.coastlines()
+    lats, longs = np.unique(dt.latitude.values), np.unique(dt.longitude.values)
+    gphs = dt.to_array().values.squeeze()
+    cset = ax.contourf(longs, lats, gphs, cmap=&#39;coolwarm&#39;, transform=ccrs.PlateCarree(), levels=100, alpha=.7)
+    cset = ax.contour(longs, lats, gphs, transform=ccrs.PlateCarree(), colors=&#39;k&#39;)
+    plt.savefig(title, bbox_inches=&#39;tight&#39;, pad_inches=0)
+    plt.close()</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="modeling.utils" href="index.html">modeling.utils</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="modeling.utils.plotting.plot_EOFS" href="#modeling.utils.plotting.plot_EOFS">plot_EOFS</a></code></li>
+<li><code><a title="modeling.utils.plotting.plot_KL" href="#modeling.utils.plotting.plot_KL">plot_KL</a></code></li>
+<li><code><a title="modeling.utils.plotting.plot_PC" href="#modeling.utils.plotting.plot_PC">plot_PC</a></code></li>
+<li><code><a title="modeling.utils.plotting.plot_density" href="#modeling.utils.plotting.plot_density">plot_density</a></code></li>
+<li><code><a title="modeling.utils.plotting.plot_elbo" href="#modeling.utils.plotting.plot_elbo">plot_elbo</a></code></li>
+<li><code><a title="modeling.utils.plotting.plot_elbow" href="#modeling.utils.plotting.plot_elbow">plot_elbow</a></code></li>
+<li><code><a title="modeling.utils.plotting.plot_gph" href="#modeling.utils.plotting.plot_gph">plot_gph</a></code></li>
+<li><code><a title="modeling.utils.plotting.plot_mixtures" href="#modeling.utils.plotting.plot_mixtures">plot_mixtures</a></code></li>
+<li><code><a title="modeling.utils.plotting.plot_normal" href="#modeling.utils.plotting.plot_normal">plot_normal</a></code></li>
+<li><code><a title="modeling.utils.plotting.plot_regimes" href="#modeling.utils.plotting.plot_regimes">plot_regimes</a></code></li>
+<li><code><a title="modeling.utils.plotting.plot_score" href="#modeling.utils.plotting.plot_score">plot_score</a></code></li>
+<li><code><a title="modeling.utils.plotting.plot_silhouette" href="#modeling.utils.plotting.plot_silhouette">plot_silhouette</a></code></li>
+<li><code><a title="modeling.utils.plotting.save_anomalies" href="#modeling.utils.plotting.save_anomalies">save_anomalies</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

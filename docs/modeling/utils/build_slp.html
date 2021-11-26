@@ -1,0 +1,1262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>modeling.utils.build_slp API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>modeling.utils.build_slp</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import xarray as xr
+import os
+from modeling.utils.sigma_vae import *
+from sklearn_xarray import wrap
+from sklearn.decomposition import PCA
+from sklearn.model_selection import train_test_split
+import torch
+device = &#34;cuda:0&#34; if torch.cuda.is_available() else &#34;cpu&#34;
+
+import numpy as np
+from scipy.spatial import distance
+from modeling.utils.tools import *
+from functools import wraps, partial
+from multiprocessing.dummy import Pool
+import pickle
+from copy import deepcopy
+
+from sklearn.model_selection import train_test_split, KFold, GridSearchCV
+from sklearn.cluster import KMeans, SpectralClustering, AgglomerativeClustering
+from sklearn.mixture import GaussianMixture, BayesianGaussianMixture
+from sklearn.metrics import silhouette_score, calinski_harabasz_score
+from sklearn.base import BaseEstimator, ClusterMixin
+from sklearn.metrics.pairwise import pairwise_kernels
+from sklearn.utils import check_random_state
+
+from modeling.utils.data import eofs
+from modeling.utils.plotting import plot_EOFS
+from modeling.utils.models import performance_matrix
+import pandas as pd
+from modeling.utils.plotting import plot_regimes
+
+def read_nc(path_to_file):
+    &#39;&#39;&#39;
+    Args:
+    - path_to_file: string of the file path
+
+    Returns:
+    - an nc.Dataset variable
+    &#39;&#39;&#39;
+    # return nc.Dataset(path_to_file)
+    return xr.open_dataset(path_to_file)
+
+def to_nc(dt, variable=&#39;z&#39;):
+    &#39;&#39;&#39;
+    Method to push a pandas DataFrame to a .nc file
+    Args:
+    - dt: an xarray Dataset
+    &#39;&#39;&#39;
+    dt.to_netcdf(READ_PATH + &#39;/ERA-5_{}_SLP_{}_{}_{}.nc&#39;. \
+                 format(freq if freq != &#39;hourly&#39; else &#39;daily&#39;, months, obs_years, variable),
+                 engine=&#34;netcdf4&#34;)
+
+
+def build_data(normal=&#39;flat&#39;):
+    &#39;&#39;&#39;
+    Method to build dataframe, including normal and anomaly for each timeframe
+    Returns:
+    - a pandas DataFrame anomaly
+    &#39;&#39;&#39;
+    if &#39;ERA-5_{}_SLP_{}_{}_anomaly.nc&#39;. \
+            format(freq if freq != &#39;hourly&#39; else &#39;daily&#39;, months, obs_years) not in os.listdir(READ_PATH):
+
+        # read nc, eventually pass from hourly to daily, limit geography
+        print(&#34;Reading nc file and converting to xarray Dataset&#34;)
+        if freq == &#39;hourly&#39;:
+            if &#39;ERA-5_{}_SLP_{}_{}.nc&#39;.format(&#39;daily&#39;, months, obs_years) not in os.listdir(READ_PATH):
+                dt = read_nc(READ_PATH + &#39;/ERA-5_{}_SLP_{}_{}.nc&#39;.format(freq, months, obs_years))
+                dt = hourly_to_daily(dt)
+            else:
+                dt = read_nc(READ_PATH + &#39;/ERA-5_{}_SLP_{}_{}.nc&#39;.format(&#39;daily&#39;, months, obs_years))
+        else:
+            dt = read_nc(READ_PATH + &#39;/ERA-5_{}_SLP_{}_{}.nc&#39;.format(freq, months, obs_years))
+
+        if &#39;expver&#39; in dt.indexes:
+            dt = xr.concat([dt.sel(time=slice(&#34;2021-07-31&#34;), expver=1),
+                            dt.sel(time=slice(&#34;2021-08-01&#34;, &#34;2021-09-30&#34;), expver=5)],
+                           dim=&#34;time&#34;)
+
+        dt = limit_geography(dt, LAT, LONG)
+        print(&#34;Evaluating the normal&#34;)
+
+        if normal != &#39;flat&#39;:
+            normal_dt = evaluate_normal(dt, domain=&#39;local&#39;, mode=&#39;dynamic&#39;, freq = &#39;m&#39;,start_date=&#34;01-01-1991&#34;)
+            print(&#34;Evaluating the anomaly&#34;)
+            anomaly_dt = evaluate_anomaly(dt, normal_dt, mode=&#39;dynamic&#39;)
+        else:
+            normal_dt = evaluate_normal(dt, domain=&#39;local&#39;, mode=&#39;flat&#39;, freq = &#39;m&#39;, start_date=&#34;01-01-1991&#34;)
+            # anomaly_dt = xr.apply_ufunc(lambda x, normal: x - normal, dt.groupby(&#39;time&#39;), normal_dt)
+            print(&#34;Evaluating the anomaly&#34;)
+            anomaly_dt = evaluate_anomaly(dt, normal_dt, mode=&#39;flat&#39;, freq = &#39;m&#39;)
+
+        print(&#34;Pushing the normal to file&#34;)
+        to_nc(normal_dt, variable=&#39;normal&#39;)
+
+        print(&#34;Pushing the anomaly to file&#34;)
+        to_nc(anomaly_dt, variable=&#39;anomaly&#39;)
+        return anomaly_dt
+
+    else:
+        print(&#34;Reading anomaly from file&#34;)
+        return read_nc(READ_PATH + &#39;/ERA-5_{}_SLP_{}_{}_anomaly.nc&#39;. \
+                       format(freq if freq != &#39;hourly&#39; else &#39;daily&#39;, months, obs_years))
+
+def hourly_to_daily(ds):
+    &#39;&#39;&#39;
+    Args:
+    - df: an xarray Dataset containing hourly historical data
+
+    Returns:
+    - an xarray Dataset containing daily historical data
+    &#39;&#39;&#39;
+    #ds = read_nc(READ_PATH + &#39;/ERA-5_{}_Geopotential-500hPa_{}_{}.nc&#39;.format(freq, months, obs_years))
+    ds.coords[&#39;time&#39;] = ds.time.dt.floor(&#39;1D&#39;)
+    ds = ds.groupby(&#39;time&#39;).mean()
+    ds.to_netcdf(READ_PATH + &#39;/ERA-5_{}_SLP_{}_{}.nc&#39;.format(&#39;daily&#39;, months, obs_years))
+    return ds
+
+def evaluate_normal(dt, domain=&#39;local&#39;, mode=&#39;flat&#39;, freq = &#39;m&#39;, start_date=None, end_date = None):
+    &#39;&#39;&#39;
+    Args:
+    - dt: an xarray Dataset containing historical data
+    - domain: either &#39;local&#39;  or &#39;global&#39;. In the first case a normal for each location is computed, in the latter
+      the normal is computed averaging all the positions
+    - mode: either &#39;flat&#39; or &#39;dynamic&#39;. In the first case the normal is the same for each day, in the latter
+      a normal for each day is computed
+    - freq:
+    - start_year: the starting year to consider for evaluating the normal.
+      If not specified, all the dates in the passed DataFrame are used
+
+    Returns:
+    - a pandas DataFrame containing the historical series of the normal
+    &#39;&#39;&#39;
+
+    if start_date is not None:
+        dt = dt.loc[dict(time=slice(start_date, end_date))]
+
+    if domain == &#39;local&#39; and mode == &#39;dynamic&#39;:
+        #month_day = pd.MultiIndex.from_arrays([dt[&#39;time.month&#39;].values, dt[&#39;time.day&#39;].values])
+        #dt.coords[&#39;month_day&#39;] = (&#39;time&#39;, month_day)
+        if freq == &#39;m&#39;:
+            return dt.groupby(&#34;time.month&#34;).mean()
+        elif freq == &#39;w&#39;:
+            return dt.groupby(&#39;time.week&#39;).mean()
+        else:
+            return dt.groupby(&#39;time.day&#39;).mean()
+
+    elif domain == &#39;local&#39; and mode == &#39;flat&#39;:
+        return dt.mean(dim=[&#34;time&#34;])
+
+    elif domain == &#39;global&#39; and mode == &#39;flat&#39;:
+        dt = dt.to_array().values
+        return dt.min(), dt.mean(), dt.max()
+
+    else:
+        #month_day = pd.MultiIndex.from_arrays([dt[&#39;time.month&#39;].values, dt[&#39;time.day&#39;].values])
+        #dt.coords[&#39;month_day&#39;] = (&#39;time&#39;, month_day)
+        if freq == &#39;m&#39;:
+            return dt.groupby(&#34;time.month&#34;).min(), dt.groupby(&#34;time.month&#34;).mean(), dt.groupby(&#34;time.month&#34;).max()
+        elif freq == &#39;w&#39;:
+            return dt.groupby(&#34;time.week&#34;).min(), dt.groupby(&#34;time.week&#34;).mean(), dt.groupby(&#34;time.week&#34;).max()
+        else:
+            return dt.groupby(&#34;time.day&#34;).min(), dt.groupby(&#34;time.day&#34;).mean(), dt.groupby(&#34;time.day&#34;).max()
+
+
+def evaluate_anomaly(observation, normal, mode=&#39;flat&#39;, freq = &#39;m&#39;):
+    &#39;&#39;&#39;
+    Args:
+    - observation: an xarray Dataset containing observation data
+    - normal: an xarray Datasete containing the historical series of the normal
+    - mode:
+    - freq:
+
+    Returns:
+    - an xarray Dataset containing the anomalous data
+    &#39;&#39;&#39;
+
+    if mode == &#39;flat&#39;:
+        return observation - normal
+    else:
+        #month_day = pd.MultiIndex.from_arrays([observation[&#39;time.month&#39;].values, observation[&#39;time.day&#39;].values])
+        #observation.coords[&#39;month_day&#39;] = (&#39;time&#39;, month_day)
+        if freq == &#39;m&#39;:
+            return xr.apply_ufunc(lambda x, norm: x - norm, observation.groupby(&#39;time.month&#39;), normal)
+        elif freq == &#39;w&#39;:
+            return xr.apply_ufunc(lambda x, norm: x - norm, observation.groupby(&#39;time.week&#39;), normal)
+        else:
+            return xr.apply_ufunc(lambda x, norm: x - norm, observation.groupby(&#39;time.day&#39;), normal)
+
+def limit_geography(dt, lats, longs):
+    &#39;&#39;&#39;
+    Args:
+    - dt: an xarray Dataset containing data
+    - lats: extreme values of latitude
+    - longs: extreme values of longitude
+
+    Returns:
+    - a Pandas df containing the retained rows falling in the geographical area
+    &#39;&#39;&#39;
+    return dt.where(lambda x: ((lats[0] &lt;= x.latitude) &amp; (x.latitude &lt;= lats[1]) &amp;
+                               (longs[0] &lt;= x.longitude) &amp; (x.longitude &lt;= longs[1])), drop=True)
+
+
+def weighted_anomaly(dt):
+    &#39;&#39;&#39;
+    Method to compute the weighted anomaly, by eliminating the bias along the latitude
+    Args:
+    - dt: an xarray Dataset
+
+    Returns:
+    - the weighted anomaly
+    &#39;&#39;&#39;
+    wgts = np.sqrt(np.cos(np.deg2rad(dt.latitude.values)).clip(0., 1.))
+    wgts = wgts[np.newaxis, ..., np.newaxis]
+    wgts = wgts.repeat(dt.to_array().shape[0], axis=0).repeat(dt.to_array().shape[-1], axis=-1)
+    return dt * wgts
+
+def flat_table(dt):
+    &#39;&#39;&#39;
+    Args:
+    - dt: an xarray Dataset containing data to be flattened. The index remains the same as the input dataset
+
+    Returns:
+    - an xarray flattened
+    &#39;&#39;&#39;
+    return dt.stack(latlon=(&#39;latitude&#39;, &#39;longitude&#39;)).to_array().squeeze()
+
+def reduce_dim(dt, reshape=&#39;latlon&#39;, method=&#39;PCA&#39;, **kwargs):
+    &#39;&#39;&#39;
+    Args:
+    - df: an xarray Dataset
+    - method: the method used to perform dimensionality reduction, if not specified PCA is used
+    - **kwargs: a dictionary of further parameters, like the percentage of explained variance used to retain the components
+
+    Returns:
+    - a numpy.array reduced in the feature space
+    &#39;&#39;&#39;
+
+    if method == &#39;PCA&#39;:
+        if dt.ndim != 2:
+            dt = dt.squeeze()
+        pca = wrap(PCA(kwargs[&#34;exp_variance&#34;] if &#34;exp_variance&#34; in kwargs else .95), reshapes=reshape)
+        reduced_dt = pca.fit_transform(dt)
+
+    elif method == &#34;VAE&#34;:
+        time_idx = dt.coords[&#39;time&#39;]
+        vae = ConvVAE(args = Args())
+        vae.load_state_dict(torch.load(&#39;../models/&#39;+kwargs[&#39;season&#39;]+&#39;/sigma_vae_statedict_5&#39;, map_location=&#39;cpu&#39;))
+        dt = np.swapaxes(dt.to_array().values, 0, 1)
+        dt = torch.from_numpy(dt).type(torch.FloatTensor)
+        stack = []
+        for i in range(0, len(dt), 256):
+            print(&#34;\r&#34;, end=&#34;&#34;)
+            print(&#34;Processing batch %d&#34; % (i // 256 + 1), end=&#34;&#34;)
+
+            batch = dt[i:i + 256, ...]
+            with torch.no_grad():
+                stack.append(vae(batch)[1])
+        reduced_dt = xr.DataArray(torch.cat(stack).squeeze().detach().numpy(), coords=[time_idx, range(1, 6)])
+
+    else:
+        pass
+
+    print(&#34;Number of days: %d, Density of the grid: %d cells&#34; % (reduced_dt.shape[0], reduced_dt.shape[1]))
+    return reduced_dt
+
+
+def cross_val(X, method=&#34;kmeans&#34;, scoring=&#34;score&#34;, season = &#34;WINTER&#34;, verbose=True):
+    &#39;&#39;&#39;
+    Method to perform cross-validation of clustering methods
+    Args
+    - X: pandas DataFrame containing data
+    - method: clustering method to be validated
+    - scoring
+    - season:
+    - verbose
+    &#39;&#39;&#39;
+
+    if method == &#39;kmeans&#39;:
+        estimator = KMeans(random_state=42)
+        params = {&#34;n_clusters&#34;: [4, 5, 6, 7], &#34;init&#34;: [&#34;k-means++&#34;, &#34;random&#34;],
+                  &#34;n_init&#34;: [10, 50], &#34;max_iter&#34;: [100, 300, 1000], &#34;tol&#34;: [1e-3, 1e-5, 1e-7]}
+
+    elif method == &#39;bayesian_gmm&#39;:
+        estimator = BayesianGaussianMixture(random_state=42)
+        params = {&#34;n_components&#34;: [4, 5, 6, 7], &#34;covariance_type&#34;: [&#34;full&#34;],
+                  &#34;n_init&#34;: [5, 10], &#34;max_iter&#34;: [100, 3000], &#34;init_params&#34;: [&#34;kmeans&#34;, &#34;random&#34;],
+                  &#34;tol&#34;: [1e-3, 1e-7],
+                  &#34;weight_concentration_prior_type&#34;: [&#34;dirichlet_process&#34;, &#34;dirichlet_distribution&#34;]}
+
+    elif method == &#39;gmm&#39;:
+        estimator = GaussianMixture(random_state=42, warm_start=True)
+        params = {&#34;n_components&#34;: [4, 5, 6, 7], &#34;covariance_type&#34;: [&#34;full&#34;],
+                  &#34;n_init&#34;: [5, 10], &#34;max_iter&#34;: [100, 300, 1000], &#34;init_params&#34;: [&#34;kmeans&#34;, &#34;random&#34;],
+                  &#34;tol&#34;: [1e-3, 1e-5, 1e-7]}
+
+    elif method == &#39;spectral&#39;:
+        estimator = SpectralClustering(random_state=42)
+        params = {&#34;n_clusters&#34;: [4, 5, 6, 7], &#34;affinity&#34;: [&#34;nearest_neighbors&#34;, &#34;rbf&#34;, &#34;precomputed&#34;],
+                  &#34;n_neighbors&#34;: [10, 50], &#34;n_init&#34;: [10, 50]}
+
+    else:
+        estimator = None
+
+    def make_generator(parameters):
+        &#39;&#39;&#39;
+        Method creating a generator on the fly returning all the combinations given the passed parameters
+        Args:
+        - parameters: a dictionary containing the parameters to be passed
+        &#39;&#39;&#39;
+        if not parameters:
+            yield dict()
+        else:
+            key_to_iterate = list(parameters.keys())[0]
+            next_round_parameters = {p: parameters[p]
+                                     for p in parameters if p != key_to_iterate}
+            for val in parameters[key_to_iterate]:
+                for pars in make_generator(next_round_parameters):
+                    temp_res = pars
+                    temp_res[key_to_iterate] = val
+                    yield temp_res
+
+    kf = KFold(n_splits=5, random_state=42, shuffle=True)
+    _best_estimator, _best_score, _best_params = None, -np.inf, None
+
+    def get_score(indexes, estimator, X, scoring):
+        train_X, val_X = X[indexes[0]], X[indexes[1]]
+        try:
+            estimator.fit(train_X)
+            labels = _est.predict(val_X)
+
+            if scoring == &#34;score&#34;:
+                scoring_fn = getattr(estimator, &#34;score&#34;, None)
+                if callable(scoring_fn):
+                    score = estimator.score(val_X)
+            elif scoring == &#34;silhouette&#34;:
+                score = silhouette_score(val_X, labels)
+
+            elif scoring == &#34;ch&#34;:
+                score = calinski_harabasz_score(val_X, labels)
+
+            elif scoring == &#34;bic&#34;:
+                scoring_fn = getattr(estimator, &#34;bic&#34;, None)
+                if callable(scoring_fn):
+                    score = - estimator.bic(val_X)
+                else:
+                    score = bic_score(val_X, labels,
+                                      estimator.cluster_centers_ if hasattr(estimator,
+                                                                            &#34;cluster_centers_&#34;) else estimator.means_)
+        except:
+            score = np.nan
+        return score
+
+    for i, param_grid in enumerate(make_generator(params)):
+        _est = estimator.set_params(**param_grid)
+        pool = Pool()
+        scores = pool.map(partial(get_score, estimator=_est, X=X, scoring=scoring), kf.split(X))
+
+        if verbose:
+            print(&#34;\tCombination %d score: %.3f&#34; % (i + 1, np.mean(scores)))
+
+        if np.mean(scores) &gt; _best_score:
+            _best_estimator, _best_score, _best_params = deepcopy(_est), np.mean(scores), _est.get_params()
+
+    with open(&#34;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/scripts/models/&#34; + season + &#34;/SLP/&#34; + method + &#39;_model_&#39; + scoring + &#39;.pkl&#39;, &#39;wb&#39;) as f:
+        pickle.dump(_best_estimator, f)
+
+    print(&#34;Validation process ended with score {}\nBest parameters: {}&#34;.format(_best_score, _best_params))
+    return _best_estimator
+
+def bic_score(X, labels, centroids):
+    &#39;&#39;&#39;
+    Method to compute the BIC (Bayesian Information Criterion)
+    Args:
+    - X: the dataset on which evaluating the BIC
+    - labels: labels associated to the samples in X
+    - centroids: the centroids associated to X
+
+    Returns:
+    - the BIC score associated to the estimator
+    &#39;&#39;&#39;
+    eps = 1e-7
+    m = centroids.shape[0]
+    n = np.zeros((m,))
+    hist = np.bincount(labels)
+    n[:len(hist)] = hist
+
+    N, D = X.shape
+
+    const_term = 0.5 * m * np.log(N) * (D + 1)
+    cl_var = (1. / (N - m) / D) * sum([
+        sum(distance.cdist(X[np.where(labels == i)], [centroids[i]], &#39;euclidean&#39;) ** 2) for i in range(m)
+    ])
+
+    return np.sum([n[i] * np.log(n[i] + eps) -
+                   n[i] * np.log(N) -
+                   ((n[i] * D) / 2) * np.log(2 * np.pi * cl_var + eps) -
+                   ((n[i] - 1) * D / 2) for i in range(m)]) - const_term
+
+def extract_regimes(anomaly, method=&#39;kmeans&#39;, nb_regimes=5, **kwargs):
+    &#39;&#39;&#39;
+    Method clustering anomalies in different weather regimes
+    Args:
+    - anomaly: a pandas DataFrame containing an historical series of anomalies
+    - clustering_algo: clustering algorithm to adopt. The class should expose the methods .fit(), .predict(), .fit_predict(), .fit_transform()
+    - nb_regimes: number of different weather regimes to be identified, if &#39;estimator&#39; in **kwargs, this parameter is ignored
+    - **kwargs: a dictionary of further parameters, like the a pre_trained estimator, or the possibility to do directly inference
+
+    Returns:
+    - an array of regimes associated to each grid in the time series
+    &#39;&#39;&#39;
+    if method == &#39;kmeans&#39;:
+        if &#39;estimator&#39; not in kwargs:
+            clustering_algo = KMeans(n_clusters=nb_regimes, random_state=42,
+                                     tol=1e-5, n_init=50)
+        else:
+            clustering_algo = kwargs[&#39;estimator&#39;]
+        clustering_algo.fit(anomaly)
+        if &#39;test&#39; in kwargs:
+            test = kwargs[&#39;test&#39;]
+            return clustering_algo.predict(test)
+        return clustering_algo.labels_, clustering_algo.inertia_, clustering_algo
+
+    elif method == &#39;bayesian_gmm&#39;:
+        if &#39;estimator&#39; not in kwargs:
+            clustering_algo = BayesianGaussianMixture(n_components=nb_regimes, random_state=42, n_init=10,
+                                                      covariance_type=&#39;full&#39; if &#39;covariance_type&#39; not in kwargs else
+                                                      kwargs[&#39;covariance_type&#39;],
+                                                      reg_covar=1e-3, max_iter=1000)
+        else:
+            clustering_algo = kwargs[&#39;estimator&#39;]
+        clustering_algo.fit(anomaly)
+        probas = clustering_algo.predict_proba(anomaly)
+        if &#39;test&#39; in kwargs:
+            test = kwargs[&#39;test&#39;]
+            return clustering_algo.predict(test)
+        return probas, clustering_algo.lower_bound_, clustering_algo.means_, clustering_algo.covariances_, clustering_algo
+
+    elif method == &#39;gmm&#39;:
+        if &#39;estimator&#39; not in kwargs:
+            clustering_algo = GaussianMixture(n_components=nb_regimes, random_state=42, n_init=10,
+                                              covariance_type=&#39;full&#39; if &#39;covariance_type&#39; not in kwargs else kwargs[
+                                                  &#39;covariance_type&#39;],
+                                              reg_covar=1e-3, max_iter=1000)
+        else:
+            clustering_algo = kwargs[&#39;estimator&#39;]
+        clustering_algo.fit(anomaly)
+        probas = clustering_algo.predict_proba(anomaly)
+        if &#39;test&#39; in kwargs:
+            test = kwargs[&#39;test&#39;]
+            return clustering_algo.predict(test)
+        return probas, clustering_algo.lower_bound_, clustering_algo.means_, clustering_algo.covariances_, clustering_algo
+
+    elif method == &#39;spectral&#39;:
+        if &#39;estimator&#39; not in kwargs:
+            clustering_algo = SpectralClustering(n_clusters=nb_regimes, random_state=42, n_init=50,
+                                                 affinity=&#39;rbf&#39; if &#39;affinity&#39; not in kwargs else kwargs[&#39;affinity&#39;])
+        else:
+            clustering_algo = kwargs[&#39;estimator&#39;]
+        clustering_algo.fit(anomaly)
+        if &#39;test&#39; in kwargs:
+            test = kwargs[&#39;test&#39;]
+            return clustering_algo.predict(test)
+        return clustering_algo.labels_, clustering_algo.affinity_matrix_, clustering_algo
+
+    else:
+        pass
+
+
+def load_estimator(path_to_file):
+    &#39;&#39;&#39;
+    Method to load an estimator from the pickle file
+    Args:
+    - path_to_file: file path to the pickle file
+
+    Returns:
+    - the loaded estimator
+    &#39;&#39;&#39;
+    with open(path_to_file, &#39;rb&#39;) as pickle_file:
+        estimator = pickle.load(pickle_file)
+
+    return estimator
+#############################################################################
+
+
+READ_PATH = &#39;P:\CH\Weather Data\ERA-5\SLP&#39;
+freq = &#39;hourly&#39; # &#39;monthly&#39;
+months = &#39;JunJulAug&#39;#&#39;DecJanFeb&#39;  #&#39;MayJunJulAugSep&#39;
+obs_years = &#39;1979-2021&#39;#&#39;1979-2020&#39;
+LAT, LONG = (20.,80.), (-90., 30.)
+reduction = &#34;PCA&#34;
+model = &#34;kmeans&#34;
+season = &#34;SUMMER&#34;
+
+dt = read_nc(READ_PATH + &#39;/ERA-5_{}_SLP_{}_{}.nc&#39;.format(freq, months, obs_years))
+dt = build_data()
+
+#dt_daily = read_nc(READ_PATH + &#39;/ERA-5_{}_SLP_{}_{}.nc&#39;.format(&#34;daily&#34;, months, obs_years))
+
+dt = weighted_anomaly(dt)
+
+pivot_anomaly = flat_table(dt)   # only for PCA + training
+
+if reduction == &#34;PCA&#34;:
+    reduced_anomaly = reduce_dim(pivot_anomaly, method=&#39;PCA&#39;, exp_variance=0.9)
+    folder = &#39;pca&#39;
+else:
+    reduced_anomaly = reduce_dim(dt, method=&#39;VAE&#39;, season = season)
+    folder = &#39;vae&#39;
+
+#eofs, pcs = eofs(pivot_anomaly)
+#plot_EOFS(eofs, savefig = False)
+
+train_X, test_X, pivot_train, pivot_test = train_test_split(reduced_anomaly, pivot_anomaly, test_size = 0.2, random_state = 42)
+
+&#39;&#39;&#39;
+for scoring in [&#34;score&#34;, &#34;ch&#34;, &#34;bic&#34;, &#34;silhouette&#34;]:
+    estimator = cross_val(reduced_anomaly.values, method=model, scoring=scoring, season=season)
+
+outputs = extract_regimes(train_X, method=model, nb_regimes = None, estimator = estimator)
+&#39;&#39;&#39;
+
+df_score = pd.DataFrame.from_dict({model:performance_matrix(&#39;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/scripts/models/SUMMER/SLP/&#39;+ model, train_X.values, test_X.values)\
+                        for model in os.listdir(&#39;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/scripts/models/SUMMER/SLP&#39;) if model.endswith(&#39;pkl&#39;)},
+             orient=&#39;index&#39;)
+print(df_score)
+
+##
+estimator = load_estimator(&#39;W:\\UK\\Research\\Private\\WEATHER\\STAGE_ABALDO\\scripts\\models\\SUMMER\\SLP\\kmeans_model_score.pkl&#39;)
+outputs = extract_regimes(reduced_anomaly, method=model, nb_regimes = None, estimator = estimator)
+plot_regimes(pivot_anomaly, outputs[0])</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="modeling.utils.build_slp.bic_score"><code class="name flex">
+<span>def <span class="ident">bic_score</span></span>(<span>X, labels, centroids)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to compute the BIC (Bayesian Information Criterion)
+Args:
+- X: the dataset on which evaluating the BIC
+- labels: labels associated to the samples in X
+- centroids: the centroids associated to X</p>
+<p>Returns:
+- the BIC score associated to the estimator</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def bic_score(X, labels, centroids):
+    &#39;&#39;&#39;
+    Method to compute the BIC (Bayesian Information Criterion)
+    Args:
+    - X: the dataset on which evaluating the BIC
+    - labels: labels associated to the samples in X
+    - centroids: the centroids associated to X
+
+    Returns:
+    - the BIC score associated to the estimator
+    &#39;&#39;&#39;
+    eps = 1e-7
+    m = centroids.shape[0]
+    n = np.zeros((m,))
+    hist = np.bincount(labels)
+    n[:len(hist)] = hist
+
+    N, D = X.shape
+
+    const_term = 0.5 * m * np.log(N) * (D + 1)
+    cl_var = (1. / (N - m) / D) * sum([
+        sum(distance.cdist(X[np.where(labels == i)], [centroids[i]], &#39;euclidean&#39;) ** 2) for i in range(m)
+    ])
+
+    return np.sum([n[i] * np.log(n[i] + eps) -
+                   n[i] * np.log(N) -
+                   ((n[i] * D) / 2) * np.log(2 * np.pi * cl_var + eps) -
+                   ((n[i] - 1) * D / 2) for i in range(m)]) - const_term</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.build_slp.build_data"><code class="name flex">
+<span>def <span class="ident">build_data</span></span>(<span>normal='flat')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to build dataframe, including normal and anomaly for each timeframe
+Returns:
+- a pandas DataFrame anomaly</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def build_data(normal=&#39;flat&#39;):
+    &#39;&#39;&#39;
+    Method to build dataframe, including normal and anomaly for each timeframe
+    Returns:
+    - a pandas DataFrame anomaly
+    &#39;&#39;&#39;
+    if &#39;ERA-5_{}_SLP_{}_{}_anomaly.nc&#39;. \
+            format(freq if freq != &#39;hourly&#39; else &#39;daily&#39;, months, obs_years) not in os.listdir(READ_PATH):
+
+        # read nc, eventually pass from hourly to daily, limit geography
+        print(&#34;Reading nc file and converting to xarray Dataset&#34;)
+        if freq == &#39;hourly&#39;:
+            if &#39;ERA-5_{}_SLP_{}_{}.nc&#39;.format(&#39;daily&#39;, months, obs_years) not in os.listdir(READ_PATH):
+                dt = read_nc(READ_PATH + &#39;/ERA-5_{}_SLP_{}_{}.nc&#39;.format(freq, months, obs_years))
+                dt = hourly_to_daily(dt)
+            else:
+                dt = read_nc(READ_PATH + &#39;/ERA-5_{}_SLP_{}_{}.nc&#39;.format(&#39;daily&#39;, months, obs_years))
+        else:
+            dt = read_nc(READ_PATH + &#39;/ERA-5_{}_SLP_{}_{}.nc&#39;.format(freq, months, obs_years))
+
+        if &#39;expver&#39; in dt.indexes:
+            dt = xr.concat([dt.sel(time=slice(&#34;2021-07-31&#34;), expver=1),
+                            dt.sel(time=slice(&#34;2021-08-01&#34;, &#34;2021-09-30&#34;), expver=5)],
+                           dim=&#34;time&#34;)
+
+        dt = limit_geography(dt, LAT, LONG)
+        print(&#34;Evaluating the normal&#34;)
+
+        if normal != &#39;flat&#39;:
+            normal_dt = evaluate_normal(dt, domain=&#39;local&#39;, mode=&#39;dynamic&#39;, freq = &#39;m&#39;,start_date=&#34;01-01-1991&#34;)
+            print(&#34;Evaluating the anomaly&#34;)
+            anomaly_dt = evaluate_anomaly(dt, normal_dt, mode=&#39;dynamic&#39;)
+        else:
+            normal_dt = evaluate_normal(dt, domain=&#39;local&#39;, mode=&#39;flat&#39;, freq = &#39;m&#39;, start_date=&#34;01-01-1991&#34;)
+            # anomaly_dt = xr.apply_ufunc(lambda x, normal: x - normal, dt.groupby(&#39;time&#39;), normal_dt)
+            print(&#34;Evaluating the anomaly&#34;)
+            anomaly_dt = evaluate_anomaly(dt, normal_dt, mode=&#39;flat&#39;, freq = &#39;m&#39;)
+
+        print(&#34;Pushing the normal to file&#34;)
+        to_nc(normal_dt, variable=&#39;normal&#39;)
+
+        print(&#34;Pushing the anomaly to file&#34;)
+        to_nc(anomaly_dt, variable=&#39;anomaly&#39;)
+        return anomaly_dt
+
+    else:
+        print(&#34;Reading anomaly from file&#34;)
+        return read_nc(READ_PATH + &#39;/ERA-5_{}_SLP_{}_{}_anomaly.nc&#39;. \
+                       format(freq if freq != &#39;hourly&#39; else &#39;daily&#39;, months, obs_years))</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.build_slp.cross_val"><code class="name flex">
+<span>def <span class="ident">cross_val</span></span>(<span>X, method='kmeans', scoring='score', season='WINTER', verbose=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to perform cross-validation of clustering methods
+Args
+- X: pandas DataFrame containing data
+- method: clustering method to be validated
+- scoring
+- season:
+- verbose</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cross_val(X, method=&#34;kmeans&#34;, scoring=&#34;score&#34;, season = &#34;WINTER&#34;, verbose=True):
+    &#39;&#39;&#39;
+    Method to perform cross-validation of clustering methods
+    Args
+    - X: pandas DataFrame containing data
+    - method: clustering method to be validated
+    - scoring
+    - season:
+    - verbose
+    &#39;&#39;&#39;
+
+    if method == &#39;kmeans&#39;:
+        estimator = KMeans(random_state=42)
+        params = {&#34;n_clusters&#34;: [4, 5, 6, 7], &#34;init&#34;: [&#34;k-means++&#34;, &#34;random&#34;],
+                  &#34;n_init&#34;: [10, 50], &#34;max_iter&#34;: [100, 300, 1000], &#34;tol&#34;: [1e-3, 1e-5, 1e-7]}
+
+    elif method == &#39;bayesian_gmm&#39;:
+        estimator = BayesianGaussianMixture(random_state=42)
+        params = {&#34;n_components&#34;: [4, 5, 6, 7], &#34;covariance_type&#34;: [&#34;full&#34;],
+                  &#34;n_init&#34;: [5, 10], &#34;max_iter&#34;: [100, 3000], &#34;init_params&#34;: [&#34;kmeans&#34;, &#34;random&#34;],
+                  &#34;tol&#34;: [1e-3, 1e-7],
+                  &#34;weight_concentration_prior_type&#34;: [&#34;dirichlet_process&#34;, &#34;dirichlet_distribution&#34;]}
+
+    elif method == &#39;gmm&#39;:
+        estimator = GaussianMixture(random_state=42, warm_start=True)
+        params = {&#34;n_components&#34;: [4, 5, 6, 7], &#34;covariance_type&#34;: [&#34;full&#34;],
+                  &#34;n_init&#34;: [5, 10], &#34;max_iter&#34;: [100, 300, 1000], &#34;init_params&#34;: [&#34;kmeans&#34;, &#34;random&#34;],
+                  &#34;tol&#34;: [1e-3, 1e-5, 1e-7]}
+
+    elif method == &#39;spectral&#39;:
+        estimator = SpectralClustering(random_state=42)
+        params = {&#34;n_clusters&#34;: [4, 5, 6, 7], &#34;affinity&#34;: [&#34;nearest_neighbors&#34;, &#34;rbf&#34;, &#34;precomputed&#34;],
+                  &#34;n_neighbors&#34;: [10, 50], &#34;n_init&#34;: [10, 50]}
+
+    else:
+        estimator = None
+
+    def make_generator(parameters):
+        &#39;&#39;&#39;
+        Method creating a generator on the fly returning all the combinations given the passed parameters
+        Args:
+        - parameters: a dictionary containing the parameters to be passed
+        &#39;&#39;&#39;
+        if not parameters:
+            yield dict()
+        else:
+            key_to_iterate = list(parameters.keys())[0]
+            next_round_parameters = {p: parameters[p]
+                                     for p in parameters if p != key_to_iterate}
+            for val in parameters[key_to_iterate]:
+                for pars in make_generator(next_round_parameters):
+                    temp_res = pars
+                    temp_res[key_to_iterate] = val
+                    yield temp_res
+
+    kf = KFold(n_splits=5, random_state=42, shuffle=True)
+    _best_estimator, _best_score, _best_params = None, -np.inf, None
+
+    def get_score(indexes, estimator, X, scoring):
+        train_X, val_X = X[indexes[0]], X[indexes[1]]
+        try:
+            estimator.fit(train_X)
+            labels = _est.predict(val_X)
+
+            if scoring == &#34;score&#34;:
+                scoring_fn = getattr(estimator, &#34;score&#34;, None)
+                if callable(scoring_fn):
+                    score = estimator.score(val_X)
+            elif scoring == &#34;silhouette&#34;:
+                score = silhouette_score(val_X, labels)
+
+            elif scoring == &#34;ch&#34;:
+                score = calinski_harabasz_score(val_X, labels)
+
+            elif scoring == &#34;bic&#34;:
+                scoring_fn = getattr(estimator, &#34;bic&#34;, None)
+                if callable(scoring_fn):
+                    score = - estimator.bic(val_X)
+                else:
+                    score = bic_score(val_X, labels,
+                                      estimator.cluster_centers_ if hasattr(estimator,
+                                                                            &#34;cluster_centers_&#34;) else estimator.means_)
+        except:
+            score = np.nan
+        return score
+
+    for i, param_grid in enumerate(make_generator(params)):
+        _est = estimator.set_params(**param_grid)
+        pool = Pool()
+        scores = pool.map(partial(get_score, estimator=_est, X=X, scoring=scoring), kf.split(X))
+
+        if verbose:
+            print(&#34;\tCombination %d score: %.3f&#34; % (i + 1, np.mean(scores)))
+
+        if np.mean(scores) &gt; _best_score:
+            _best_estimator, _best_score, _best_params = deepcopy(_est), np.mean(scores), _est.get_params()
+
+    with open(&#34;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/scripts/models/&#34; + season + &#34;/SLP/&#34; + method + &#39;_model_&#39; + scoring + &#39;.pkl&#39;, &#39;wb&#39;) as f:
+        pickle.dump(_best_estimator, f)
+
+    print(&#34;Validation process ended with score {}\nBest parameters: {}&#34;.format(_best_score, _best_params))
+    return _best_estimator</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.build_slp.evaluate_anomaly"><code class="name flex">
+<span>def <span class="ident">evaluate_anomaly</span></span>(<span>observation, normal, mode='flat', freq='m')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Args:
+- observation: an xarray Dataset containing observation data
+- normal: an xarray Datasete containing the historical series of the normal
+- mode:
+- freq:</p>
+<p>Returns:
+- an xarray Dataset containing the anomalous data</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_anomaly(observation, normal, mode=&#39;flat&#39;, freq = &#39;m&#39;):
+    &#39;&#39;&#39;
+    Args:
+    - observation: an xarray Dataset containing observation data
+    - normal: an xarray Datasete containing the historical series of the normal
+    - mode:
+    - freq:
+
+    Returns:
+    - an xarray Dataset containing the anomalous data
+    &#39;&#39;&#39;
+
+    if mode == &#39;flat&#39;:
+        return observation - normal
+    else:
+        #month_day = pd.MultiIndex.from_arrays([observation[&#39;time.month&#39;].values, observation[&#39;time.day&#39;].values])
+        #observation.coords[&#39;month_day&#39;] = (&#39;time&#39;, month_day)
+        if freq == &#39;m&#39;:
+            return xr.apply_ufunc(lambda x, norm: x - norm, observation.groupby(&#39;time.month&#39;), normal)
+        elif freq == &#39;w&#39;:
+            return xr.apply_ufunc(lambda x, norm: x - norm, observation.groupby(&#39;time.week&#39;), normal)
+        else:
+            return xr.apply_ufunc(lambda x, norm: x - norm, observation.groupby(&#39;time.day&#39;), normal)</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.build_slp.evaluate_normal"><code class="name flex">
+<span>def <span class="ident">evaluate_normal</span></span>(<span>dt, domain='local', mode='flat', freq='m', start_date=None, end_date=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Args:
+- dt: an xarray Dataset containing historical data
+- domain: either 'local'
+or 'global'. In the first case a normal for each location is computed, in the latter
+the normal is computed averaging all the positions
+- mode: either 'flat' or 'dynamic'. In the first case the normal is the same for each day, in the latter
+a normal for each day is computed
+- freq:
+- start_year: the starting year to consider for evaluating the normal.
+If not specified, all the dates in the passed DataFrame are used</p>
+<p>Returns:
+- a pandas DataFrame containing the historical series of the normal</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_normal(dt, domain=&#39;local&#39;, mode=&#39;flat&#39;, freq = &#39;m&#39;, start_date=None, end_date = None):
+    &#39;&#39;&#39;
+    Args:
+    - dt: an xarray Dataset containing historical data
+    - domain: either &#39;local&#39;  or &#39;global&#39;. In the first case a normal for each location is computed, in the latter
+      the normal is computed averaging all the positions
+    - mode: either &#39;flat&#39; or &#39;dynamic&#39;. In the first case the normal is the same for each day, in the latter
+      a normal for each day is computed
+    - freq:
+    - start_year: the starting year to consider for evaluating the normal.
+      If not specified, all the dates in the passed DataFrame are used
+
+    Returns:
+    - a pandas DataFrame containing the historical series of the normal
+    &#39;&#39;&#39;
+
+    if start_date is not None:
+        dt = dt.loc[dict(time=slice(start_date, end_date))]
+
+    if domain == &#39;local&#39; and mode == &#39;dynamic&#39;:
+        #month_day = pd.MultiIndex.from_arrays([dt[&#39;time.month&#39;].values, dt[&#39;time.day&#39;].values])
+        #dt.coords[&#39;month_day&#39;] = (&#39;time&#39;, month_day)
+        if freq == &#39;m&#39;:
+            return dt.groupby(&#34;time.month&#34;).mean()
+        elif freq == &#39;w&#39;:
+            return dt.groupby(&#39;time.week&#39;).mean()
+        else:
+            return dt.groupby(&#39;time.day&#39;).mean()
+
+    elif domain == &#39;local&#39; and mode == &#39;flat&#39;:
+        return dt.mean(dim=[&#34;time&#34;])
+
+    elif domain == &#39;global&#39; and mode == &#39;flat&#39;:
+        dt = dt.to_array().values
+        return dt.min(), dt.mean(), dt.max()
+
+    else:
+        #month_day = pd.MultiIndex.from_arrays([dt[&#39;time.month&#39;].values, dt[&#39;time.day&#39;].values])
+        #dt.coords[&#39;month_day&#39;] = (&#39;time&#39;, month_day)
+        if freq == &#39;m&#39;:
+            return dt.groupby(&#34;time.month&#34;).min(), dt.groupby(&#34;time.month&#34;).mean(), dt.groupby(&#34;time.month&#34;).max()
+        elif freq == &#39;w&#39;:
+            return dt.groupby(&#34;time.week&#34;).min(), dt.groupby(&#34;time.week&#34;).mean(), dt.groupby(&#34;time.week&#34;).max()
+        else:
+            return dt.groupby(&#34;time.day&#34;).min(), dt.groupby(&#34;time.day&#34;).mean(), dt.groupby(&#34;time.day&#34;).max()</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.build_slp.extract_regimes"><code class="name flex">
+<span>def <span class="ident">extract_regimes</span></span>(<span>anomaly, method='kmeans', nb_regimes=5, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method clustering anomalies in different weather regimes
+Args:
+- anomaly: a pandas DataFrame containing an historical series of anomalies
+- clustering_algo: clustering algorithm to adopt. The class should expose the methods .fit(), .predict(), .fit_predict(), .fit_transform()
+- nb_regimes: number of different weather regimes to be identified, if 'estimator' in <strong>kwargs, this parameter is ignored
+- </strong>kwargs: a dictionary of further parameters, like the a pre_trained estimator, or the possibility to do directly inference</p>
+<p>Returns:
+- an array of regimes associated to each grid in the time series</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def extract_regimes(anomaly, method=&#39;kmeans&#39;, nb_regimes=5, **kwargs):
+    &#39;&#39;&#39;
+    Method clustering anomalies in different weather regimes
+    Args:
+    - anomaly: a pandas DataFrame containing an historical series of anomalies
+    - clustering_algo: clustering algorithm to adopt. The class should expose the methods .fit(), .predict(), .fit_predict(), .fit_transform()
+    - nb_regimes: number of different weather regimes to be identified, if &#39;estimator&#39; in **kwargs, this parameter is ignored
+    - **kwargs: a dictionary of further parameters, like the a pre_trained estimator, or the possibility to do directly inference
+
+    Returns:
+    - an array of regimes associated to each grid in the time series
+    &#39;&#39;&#39;
+    if method == &#39;kmeans&#39;:
+        if &#39;estimator&#39; not in kwargs:
+            clustering_algo = KMeans(n_clusters=nb_regimes, random_state=42,
+                                     tol=1e-5, n_init=50)
+        else:
+            clustering_algo = kwargs[&#39;estimator&#39;]
+        clustering_algo.fit(anomaly)
+        if &#39;test&#39; in kwargs:
+            test = kwargs[&#39;test&#39;]
+            return clustering_algo.predict(test)
+        return clustering_algo.labels_, clustering_algo.inertia_, clustering_algo
+
+    elif method == &#39;bayesian_gmm&#39;:
+        if &#39;estimator&#39; not in kwargs:
+            clustering_algo = BayesianGaussianMixture(n_components=nb_regimes, random_state=42, n_init=10,
+                                                      covariance_type=&#39;full&#39; if &#39;covariance_type&#39; not in kwargs else
+                                                      kwargs[&#39;covariance_type&#39;],
+                                                      reg_covar=1e-3, max_iter=1000)
+        else:
+            clustering_algo = kwargs[&#39;estimator&#39;]
+        clustering_algo.fit(anomaly)
+        probas = clustering_algo.predict_proba(anomaly)
+        if &#39;test&#39; in kwargs:
+            test = kwargs[&#39;test&#39;]
+            return clustering_algo.predict(test)
+        return probas, clustering_algo.lower_bound_, clustering_algo.means_, clustering_algo.covariances_, clustering_algo
+
+    elif method == &#39;gmm&#39;:
+        if &#39;estimator&#39; not in kwargs:
+            clustering_algo = GaussianMixture(n_components=nb_regimes, random_state=42, n_init=10,
+                                              covariance_type=&#39;full&#39; if &#39;covariance_type&#39; not in kwargs else kwargs[
+                                                  &#39;covariance_type&#39;],
+                                              reg_covar=1e-3, max_iter=1000)
+        else:
+            clustering_algo = kwargs[&#39;estimator&#39;]
+        clustering_algo.fit(anomaly)
+        probas = clustering_algo.predict_proba(anomaly)
+        if &#39;test&#39; in kwargs:
+            test = kwargs[&#39;test&#39;]
+            return clustering_algo.predict(test)
+        return probas, clustering_algo.lower_bound_, clustering_algo.means_, clustering_algo.covariances_, clustering_algo
+
+    elif method == &#39;spectral&#39;:
+        if &#39;estimator&#39; not in kwargs:
+            clustering_algo = SpectralClustering(n_clusters=nb_regimes, random_state=42, n_init=50,
+                                                 affinity=&#39;rbf&#39; if &#39;affinity&#39; not in kwargs else kwargs[&#39;affinity&#39;])
+        else:
+            clustering_algo = kwargs[&#39;estimator&#39;]
+        clustering_algo.fit(anomaly)
+        if &#39;test&#39; in kwargs:
+            test = kwargs[&#39;test&#39;]
+            return clustering_algo.predict(test)
+        return clustering_algo.labels_, clustering_algo.affinity_matrix_, clustering_algo
+
+    else:
+        pass</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.build_slp.flat_table"><code class="name flex">
+<span>def <span class="ident">flat_table</span></span>(<span>dt)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Args:
+- dt: an xarray Dataset containing data to be flattened. The index remains the same as the input dataset</p>
+<p>Returns:
+- an xarray flattened</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def flat_table(dt):
+    &#39;&#39;&#39;
+    Args:
+    - dt: an xarray Dataset containing data to be flattened. The index remains the same as the input dataset
+
+    Returns:
+    - an xarray flattened
+    &#39;&#39;&#39;
+    return dt.stack(latlon=(&#39;latitude&#39;, &#39;longitude&#39;)).to_array().squeeze()</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.build_slp.hourly_to_daily"><code class="name flex">
+<span>def <span class="ident">hourly_to_daily</span></span>(<span>ds)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Args:
+- df: an xarray Dataset containing hourly historical data</p>
+<p>Returns:
+- an xarray Dataset containing daily historical data</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def hourly_to_daily(ds):
+    &#39;&#39;&#39;
+    Args:
+    - df: an xarray Dataset containing hourly historical data
+
+    Returns:
+    - an xarray Dataset containing daily historical data
+    &#39;&#39;&#39;
+    #ds = read_nc(READ_PATH + &#39;/ERA-5_{}_Geopotential-500hPa_{}_{}.nc&#39;.format(freq, months, obs_years))
+    ds.coords[&#39;time&#39;] = ds.time.dt.floor(&#39;1D&#39;)
+    ds = ds.groupby(&#39;time&#39;).mean()
+    ds.to_netcdf(READ_PATH + &#39;/ERA-5_{}_SLP_{}_{}.nc&#39;.format(&#39;daily&#39;, months, obs_years))
+    return ds</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.build_slp.limit_geography"><code class="name flex">
+<span>def <span class="ident">limit_geography</span></span>(<span>dt, lats, longs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Args:
+- dt: an xarray Dataset containing data
+- lats: extreme values of latitude
+- longs: extreme values of longitude</p>
+<p>Returns:
+- a Pandas df containing the retained rows falling in the geographical area</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def limit_geography(dt, lats, longs):
+    &#39;&#39;&#39;
+    Args:
+    - dt: an xarray Dataset containing data
+    - lats: extreme values of latitude
+    - longs: extreme values of longitude
+
+    Returns:
+    - a Pandas df containing the retained rows falling in the geographical area
+    &#39;&#39;&#39;
+    return dt.where(lambda x: ((lats[0] &lt;= x.latitude) &amp; (x.latitude &lt;= lats[1]) &amp;
+                               (longs[0] &lt;= x.longitude) &amp; (x.longitude &lt;= longs[1])), drop=True)</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.build_slp.load_estimator"><code class="name flex">
+<span>def <span class="ident">load_estimator</span></span>(<span>path_to_file)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to load an estimator from the pickle file
+Args:
+- path_to_file: file path to the pickle file</p>
+<p>Returns:
+- the loaded estimator</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_estimator(path_to_file):
+    &#39;&#39;&#39;
+    Method to load an estimator from the pickle file
+    Args:
+    - path_to_file: file path to the pickle file
+
+    Returns:
+    - the loaded estimator
+    &#39;&#39;&#39;
+    with open(path_to_file, &#39;rb&#39;) as pickle_file:
+        estimator = pickle.load(pickle_file)
+
+    return estimator</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.build_slp.read_nc"><code class="name flex">
+<span>def <span class="ident">read_nc</span></span>(<span>path_to_file)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Args:
+- path_to_file: string of the file path</p>
+<p>Returns:
+- an nc.Dataset variable</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read_nc(path_to_file):
+    &#39;&#39;&#39;
+    Args:
+    - path_to_file: string of the file path
+
+    Returns:
+    - an nc.Dataset variable
+    &#39;&#39;&#39;
+    # return nc.Dataset(path_to_file)
+    return xr.open_dataset(path_to_file)</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.build_slp.reduce_dim"><code class="name flex">
+<span>def <span class="ident">reduce_dim</span></span>(<span>dt, reshape='latlon', method='PCA', **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Args:
+- df: an xarray Dataset
+- method: the method used to perform dimensionality reduction, if not specified PCA is used
+- **kwargs: a dictionary of further parameters, like the percentage of explained variance used to retain the components</p>
+<p>Returns:
+- a numpy.array reduced in the feature space</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reduce_dim(dt, reshape=&#39;latlon&#39;, method=&#39;PCA&#39;, **kwargs):
+    &#39;&#39;&#39;
+    Args:
+    - df: an xarray Dataset
+    - method: the method used to perform dimensionality reduction, if not specified PCA is used
+    - **kwargs: a dictionary of further parameters, like the percentage of explained variance used to retain the components
+
+    Returns:
+    - a numpy.array reduced in the feature space
+    &#39;&#39;&#39;
+
+    if method == &#39;PCA&#39;:
+        if dt.ndim != 2:
+            dt = dt.squeeze()
+        pca = wrap(PCA(kwargs[&#34;exp_variance&#34;] if &#34;exp_variance&#34; in kwargs else .95), reshapes=reshape)
+        reduced_dt = pca.fit_transform(dt)
+
+    elif method == &#34;VAE&#34;:
+        time_idx = dt.coords[&#39;time&#39;]
+        vae = ConvVAE(args = Args())
+        vae.load_state_dict(torch.load(&#39;../models/&#39;+kwargs[&#39;season&#39;]+&#39;/sigma_vae_statedict_5&#39;, map_location=&#39;cpu&#39;))
+        dt = np.swapaxes(dt.to_array().values, 0, 1)
+        dt = torch.from_numpy(dt).type(torch.FloatTensor)
+        stack = []
+        for i in range(0, len(dt), 256):
+            print(&#34;\r&#34;, end=&#34;&#34;)
+            print(&#34;Processing batch %d&#34; % (i // 256 + 1), end=&#34;&#34;)
+
+            batch = dt[i:i + 256, ...]
+            with torch.no_grad():
+                stack.append(vae(batch)[1])
+        reduced_dt = xr.DataArray(torch.cat(stack).squeeze().detach().numpy(), coords=[time_idx, range(1, 6)])
+
+    else:
+        pass
+
+    print(&#34;Number of days: %d, Density of the grid: %d cells&#34; % (reduced_dt.shape[0], reduced_dt.shape[1]))
+    return reduced_dt</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.build_slp.to_nc"><code class="name flex">
+<span>def <span class="ident">to_nc</span></span>(<span>dt, variable='z')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to push a pandas DataFrame to a .nc file
+Args:
+- dt: an xarray Dataset</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_nc(dt, variable=&#39;z&#39;):
+    &#39;&#39;&#39;
+    Method to push a pandas DataFrame to a .nc file
+    Args:
+    - dt: an xarray Dataset
+    &#39;&#39;&#39;
+    dt.to_netcdf(READ_PATH + &#39;/ERA-5_{}_SLP_{}_{}_{}.nc&#39;. \
+                 format(freq if freq != &#39;hourly&#39; else &#39;daily&#39;, months, obs_years, variable),
+                 engine=&#34;netcdf4&#34;)</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.build_slp.weighted_anomaly"><code class="name flex">
+<span>def <span class="ident">weighted_anomaly</span></span>(<span>dt)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to compute the weighted anomaly, by eliminating the bias along the latitude
+Args:
+- dt: an xarray Dataset</p>
+<p>Returns:
+- the weighted anomaly</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def weighted_anomaly(dt):
+    &#39;&#39;&#39;
+    Method to compute the weighted anomaly, by eliminating the bias along the latitude
+    Args:
+    - dt: an xarray Dataset
+
+    Returns:
+    - the weighted anomaly
+    &#39;&#39;&#39;
+    wgts = np.sqrt(np.cos(np.deg2rad(dt.latitude.values)).clip(0., 1.))
+    wgts = wgts[np.newaxis, ..., np.newaxis]
+    wgts = wgts.repeat(dt.to_array().shape[0], axis=0).repeat(dt.to_array().shape[-1], axis=-1)
+    return dt * wgts</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="modeling.utils" href="index.html">modeling.utils</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="modeling.utils.build_slp.bic_score" href="#modeling.utils.build_slp.bic_score">bic_score</a></code></li>
+<li><code><a title="modeling.utils.build_slp.build_data" href="#modeling.utils.build_slp.build_data">build_data</a></code></li>
+<li><code><a title="modeling.utils.build_slp.cross_val" href="#modeling.utils.build_slp.cross_val">cross_val</a></code></li>
+<li><code><a title="modeling.utils.build_slp.evaluate_anomaly" href="#modeling.utils.build_slp.evaluate_anomaly">evaluate_anomaly</a></code></li>
+<li><code><a title="modeling.utils.build_slp.evaluate_normal" href="#modeling.utils.build_slp.evaluate_normal">evaluate_normal</a></code></li>
+<li><code><a title="modeling.utils.build_slp.extract_regimes" href="#modeling.utils.build_slp.extract_regimes">extract_regimes</a></code></li>
+<li><code><a title="modeling.utils.build_slp.flat_table" href="#modeling.utils.build_slp.flat_table">flat_table</a></code></li>
+<li><code><a title="modeling.utils.build_slp.hourly_to_daily" href="#modeling.utils.build_slp.hourly_to_daily">hourly_to_daily</a></code></li>
+<li><code><a title="modeling.utils.build_slp.limit_geography" href="#modeling.utils.build_slp.limit_geography">limit_geography</a></code></li>
+<li><code><a title="modeling.utils.build_slp.load_estimator" href="#modeling.utils.build_slp.load_estimator">load_estimator</a></code></li>
+<li><code><a title="modeling.utils.build_slp.read_nc" href="#modeling.utils.build_slp.read_nc">read_nc</a></code></li>
+<li><code><a title="modeling.utils.build_slp.reduce_dim" href="#modeling.utils.build_slp.reduce_dim">reduce_dim</a></code></li>
+<li><code><a title="modeling.utils.build_slp.to_nc" href="#modeling.utils.build_slp.to_nc">to_nc</a></code></li>
+<li><code><a title="modeling.utils.build_slp.weighted_anomaly" href="#modeling.utils.build_slp.weighted_anomaly">weighted_anomaly</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

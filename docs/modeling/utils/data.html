@@ -1,0 +1,1088 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>modeling.utils.data API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>modeling.utils.data</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import xarray as xr
+import numpy as np
+import pandas as pd
+import os
+from modeling.utils.tools import *
+from modeling.utils.sigma_vae import *
+from modeling.utils.config import *
+from sklearn_xarray import wrap
+from sklearn.decomposition import PCA
+import torch
+device = &#34;cuda:0&#34; if torch.cuda.is_available() else &#34;cpu&#34;
+
+@timing
+def read_nc(path_to_file):
+    &#39;&#39;&#39;
+    Args:
+        path_to_file: string of the file path
+
+    Returns:
+        an xr.Dataset variable
+    &#39;&#39;&#39;
+    # return nc.Dataset(path_to_file)
+    return xr.open_dataset(path_to_file)
+
+
+@timing
+def to_df(dataset, col_name=&#39;z&#39;):
+    &#39;&#39;&#39;
+    Args:
+        dataset: an xr.Dataset
+
+    Returns:
+        a Pandas df
+    &#39;&#39;&#39;
+    df = dataset.to_dataframe().reset_index()
+    df = df.astype({&#39;latitude&#39;: &#39;float32&#39;, &#39;longitude&#39;: &#39;float32&#39;, col_name: &#39;float32&#39;})
+    df.set_index(&#39;time&#39;, inplace=True)
+    if col_name == &#39;z&#39;:
+        df[&#39;z&#39;] = df[&#39;z&#39;] / G
+    return df
+
+
+@timing
+def to_nc(dt, variable=&#39;z&#39;):
+    &#39;&#39;&#39;
+    Method to push a pandas DataFrame to a .nc file
+    Args:
+        dt: an xarray Dataset
+    &#39;&#39;&#39;
+    dt.to_netcdf(READ_PATH + &#39;/ERA-5_{}_{}_{}_{}_{}.nc&#39;. \
+                 format(freq if freq != &#39;hourly&#39; else &#39;daily&#39;, physical_qty, months, obs_years, variable),
+                 engine=&#34;netcdf4&#34;)
+
+
+@timing
+def limit_geography(dt, lats, longs):
+    &#39;&#39;&#39;
+    Args:
+        dt: an xarray Dataset containing data
+        lats: extreme values of latitude
+        longs: extreme values of longitude
+
+    Returns:
+        a Pandas df containing the retained rows falling in the geographical area
+    &#39;&#39;&#39;
+    return dt.where(lambda x: ((lats[0] &lt;= x.latitude) &amp; (x.latitude &lt;= lats[1]) &amp;
+                               (longs[0] &lt;= x.longitude) &amp; (x.longitude &lt;= longs[1])), drop=True)
+    # return dt.loc[dict(latitude=slice(lats[1], lats[0]), longitude=slice(longs[0],longs[1]))]
+
+
+@timing
+def limit_years(df, start_year=1991):
+    &#39;&#39;&#39;
+    Args:
+        df: a pandas DataFrame  containing historical data
+        start_year: the year from which to start to compute the normal
+
+    Returns:
+        a pandas DataFrame containing the historical series of the normal starting from start_year
+    &#39;&#39;&#39;
+    print(&#34;Dataframe length before limiting years: %d&#34; % len(df))
+    new_df = df[df[&#39;year&#39;] &gt;= start_year]
+    print(&#34;Dataframe length after limiting years: %d&#34; % len(new_df))
+    return new_df
+
+
+@timing
+def hourly_to_daily(ds):
+    &#39;&#39;&#39;
+    Args:
+        df: an xarray Dataset containing hourly historical data
+
+    Returns:
+        an xarray Dataset containing daily historical data
+    &#39;&#39;&#39;
+    #ds = read_nc(READ_PATH + &#39;/ERA-5_{}_Geopotential-500hPa_{}_{}.nc&#39;.format(freq, months, obs_years))
+    ds.coords[&#39;time&#39;] = ds.time.dt.floor(&#39;1D&#39;)
+    ds = ds.groupby(&#39;time&#39;).mean()
+    ds.to_netcdf(READ_PATH + &#39;/ERA-5_{}_{}_{}_{}.nc&#39;.format(&#39;daily&#39;, physical_qty, months, obs_years))
+    return ds
+
+
+@timing
+def evaluate_normal(dt, domain=&#39;local&#39;, mode=&#39;flat&#39;, freq = &#39;m&#39;, start_date=None, end_date = None):
+    &#39;&#39;&#39;
+    Args:
+        dt: an xarray Dataset containing historical data
+        domain: either &#39;local&#39;  or &#39;global&#39;. In the first case a normal for each location is computed, in the latter
+        the normal is computed averaging all the positions
+        mode: either &#39;flat&#39; or &#39;dynamic&#39;. In the first case the normal is the same for each day, in the latter
+        a normal for each day is computed
+        freq: the time frequency at which evaluating the dynamic normal
+        start_year: the starting year to consider for evaluating the normal.
+        If not specified, all the dates in the passed DataFrame are used
+
+    Returns:
+        a pandas DataFrame containing the historical series of the normal
+    &#39;&#39;&#39;
+
+    if start_date is not None:
+        dt = dt.loc[dict(time=slice(start_date, end_date))]
+
+    if domain == &#39;local&#39; and mode == &#39;dynamic&#39;:
+        #month_day = pd.MultiIndex.from_arrays([dt[&#39;time.month&#39;].values, dt[&#39;time.day&#39;].values])
+        #dt.coords[&#39;month_day&#39;] = (&#39;time&#39;, month_day)
+        if freq == &#39;m&#39;:
+            return dt.groupby(&#34;time.month&#34;).mean()
+        elif freq == &#39;w&#39;:
+            return dt.groupby(&#39;time.week&#39;).mean()
+        else:
+            return dt.groupby(&#39;time.day&#39;).mean()
+
+    elif domain == &#39;local&#39; and mode == &#39;flat&#39;:
+        return dt.mean(dim=[&#34;time&#34;])
+
+    elif domain == &#39;global&#39; and mode == &#39;flat&#39;:
+        dt = dt.to_array().values
+        return dt.min(), dt.mean(), dt.max()
+
+    else:
+        #month_day = pd.MultiIndex.from_arrays([dt[&#39;time.month&#39;].values, dt[&#39;time.day&#39;].values])
+        #dt.coords[&#39;month_day&#39;] = (&#39;time&#39;, month_day)
+        if freq == &#39;m&#39;:
+            return dt.groupby(&#34;time.month&#34;).min(), dt.groupby(&#34;time.month&#34;).mean(), dt.groupby(&#34;time.month&#34;).max()
+        elif freq == &#39;w&#39;:
+            return dt.groupby(&#34;time.week&#34;).min(), dt.groupby(&#34;time.week&#34;).mean(), dt.groupby(&#34;time.week&#34;).max()
+        else:
+            return dt.groupby(&#34;time.day&#34;).min(), dt.groupby(&#34;time.day&#34;).mean(), dt.groupby(&#34;time.day&#34;).max()
+
+
+@timing
+def evaluate_anomaly(observation, normal, mode=&#39;flat&#39;, freq = &#39;m&#39;):
+    &#39;&#39;&#39;
+    Args:
+        observation: an xarray Dataset containing observation data
+        normal: an xarray Datasete containing the historical series of the normal
+        mode: either &#39;flat&#39; or &#39;dynamic&#39;. In the first case the normal is the same for each day, in the latter
+        a normal for each day is computed
+        freq: the time frequency at which evaluating the dynamic normal
+
+    Returns:
+        an xarray Dataset containing the anomalous data
+    &#39;&#39;&#39;
+
+    if mode == &#39;flat&#39;:
+        return observation - normal
+    else:
+        #month_day = pd.MultiIndex.from_arrays([observation[&#39;time.month&#39;].values, observation[&#39;time.day&#39;].values])
+        #observation.coords[&#39;month_day&#39;] = (&#39;time&#39;, month_day)
+        if freq == &#39;m&#39;:
+            return xr.apply_ufunc(lambda x, norm: x - norm, observation.groupby(&#39;time.month&#39;), normal)
+        elif freq == &#39;w&#39;:
+            return xr.apply_ufunc(lambda x, norm: x - norm, observation.groupby(&#39;time.week&#39;), normal)
+        else:
+            return xr.apply_ufunc(lambda x, norm: x - norm, observation.groupby(&#39;time.day&#39;), normal)
+
+
+@timing
+def weighted_anomaly(dt):
+    &#39;&#39;&#39;
+    Method to compute the weighted anomaly, by eliminating the bias along the latitude
+    Args:
+        dt: an xarray Dataset
+
+    Returns:
+        the weighted anomaly
+    &#39;&#39;&#39;
+    wgts = np.sqrt(np.cos(np.deg2rad(dt.latitude.values)).clip(0., 1.))
+    wgts = wgts[np.newaxis, ..., np.newaxis]
+    wgts = wgts.repeat(dt.to_array().shape[0], axis=0).repeat(dt.to_array().shape[-1], axis=-1)
+    return dt * wgts
+
+
+@timing
+def build_data(normal=&#39;flat&#39;):
+    &#39;&#39;&#39;
+    Method to build dataframe, including normal and anomaly for each timeframe
+    Args:
+        normal: an xarray Datasete containing the historical series of the normal
+
+    Returns:
+        a pandas DataFrame anomaly
+    &#39;&#39;&#39;
+    if &#39;ERA-5_{}_{}_{}_{}_anomaly.nc&#39;. \
+            format(freq if freq != &#39;hourly&#39; else &#39;daily&#39;, physical_qty, months, obs_years) not in os.listdir(READ_PATH):
+
+        # read nc, eventually pass from hourly to daily, limit geography
+        print(&#34;Reading nc file and converting to xarray Dataset&#34;)
+        if freq == &#39;hourly&#39;:
+            if &#39;ERA-5_{}_{}_{}_{}.nc&#39;.format(&#39;daily&#39;, physical_qty,  months, obs_years) not in os.listdir(READ_PATH):
+                dt = read_nc(READ_PATH + &#39;/ERA-5_{}_{}_{}_{}.nc&#39;.format(freq, physical_qty, months, obs_years))
+                dt = hourly_to_daily(dt)
+            else:
+                dt = read_nc(READ_PATH + &#39;/ERA-5_{}_{}_{}_{}.nc&#39;.format(&#39;daily&#39;, physical_qty, months, obs_years))
+        else:
+            dt = read_nc(READ_PATH + &#39;/ERA-5_{}_{}_{}_{}.nc&#39;.format(freq, physical_qty, months, obs_years))
+
+        if &#39;expver&#39; in dt.indexes:
+            dt = xr.concat([dt.sel(time=slice(&#34;2021-07-31&#34;), expver=1),
+                            dt.sel(time=slice(&#34;2021-08-01&#34;, &#34;2021-09-30&#34;), expver=5)],
+                           dim=&#34;time&#34;)
+
+        dt = limit_geography(dt, LAT, LONG)
+        if physical_qty == &#39;Geopotential-500hPa&#39;:
+            dt = dt / G
+        elif physical_qty == &#39;SLP&#39;:
+            dt = dt / 100.
+        else:
+            pass
+
+        print(&#34;Evaluating the normal&#34;)
+
+        if normal != &#39;flat&#39;:
+            normal_dt = evaluate_normal(dt, domain=&#39;local&#39;, mode=&#39;dynamic&#39;, freq = &#39;m&#39;,start_date=&#34;01-01-1991&#34;)
+            print(&#34;Evaluating the anomaly&#34;)
+            anomaly_dt = evaluate_anomaly(dt, normal_dt, mode=&#39;dynamic&#39;)
+        else:
+            normal_dt = evaluate_normal(dt, domain=&#39;local&#39;, mode=&#39;flat&#39;, freq = &#39;m&#39;, start_date=&#34;01-01-1991&#34;)
+            # anomaly_dt = xr.apply_ufunc(lambda x, normal: x - normal, dt.groupby(&#39;time&#39;), normal_dt)
+            print(&#34;Evaluating the anomaly&#34;)
+            anomaly_dt = evaluate_anomaly(dt, normal_dt, mode=&#39;flat&#39;, freq = &#39;m&#39;)
+
+        print(&#34;Pushing the normal to file&#34;)
+        to_nc(normal_dt, variable=&#39;normal&#39;)
+
+        print(&#34;Pushing the anomaly to file&#34;)
+        to_nc(anomaly_dt, variable=&#39;anomaly&#39;)
+        return anomaly_dt
+
+    else:
+        print(&#34;Reading anomaly from file&#34;)
+        return read_nc(READ_PATH + &#39;/ERA-5_{}_{}_{}_{}_anomaly.nc&#39;. \
+                       format(freq if freq != &#39;hourly&#39; else &#39;daily&#39;, physical_qty, months, obs_years))
+
+
+class Compresser(object):
+    &#39;&#39;&#39;
+    Class to manage compression of dataframes
+    &#39;&#39;&#39;
+
+    def __init__(self, latitude, longitude):
+        self.enc_dicts = [{k: v for k, v in zip(latitude.unique(), range(len(latitude.unique())))},
+                          {k: v for k, v in zip(longitude.unique(), range(len(longitude.unique())))}]
+
+        self.dec_dicts = [{v: k for k, v in dd.items()} for dd in self.enc_dicts]
+
+    @timing
+    def encode_coords(self, df):
+        &#39;&#39;&#39;
+        Method to map float32 latitude, longitude coordinates in a more memory-conservative format (i.e. int16)
+        Args:
+        - df: a pandas DataFrame containing the coordinates to be converted
+        &#39;&#39;&#39;
+
+        df[&#39;latitude&#39;] = df[&#39;latitude&#39;].map(self.enc_dicts[0]).astype(&#39;int16&#39;)
+        df[&#39;longitude&#39;] = df[&#39;longitude&#39;].map(self.enc_dicts[1]).astype(&#39;int16&#39;)
+        return df
+
+    @timing
+    def decode_coords(self, df):
+        &#39;&#39;&#39;
+        Method to map int16-encoded latitude, longitude coordinates in the original float32 format
+        Args:
+        - df: a pandas DataFrame containing the coordinates to be converted
+        &#39;&#39;&#39;
+        df[&#39;latitude&#39;] = df[&#39;latitude&#39;].map(self.dec_dicts[0]).astype(&#39;float32&#39;)
+        df[&#39;longitude&#39;] = df[&#39;longitude&#39;].map(self.dec_dicts[1]).astype(&#39;float32&#39;)
+        return df
+
+
+@timing
+def flat_table(dt):
+    &#39;&#39;&#39;
+    Args:
+        dt: an xarray Dataset containing data to be flattened. The index remains the same as the input dataset
+
+    Returns:
+        an xarray flattened
+    &#39;&#39;&#39;
+    return dt.stack(latlon=(&#39;latitude&#39;, &#39;longitude&#39;)).to_array().squeeze()
+
+
+@timing
+def eofs(dt, **kwargs):
+    &#39;&#39;&#39;
+    Args:
+        dt: an xarray Dataset
+
+    Returns:
+        an xr.DataArray containing the EOFs, a numpy.array containing the PCs
+    &#39;&#39;&#39;
+    A, Lh, E = np.linalg.svd(dt, full_matrices=False)
+    L = (Lh * Lh) / (len(dt) - 1)
+    neofs = len(L)
+    pcs = (A * Lh) / np.sqrt(L)
+    eofs = E / np.sqrt(L)[..., np.newaxis]
+    eofs = xr.DataArray(eofs, coords=dt.coords)
+
+    return eofs, pcs
+
+@timing
+def reduce_dim(dt, reshape=&#39;latlon&#39;, method=&#39;PCA&#39;, **kwargs):
+    &#39;&#39;&#39;
+    Args:
+        df: an xarray Dataset
+        method: the method used to perform dimensionality reduction, if not specified PCA is used
+        **kwargs: a dictionary of further parameters, like the percentage of explained variance used to retain the components or the name of the VAE model file
+
+    Returns:
+        a numpy.array reduced in the feature space
+    &#39;&#39;&#39;
+
+    if method == &#39;PCA&#39;:
+        if dt.ndim != 2:
+            dt = dt.squeeze()
+        pca = wrap(PCA(kwargs[&#34;exp_variance&#34;] if &#34;exp_variance&#34; in kwargs else .95), reshapes=reshape)
+        reduced_dt = pca.fit_transform(dt)
+
+    elif method == &#34;VAE&#34;:
+        time_idx = dt.coords[&#39;time&#39;]
+        vae = ConvVAE(args = Args())
+        vae.load_state_dict(torch.load(&#39;../models/&#39;+kwargs[&#39;season&#39;]+&#39;/&#39; + kwargs[&#39;model&#39;], map_location=&#39;cpu&#39;))
+        dt = np.swapaxes(dt.to_array().values, 0, 1)
+        dt = torch.from_numpy(dt).type(torch.FloatTensor)
+        stack = []
+        for i in range(0, len(dt), 256):
+            print(&#34;\r&#34;, end=&#34;&#34;)
+            print(&#34;Processing batch %d&#34; % (i // 256 + 1), end=&#34;&#34;)
+
+            batch = dt[i:i + 256, ...]
+            with torch.no_grad():
+                stack.append(vae(batch)[1])
+        reduced_dt = torch.cat(stack).squeeze().detach().numpy()
+        reduced_dt = xr.DataArray(reduced_dt, coords=[time_idx, range(1, reduced_dt.shape[1])])
+
+    else:
+        pass
+
+    print(&#34;Number of days: %d, Density of the grid: %d cells&#34; % (reduced_dt.shape[0], reduced_dt.shape[1]))
+    return reduced_dt</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="modeling.utils.data.build_data"><code class="name flex">
+<span>def <span class="ident">build_data</span></span>(<span>normal='flat')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to build dataframe, including normal and anomaly for each timeframe</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>normal</code></strong></dt>
+<dd>an xarray Datasete containing the historical series of the normal</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>a pandas DataFrame anomaly</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@timing
+def build_data(normal=&#39;flat&#39;):
+    &#39;&#39;&#39;
+    Method to build dataframe, including normal and anomaly for each timeframe
+    Args:
+        normal: an xarray Datasete containing the historical series of the normal
+
+    Returns:
+        a pandas DataFrame anomaly
+    &#39;&#39;&#39;
+    if &#39;ERA-5_{}_{}_{}_{}_anomaly.nc&#39;. \
+            format(freq if freq != &#39;hourly&#39; else &#39;daily&#39;, physical_qty, months, obs_years) not in os.listdir(READ_PATH):
+
+        # read nc, eventually pass from hourly to daily, limit geography
+        print(&#34;Reading nc file and converting to xarray Dataset&#34;)
+        if freq == &#39;hourly&#39;:
+            if &#39;ERA-5_{}_{}_{}_{}.nc&#39;.format(&#39;daily&#39;, physical_qty,  months, obs_years) not in os.listdir(READ_PATH):
+                dt = read_nc(READ_PATH + &#39;/ERA-5_{}_{}_{}_{}.nc&#39;.format(freq, physical_qty, months, obs_years))
+                dt = hourly_to_daily(dt)
+            else:
+                dt = read_nc(READ_PATH + &#39;/ERA-5_{}_{}_{}_{}.nc&#39;.format(&#39;daily&#39;, physical_qty, months, obs_years))
+        else:
+            dt = read_nc(READ_PATH + &#39;/ERA-5_{}_{}_{}_{}.nc&#39;.format(freq, physical_qty, months, obs_years))
+
+        if &#39;expver&#39; in dt.indexes:
+            dt = xr.concat([dt.sel(time=slice(&#34;2021-07-31&#34;), expver=1),
+                            dt.sel(time=slice(&#34;2021-08-01&#34;, &#34;2021-09-30&#34;), expver=5)],
+                           dim=&#34;time&#34;)
+
+        dt = limit_geography(dt, LAT, LONG)
+        if physical_qty == &#39;Geopotential-500hPa&#39;:
+            dt = dt / G
+        elif physical_qty == &#39;SLP&#39;:
+            dt = dt / 100.
+        else:
+            pass
+
+        print(&#34;Evaluating the normal&#34;)
+
+        if normal != &#39;flat&#39;:
+            normal_dt = evaluate_normal(dt, domain=&#39;local&#39;, mode=&#39;dynamic&#39;, freq = &#39;m&#39;,start_date=&#34;01-01-1991&#34;)
+            print(&#34;Evaluating the anomaly&#34;)
+            anomaly_dt = evaluate_anomaly(dt, normal_dt, mode=&#39;dynamic&#39;)
+        else:
+            normal_dt = evaluate_normal(dt, domain=&#39;local&#39;, mode=&#39;flat&#39;, freq = &#39;m&#39;, start_date=&#34;01-01-1991&#34;)
+            # anomaly_dt = xr.apply_ufunc(lambda x, normal: x - normal, dt.groupby(&#39;time&#39;), normal_dt)
+            print(&#34;Evaluating the anomaly&#34;)
+            anomaly_dt = evaluate_anomaly(dt, normal_dt, mode=&#39;flat&#39;, freq = &#39;m&#39;)
+
+        print(&#34;Pushing the normal to file&#34;)
+        to_nc(normal_dt, variable=&#39;normal&#39;)
+
+        print(&#34;Pushing the anomaly to file&#34;)
+        to_nc(anomaly_dt, variable=&#39;anomaly&#39;)
+        return anomaly_dt
+
+    else:
+        print(&#34;Reading anomaly from file&#34;)
+        return read_nc(READ_PATH + &#39;/ERA-5_{}_{}_{}_{}_anomaly.nc&#39;. \
+                       format(freq if freq != &#39;hourly&#39; else &#39;daily&#39;, physical_qty, months, obs_years))</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.data.eofs"><code class="name flex">
+<span>def <span class="ident">eofs</span></span>(<span>dt, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>dt</code></strong></dt>
+<dd>an xarray Dataset</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>an xr.DataArray containing the EOFs, a numpy.array containing the PCs</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@timing
+def eofs(dt, **kwargs):
+    &#39;&#39;&#39;
+    Args:
+        dt: an xarray Dataset
+
+    Returns:
+        an xr.DataArray containing the EOFs, a numpy.array containing the PCs
+    &#39;&#39;&#39;
+    A, Lh, E = np.linalg.svd(dt, full_matrices=False)
+    L = (Lh * Lh) / (len(dt) - 1)
+    neofs = len(L)
+    pcs = (A * Lh) / np.sqrt(L)
+    eofs = E / np.sqrt(L)[..., np.newaxis]
+    eofs = xr.DataArray(eofs, coords=dt.coords)
+
+    return eofs, pcs</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.data.evaluate_anomaly"><code class="name flex">
+<span>def <span class="ident">evaluate_anomaly</span></span>(<span>observation, normal, mode='flat', freq='m')</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>observation</code></strong></dt>
+<dd>an xarray Dataset containing observation data</dd>
+<dt><strong><code>normal</code></strong></dt>
+<dd>an xarray Datasete containing the historical series of the normal</dd>
+<dt><strong><code>mode</code></strong></dt>
+<dd>either 'flat' or 'dynamic'. In the first case the normal is the same for each day, in the latter</dd>
+<dt>a normal for each day is computed</dt>
+<dt><strong><code>freq</code></strong></dt>
+<dd>the time frequency at which evaluating the dynamic normal</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>an xarray Dataset containing the anomalous data</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@timing
+def evaluate_anomaly(observation, normal, mode=&#39;flat&#39;, freq = &#39;m&#39;):
+    &#39;&#39;&#39;
+    Args:
+        observation: an xarray Dataset containing observation data
+        normal: an xarray Datasete containing the historical series of the normal
+        mode: either &#39;flat&#39; or &#39;dynamic&#39;. In the first case the normal is the same for each day, in the latter
+        a normal for each day is computed
+        freq: the time frequency at which evaluating the dynamic normal
+
+    Returns:
+        an xarray Dataset containing the anomalous data
+    &#39;&#39;&#39;
+
+    if mode == &#39;flat&#39;:
+        return observation - normal
+    else:
+        #month_day = pd.MultiIndex.from_arrays([observation[&#39;time.month&#39;].values, observation[&#39;time.day&#39;].values])
+        #observation.coords[&#39;month_day&#39;] = (&#39;time&#39;, month_day)
+        if freq == &#39;m&#39;:
+            return xr.apply_ufunc(lambda x, norm: x - norm, observation.groupby(&#39;time.month&#39;), normal)
+        elif freq == &#39;w&#39;:
+            return xr.apply_ufunc(lambda x, norm: x - norm, observation.groupby(&#39;time.week&#39;), normal)
+        else:
+            return xr.apply_ufunc(lambda x, norm: x - norm, observation.groupby(&#39;time.day&#39;), normal)</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.data.evaluate_normal"><code class="name flex">
+<span>def <span class="ident">evaluate_normal</span></span>(<span>dt, domain='local', mode='flat', freq='m', start_date=None, end_date=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>dt</code></strong></dt>
+<dd>an xarray Dataset containing historical data</dd>
+<dt><strong><code>domain</code></strong></dt>
+<dd>either 'local'
+or 'global'. In the first case a normal for each location is computed, in the latter</dd>
+<dt>the normal is computed averaging all the positions</dt>
+<dt><strong><code>mode</code></strong></dt>
+<dd>either 'flat' or 'dynamic'. In the first case the normal is the same for each day, in the latter</dd>
+<dt>a normal for each day is computed</dt>
+<dt><strong><code>freq</code></strong></dt>
+<dd>the time frequency at which evaluating the dynamic normal</dd>
+<dt><strong><code>start_year</code></strong></dt>
+<dd>the starting year to consider for evaluating the normal.</dd>
+</dl>
+<p>If not specified, all the dates in the passed DataFrame are used</p>
+<h2 id="returns">Returns</h2>
+<p>a pandas DataFrame containing the historical series of the normal</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@timing
+def evaluate_normal(dt, domain=&#39;local&#39;, mode=&#39;flat&#39;, freq = &#39;m&#39;, start_date=None, end_date = None):
+    &#39;&#39;&#39;
+    Args:
+        dt: an xarray Dataset containing historical data
+        domain: either &#39;local&#39;  or &#39;global&#39;. In the first case a normal for each location is computed, in the latter
+        the normal is computed averaging all the positions
+        mode: either &#39;flat&#39; or &#39;dynamic&#39;. In the first case the normal is the same for each day, in the latter
+        a normal for each day is computed
+        freq: the time frequency at which evaluating the dynamic normal
+        start_year: the starting year to consider for evaluating the normal.
+        If not specified, all the dates in the passed DataFrame are used
+
+    Returns:
+        a pandas DataFrame containing the historical series of the normal
+    &#39;&#39;&#39;
+
+    if start_date is not None:
+        dt = dt.loc[dict(time=slice(start_date, end_date))]
+
+    if domain == &#39;local&#39; and mode == &#39;dynamic&#39;:
+        #month_day = pd.MultiIndex.from_arrays([dt[&#39;time.month&#39;].values, dt[&#39;time.day&#39;].values])
+        #dt.coords[&#39;month_day&#39;] = (&#39;time&#39;, month_day)
+        if freq == &#39;m&#39;:
+            return dt.groupby(&#34;time.month&#34;).mean()
+        elif freq == &#39;w&#39;:
+            return dt.groupby(&#39;time.week&#39;).mean()
+        else:
+            return dt.groupby(&#39;time.day&#39;).mean()
+
+    elif domain == &#39;local&#39; and mode == &#39;flat&#39;:
+        return dt.mean(dim=[&#34;time&#34;])
+
+    elif domain == &#39;global&#39; and mode == &#39;flat&#39;:
+        dt = dt.to_array().values
+        return dt.min(), dt.mean(), dt.max()
+
+    else:
+        #month_day = pd.MultiIndex.from_arrays([dt[&#39;time.month&#39;].values, dt[&#39;time.day&#39;].values])
+        #dt.coords[&#39;month_day&#39;] = (&#39;time&#39;, month_day)
+        if freq == &#39;m&#39;:
+            return dt.groupby(&#34;time.month&#34;).min(), dt.groupby(&#34;time.month&#34;).mean(), dt.groupby(&#34;time.month&#34;).max()
+        elif freq == &#39;w&#39;:
+            return dt.groupby(&#34;time.week&#34;).min(), dt.groupby(&#34;time.week&#34;).mean(), dt.groupby(&#34;time.week&#34;).max()
+        else:
+            return dt.groupby(&#34;time.day&#34;).min(), dt.groupby(&#34;time.day&#34;).mean(), dt.groupby(&#34;time.day&#34;).max()</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.data.flat_table"><code class="name flex">
+<span>def <span class="ident">flat_table</span></span>(<span>dt)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>dt</code></strong></dt>
+<dd>an xarray Dataset containing data to be flattened. The index remains the same as the input dataset</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>an xarray flattened</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@timing
+def flat_table(dt):
+    &#39;&#39;&#39;
+    Args:
+        dt: an xarray Dataset containing data to be flattened. The index remains the same as the input dataset
+
+    Returns:
+        an xarray flattened
+    &#39;&#39;&#39;
+    return dt.stack(latlon=(&#39;latitude&#39;, &#39;longitude&#39;)).to_array().squeeze()</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.data.hourly_to_daily"><code class="name flex">
+<span>def <span class="ident">hourly_to_daily</span></span>(<span>ds)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>df</code></strong></dt>
+<dd>an xarray Dataset containing hourly historical data</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>an xarray Dataset containing daily historical data</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@timing
+def hourly_to_daily(ds):
+    &#39;&#39;&#39;
+    Args:
+        df: an xarray Dataset containing hourly historical data
+
+    Returns:
+        an xarray Dataset containing daily historical data
+    &#39;&#39;&#39;
+    #ds = read_nc(READ_PATH + &#39;/ERA-5_{}_Geopotential-500hPa_{}_{}.nc&#39;.format(freq, months, obs_years))
+    ds.coords[&#39;time&#39;] = ds.time.dt.floor(&#39;1D&#39;)
+    ds = ds.groupby(&#39;time&#39;).mean()
+    ds.to_netcdf(READ_PATH + &#39;/ERA-5_{}_{}_{}_{}.nc&#39;.format(&#39;daily&#39;, physical_qty, months, obs_years))
+    return ds</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.data.limit_geography"><code class="name flex">
+<span>def <span class="ident">limit_geography</span></span>(<span>dt, lats, longs)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>dt</code></strong></dt>
+<dd>an xarray Dataset containing data</dd>
+<dt><strong><code>lats</code></strong></dt>
+<dd>extreme values of latitude</dd>
+<dt><strong><code>longs</code></strong></dt>
+<dd>extreme values of longitude</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>a Pandas df containing the retained rows falling in the geographical area</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@timing
+def limit_geography(dt, lats, longs):
+    &#39;&#39;&#39;
+    Args:
+        dt: an xarray Dataset containing data
+        lats: extreme values of latitude
+        longs: extreme values of longitude
+
+    Returns:
+        a Pandas df containing the retained rows falling in the geographical area
+    &#39;&#39;&#39;
+    return dt.where(lambda x: ((lats[0] &lt;= x.latitude) &amp; (x.latitude &lt;= lats[1]) &amp;
+                               (longs[0] &lt;= x.longitude) &amp; (x.longitude &lt;= longs[1])), drop=True)</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.data.limit_years"><code class="name flex">
+<span>def <span class="ident">limit_years</span></span>(<span>df, start_year=1991)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>df</code></strong></dt>
+<dd>a pandas DataFrame
+containing historical data</dd>
+<dt><strong><code>start_year</code></strong></dt>
+<dd>the year from which to start to compute the normal</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>a pandas DataFrame containing the historical series of the normal starting from start_year</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@timing
+def limit_years(df, start_year=1991):
+    &#39;&#39;&#39;
+    Args:
+        df: a pandas DataFrame  containing historical data
+        start_year: the year from which to start to compute the normal
+
+    Returns:
+        a pandas DataFrame containing the historical series of the normal starting from start_year
+    &#39;&#39;&#39;
+    print(&#34;Dataframe length before limiting years: %d&#34; % len(df))
+    new_df = df[df[&#39;year&#39;] &gt;= start_year]
+    print(&#34;Dataframe length after limiting years: %d&#34; % len(new_df))
+    return new_df</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.data.read_nc"><code class="name flex">
+<span>def <span class="ident">read_nc</span></span>(<span>path_to_file)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>path_to_file</code></strong></dt>
+<dd>string of the file path</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>an xr.Dataset variable</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@timing
+def read_nc(path_to_file):
+    &#39;&#39;&#39;
+    Args:
+        path_to_file: string of the file path
+
+    Returns:
+        an xr.Dataset variable
+    &#39;&#39;&#39;
+    # return nc.Dataset(path_to_file)
+    return xr.open_dataset(path_to_file)</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.data.reduce_dim"><code class="name flex">
+<span>def <span class="ident">reduce_dim</span></span>(<span>dt, reshape='latlon', method='PCA', **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>df</code></strong></dt>
+<dd>an xarray Dataset</dd>
+<dt><strong><code>method</code></strong></dt>
+<dd>the method used to perform dimensionality reduction, if not specified PCA is used</dd>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>a dictionary of further parameters, like the percentage of explained variance used to retain the components or the name of the VAE model file</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>a numpy.array reduced in the feature space</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@timing
+def reduce_dim(dt, reshape=&#39;latlon&#39;, method=&#39;PCA&#39;, **kwargs):
+    &#39;&#39;&#39;
+    Args:
+        df: an xarray Dataset
+        method: the method used to perform dimensionality reduction, if not specified PCA is used
+        **kwargs: a dictionary of further parameters, like the percentage of explained variance used to retain the components or the name of the VAE model file
+
+    Returns:
+        a numpy.array reduced in the feature space
+    &#39;&#39;&#39;
+
+    if method == &#39;PCA&#39;:
+        if dt.ndim != 2:
+            dt = dt.squeeze()
+        pca = wrap(PCA(kwargs[&#34;exp_variance&#34;] if &#34;exp_variance&#34; in kwargs else .95), reshapes=reshape)
+        reduced_dt = pca.fit_transform(dt)
+
+    elif method == &#34;VAE&#34;:
+        time_idx = dt.coords[&#39;time&#39;]
+        vae = ConvVAE(args = Args())
+        vae.load_state_dict(torch.load(&#39;../models/&#39;+kwargs[&#39;season&#39;]+&#39;/&#39; + kwargs[&#39;model&#39;], map_location=&#39;cpu&#39;))
+        dt = np.swapaxes(dt.to_array().values, 0, 1)
+        dt = torch.from_numpy(dt).type(torch.FloatTensor)
+        stack = []
+        for i in range(0, len(dt), 256):
+            print(&#34;\r&#34;, end=&#34;&#34;)
+            print(&#34;Processing batch %d&#34; % (i // 256 + 1), end=&#34;&#34;)
+
+            batch = dt[i:i + 256, ...]
+            with torch.no_grad():
+                stack.append(vae(batch)[1])
+        reduced_dt = torch.cat(stack).squeeze().detach().numpy()
+        reduced_dt = xr.DataArray(reduced_dt, coords=[time_idx, range(1, reduced_dt.shape[1])])
+
+    else:
+        pass
+
+    print(&#34;Number of days: %d, Density of the grid: %d cells&#34; % (reduced_dt.shape[0], reduced_dt.shape[1]))
+    return reduced_dt</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.data.to_df"><code class="name flex">
+<span>def <span class="ident">to_df</span></span>(<span>dataset, col_name='z')</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>dataset</code></strong></dt>
+<dd>an xr.Dataset</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>a Pandas df</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@timing
+def to_df(dataset, col_name=&#39;z&#39;):
+    &#39;&#39;&#39;
+    Args:
+        dataset: an xr.Dataset
+
+    Returns:
+        a Pandas df
+    &#39;&#39;&#39;
+    df = dataset.to_dataframe().reset_index()
+    df = df.astype({&#39;latitude&#39;: &#39;float32&#39;, &#39;longitude&#39;: &#39;float32&#39;, col_name: &#39;float32&#39;})
+    df.set_index(&#39;time&#39;, inplace=True)
+    if col_name == &#39;z&#39;:
+        df[&#39;z&#39;] = df[&#39;z&#39;] / G
+    return df</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.data.to_nc"><code class="name flex">
+<span>def <span class="ident">to_nc</span></span>(<span>dt, variable='z')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to push a pandas DataFrame to a .nc file</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>dt</code></strong></dt>
+<dd>an xarray Dataset</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@timing
+def to_nc(dt, variable=&#39;z&#39;):
+    &#39;&#39;&#39;
+    Method to push a pandas DataFrame to a .nc file
+    Args:
+        dt: an xarray Dataset
+    &#39;&#39;&#39;
+    dt.to_netcdf(READ_PATH + &#39;/ERA-5_{}_{}_{}_{}_{}.nc&#39;. \
+                 format(freq if freq != &#39;hourly&#39; else &#39;daily&#39;, physical_qty, months, obs_years, variable),
+                 engine=&#34;netcdf4&#34;)</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.data.weighted_anomaly"><code class="name flex">
+<span>def <span class="ident">weighted_anomaly</span></span>(<span>dt)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to compute the weighted anomaly, by eliminating the bias along the latitude</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>dt</code></strong></dt>
+<dd>an xarray Dataset</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>the weighted anomaly</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@timing
+def weighted_anomaly(dt):
+    &#39;&#39;&#39;
+    Method to compute the weighted anomaly, by eliminating the bias along the latitude
+    Args:
+        dt: an xarray Dataset
+
+    Returns:
+        the weighted anomaly
+    &#39;&#39;&#39;
+    wgts = np.sqrt(np.cos(np.deg2rad(dt.latitude.values)).clip(0., 1.))
+    wgts = wgts[np.newaxis, ..., np.newaxis]
+    wgts = wgts.repeat(dt.to_array().shape[0], axis=0).repeat(dt.to_array().shape[-1], axis=-1)
+    return dt * wgts</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="modeling.utils.data.Compresser"><code class="flex name class">
+<span>class <span class="ident">Compresser</span></span>
+<span>(</span><span>latitude, longitude)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class to manage compression of dataframes</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Compresser(object):
+    &#39;&#39;&#39;
+    Class to manage compression of dataframes
+    &#39;&#39;&#39;
+
+    def __init__(self, latitude, longitude):
+        self.enc_dicts = [{k: v for k, v in zip(latitude.unique(), range(len(latitude.unique())))},
+                          {k: v for k, v in zip(longitude.unique(), range(len(longitude.unique())))}]
+
+        self.dec_dicts = [{v: k for k, v in dd.items()} for dd in self.enc_dicts]
+
+    @timing
+    def encode_coords(self, df):
+        &#39;&#39;&#39;
+        Method to map float32 latitude, longitude coordinates in a more memory-conservative format (i.e. int16)
+        Args:
+        - df: a pandas DataFrame containing the coordinates to be converted
+        &#39;&#39;&#39;
+
+        df[&#39;latitude&#39;] = df[&#39;latitude&#39;].map(self.enc_dicts[0]).astype(&#39;int16&#39;)
+        df[&#39;longitude&#39;] = df[&#39;longitude&#39;].map(self.enc_dicts[1]).astype(&#39;int16&#39;)
+        return df
+
+    @timing
+    def decode_coords(self, df):
+        &#39;&#39;&#39;
+        Method to map int16-encoded latitude, longitude coordinates in the original float32 format
+        Args:
+        - df: a pandas DataFrame containing the coordinates to be converted
+        &#39;&#39;&#39;
+        df[&#39;latitude&#39;] = df[&#39;latitude&#39;].map(self.dec_dicts[0]).astype(&#39;float32&#39;)
+        df[&#39;longitude&#39;] = df[&#39;longitude&#39;].map(self.dec_dicts[1]).astype(&#39;float32&#39;)
+        return df</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="modeling.utils.data.Compresser.decode_coords"><code class="name flex">
+<span>def <span class="ident">decode_coords</span></span>(<span>self, df)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to map int16-encoded latitude, longitude coordinates in the original float32 format
+Args:
+- df: a pandas DataFrame containing the coordinates to be converted</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@timing
+def decode_coords(self, df):
+    &#39;&#39;&#39;
+    Method to map int16-encoded latitude, longitude coordinates in the original float32 format
+    Args:
+    - df: a pandas DataFrame containing the coordinates to be converted
+    &#39;&#39;&#39;
+    df[&#39;latitude&#39;] = df[&#39;latitude&#39;].map(self.dec_dicts[0]).astype(&#39;float32&#39;)
+    df[&#39;longitude&#39;] = df[&#39;longitude&#39;].map(self.dec_dicts[1]).astype(&#39;float32&#39;)
+    return df</code></pre>
+</details>
+</dd>
+<dt id="modeling.utils.data.Compresser.encode_coords"><code class="name flex">
+<span>def <span class="ident">encode_coords</span></span>(<span>self, df)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to map float32 latitude, longitude coordinates in a more memory-conservative format (i.e. int16)
+Args:
+- df: a pandas DataFrame containing the coordinates to be converted</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@timing
+def encode_coords(self, df):
+    &#39;&#39;&#39;
+    Method to map float32 latitude, longitude coordinates in a more memory-conservative format (i.e. int16)
+    Args:
+    - df: a pandas DataFrame containing the coordinates to be converted
+    &#39;&#39;&#39;
+
+    df[&#39;latitude&#39;] = df[&#39;latitude&#39;].map(self.enc_dicts[0]).astype(&#39;int16&#39;)
+    df[&#39;longitude&#39;] = df[&#39;longitude&#39;].map(self.enc_dicts[1]).astype(&#39;int16&#39;)
+    return df</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="modeling.utils" href="index.html">modeling.utils</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="modeling.utils.data.build_data" href="#modeling.utils.data.build_data">build_data</a></code></li>
+<li><code><a title="modeling.utils.data.eofs" href="#modeling.utils.data.eofs">eofs</a></code></li>
+<li><code><a title="modeling.utils.data.evaluate_anomaly" href="#modeling.utils.data.evaluate_anomaly">evaluate_anomaly</a></code></li>
+<li><code><a title="modeling.utils.data.evaluate_normal" href="#modeling.utils.data.evaluate_normal">evaluate_normal</a></code></li>
+<li><code><a title="modeling.utils.data.flat_table" href="#modeling.utils.data.flat_table">flat_table</a></code></li>
+<li><code><a title="modeling.utils.data.hourly_to_daily" href="#modeling.utils.data.hourly_to_daily">hourly_to_daily</a></code></li>
+<li><code><a title="modeling.utils.data.limit_geography" href="#modeling.utils.data.limit_geography">limit_geography</a></code></li>
+<li><code><a title="modeling.utils.data.limit_years" href="#modeling.utils.data.limit_years">limit_years</a></code></li>
+<li><code><a title="modeling.utils.data.read_nc" href="#modeling.utils.data.read_nc">read_nc</a></code></li>
+<li><code><a title="modeling.utils.data.reduce_dim" href="#modeling.utils.data.reduce_dim">reduce_dim</a></code></li>
+<li><code><a title="modeling.utils.data.to_df" href="#modeling.utils.data.to_df">to_df</a></code></li>
+<li><code><a title="modeling.utils.data.to_nc" href="#modeling.utils.data.to_nc">to_nc</a></code></li>
+<li><code><a title="modeling.utils.data.weighted_anomaly" href="#modeling.utils.data.weighted_anomaly">weighted_anomaly</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="modeling.utils.data.Compresser" href="#modeling.utils.data.Compresser">Compresser</a></code></h4>
+<ul class="">
+<li><code><a title="modeling.utils.data.Compresser.decode_coords" href="#modeling.utils.data.Compresser.decode_coords">decode_coords</a></code></li>
+<li><code><a title="modeling.utils.data.Compresser.encode_coords" href="#modeling.utils.data.Compresser.encode_coords">encode_coords</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

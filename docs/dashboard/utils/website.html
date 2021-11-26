@@ -1,0 +1,1074 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>dashboard.utils.website API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>dashboard.utils.website</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import os
+import itertools
+import pandas as pd
+from dashboard.utils.plotting import *
+from dashboard.utils.data import *
+
+path = &#34;dashboard/energy_imgs&#34;
+
+def plot_comparison(true_df, synthetic_df):
+    try:
+        os.makedirs(os.path.join(path, &#39;Comparison&#39;))
+    except OSError as oserr:
+        print(oserr)
+    columns = [c for c in true_df.columns.intersection(synthetic_df.columns)]
+    tmp, tmp_synth = true_df[columns], synthetic_df[columns]
+    countries = tmp.index.get_level_values(0).intersection(tmp_synth.index.get_level_values(0))
+    tmp = tmp.loc[countries]
+    tmp_synth = tmp_synth.loc[countries]
+
+
+    st.subheader(&#34;Time series comparison&#34;)
+    with st.expander(&#39;&#39;, expanded = True):
+        selected = st.multiselect(&#34;Select the variables you want to plot&#34;, columns, [&#39;Total Wind Obs&#39;, &#39;Total Wind Capacity&#39;], key = &#34;ts_vars&#34;)
+        years = st.multiselect(&#34;Select an year to show&#34;, range(2011, 2022), [2020], key = &#34;ts_years&#34;)
+        st.write(
+            compare_timeseries(tmp.reset_index(level=0)[tmp.reset_index(level=0).index.year.isin(years)], tmp_synth.reset_index(level=0)[tmp_synth.reset_index(level=0).index.year.isin(years)],
+                               selected, [&#39;True&#39;, &#39;Synthetic&#39;],
+                               os.path.join(path, &#39;Comparison&#39;, &#39;energy_vars_ts.png&#39;)))
+
+        st.caption(f&#34;Comparison of the time-series of the {&#39;,&#39;.join(selected)} variables for synthetic data (1979-2021) and true measurements (2011-2021)&#34;)
+
+        st.write(
+            compare_timeseries(tmp.reset_index(level=0)[tmp.reset_index(level=0).index.year.isin(years)], tmp.diff().reset_index(level=0)[tmp.reset_index(level=0).index.year.isin(years)],
+                               selected,
+                               [&#39;True&#39;, &#39;Correlated&#39;],
+                               os.path.join(path, &#39;Comparison&#39;, &#39;energy_vars_ts_correlated.png&#39;)))
+        st.caption(f&#34;Detrended true time-series  of the {&#39;,&#39;.join(selected)} variables&#34;)
+
+    st.subheader(&#34;Distribution comparison&#34;)
+
+    with st.expander(&#39;&#39;, expanded = True):
+        period = st.radio(&#34;Compare:&#34;, (&#39;Same Period&#39;,&#39;All History&#39;))
+        if period == &#39;Same Period&#39;:
+            idx = tmp.index
+            print(len(idx))
+        else:
+            idx = tmp_synth.index
+            print(len(idx))
+
+        selected = st.multiselect(&#34;Select the variables you want to plot&#34;, columns, [&#34;Total Wind Obs&#34;, &#34;Total Wind Capacity&#34;, &#34;Total Solar Obs&#34;, &#34;Total Solar Capacity&#34;], key=&#34;distributions_vars&#34;)
+        st.write(
+            compare_distributions(tmp, tmp_synth.loc[idx], selected, [&#39;True&#39;, &#39;Synthetic&#39;],
+                                  os.path.join(path, &#39;Comparison&#39;, &#39;energy_vars_distribution.png&#39;)))
+        st.caption(f&#34;Distribution of the {&#39;,&#39;.join(selected)} variables across the synthetic (orange) and true measurements (blue) datasets&#34;)
+
+        st.write(
+            compare_distributions_by_country(tmp, tmp_synth.loc[idx], selected, [&#39;True&#39;, &#39;Synthetic&#39;],
+                                             os.path.join(path, &#39;Comparison&#39;, &#39;energy_vars_distribution_by_country.png&#39;)))
+        st.caption(f&#34;Distribution of the {&#39;,&#39;.join(selected)} variables divided by countires across the synthetic (orange) and true measurements (blue) datasets&#34;)
+
+        stats = pd.DataFrame(columns=pd.MultiIndex.from_tuples(
+            itertools.product([&#39;Mean&#39;, &#39;Std&#39;, &#39;Skewness&#39;, &#39;Kurtosis&#39;], [&#39;True&#39;, &#39;Synthetic&#39;])),
+            index=selected)
+        for col in stats.index:
+            for dtf, ind in zip([tmp, tmp_synth.loc[idx]], [&#39;True&#39;, &#39;Synthetic&#39;]):
+                val = dtf[col]
+                mean = val.mean(skipna=True)
+                stats.loc[col, (&#39;Mean&#39;, ind)] = mean
+                std = val.std(skipna=True)
+                stats.loc[col, (&#39;Std&#39;, ind)] = std
+                stats.loc[col, (&#39;Skewness&#39;, ind)] = ((val ** 3).mean(skipna=True) - 3 * mean * (
+                        std ** 2) - mean ** 3) / std ** 3
+                stats.loc[col, (&#39;Kurtosis&#39;, ind)] = ((val - mean) ** 4).mean(skipna=True) / std ** 4
+
+        stats.to_csv(&#34;stats.csv&#34;)
+        st.write(stats)
+        st.caption(&#34;The four statistical moments of the synthetic-data and true-data distributions&#34;)
+
+def plot_EU7(df, predictions, pcs):
+    try:
+        os.makedirs(os.path.join(path, &#39;EU-7&#39;))
+    except OSError as oserr:
+        print(oserr)
+    columns = df.columns
+
+    st.subheader(&#39;Distributions&#39;)
+    with st.expander(&#39;&#39;, expanded = True):
+        selected = st.multiselect(&#34;Select the variables you want to plot&#34;, columns, [&#34;Total Wind Obs&#34;, &#34;Total Wind Capacity&#34;, &#34;Total Solar Obs&#34;, &#34;Total Solar Capacity&#34;], key=&#34;distribution_vars&#34;)
+        st.write(
+            plot_distribution(df, selected,
+                          os.path.join(path, &#39;EU-7&#39;, &#39;energy_vars_distribution.png&#39;)))
+        st.caption(f&#34;Distribution of {&#39;,&#39;.join(selected)} variables for EU-7&#34;)
+
+    st.subheader(&#39;Monthly trends&#39;)
+    with st.expander(&#39;&#39;, expanded = True):
+        selected = st.multiselect(&#34;Select the variables you want to plot&#34;, columns, [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;, &#39;Load&#39;], key=&#34;trends_vars&#34;)
+        st.write(
+            plot_bands(df, df.index.get_level_values(1).month, selected,
+                   &#39;Month&#39;, &#39;&#39;, os.path.join(path, &#39;EU-7&#39;, &#39;bands_energy_vars.png&#39;)))
+        st.caption(f&#34;Monthly trends of the {&#39;,&#39;.join(selected)} variables&#34;)
+
+    st.subheader(&#39;Variable vs. Variable&#39;)
+    with st.expander(&#39;&#39;, expanded = True):
+        col1, col2 = st.columns(2)
+        x_col = col1.selectbox(&#34;Select the x variable&#34;, columns)
+        y_col = col2.selectbox(&#34;Select the y variable&#34;, columns)
+        col1.write(
+            plot_scatter(df[df.index.get_level_values(1).map(pd.tseries.offsets.BDay().onOffset)], x_col, y_col,
+                         os.path.join(path, &#39;EU-7&#39;, f&#39;{x_col}_vs_{y_col}_bdays.png&#39;),
+                         c=df[df.index.get_level_values(1).map(pd.tseries.offsets.BDay().onOffset)][x_col],
+                         cmap=&#39;RdBu_r&#39;)
+        )
+        col1.caption(f&#34;Distribution {x_col} vs. {y_col} on Business Days&#34;)
+
+        col2.write(
+            plot_scatter(df[[not elem for elem in df.index.get_level_values(1).map(pd.tseries.offsets.BDay().onOffset)]],
+                         x_col, y_col, os.path.join(path, &#39;EU-7&#39;, f&#39;{x_col}_vs_{y_col}_holidays.png&#39;),
+                         c=df[[not elem for elem in df.index.get_level_values(1).map(pd.tseries.offsets.BDay().onOffset)]][x_col], cmap=&#39;RdBu_r&#39;)
+        )
+        col2.caption(f&#34;Distribution {x_col} vs. {y_col} on Day Offs&#34;)
+
+    st.subheader(&#34;Maps&#34;)
+    with st.expander(&#39;&#39;, expanded=True):
+        selected_date = st.selectbox(&#34;Select one date&#34;, df.index.get_level_values(1), format_func = lambda x: x.strftime(&#34;%d, %B, %Y&#34;), key=&#34;maps_dates&#34;)
+        selected_cols = st.multiselect(&#34;Select the variable(s)&#34;, columns, [&#39;Load&#39;], key=&#34;maps_columns&#34;)
+
+        st.write(
+            plot_maps(df.reset_index(level=0), &#39;EU-7&#39;, selected_cols, selected_date,
+                      os.path.join(path, &#39;EU-7&#39;, f&#39;maps_{&#34;_&#34;.join(selected_cols)}.png&#39;)))
+
+    st.subheader(&#34;Regimes&#34;)
+    with st.expander(&#39;&#39;, expanded = True):
+        model = st.selectbox(&#34;Select the model&#34;, predictions.columns.get_level_values(0).unique())
+        try:
+            os.makedirs(os.path.join(path, &#39;EU-7&#39;, model))
+        except OSError as oserr:
+            print(oserr)
+
+        eu_df = filter_by_preds(df.reset_index(level=0), predictions, model)
+        selected = st.multiselect(&#34;Select one or more variables&#34;, columns, [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;, &#39;Load&#39;], key = &#34;regimes&#34;)
+
+        for sel, statistic in zip(selected, get_distribution_by_regime(eu_df, selected, predictions, model)):
+            st.write(statistic)
+            statistic.to_csv(f&#34;{sel}.csv&#34;)
+            st.caption(f&#34;Moments of the distribution of the {sel} variable under regimes&#34;)
+        st.write(
+            plot_distribution_by_regime_days(eu_df, selected, predictions, model,
+                                             os.path.join(path, &#39;EU-7&#39;, model,f&#39;distributions_{&#34;_&#34;.join(selected)}_regimes_days.png&#39;)))
+        st.caption(f&#34;Distribution of the {&#39;,&#39;.join(selected)} variables under regimes on Business Days (left) and Day Offs (right)&#34;)
+
+        st.write(
+            plot_distribution_by_regime_monthly(eu_df, selected,
+                                            predictions, model, os.path.join(path, &#39;EU-7&#39;, model,f&#39;distributions_monthly_{&#34;_&#34;.join(selected)}_regimes.png&#39;)))
+        st.caption(f&#34;Distribution of the {&#39;,&#39;.join(selected)} variables under regimes at a monthly level&#34;)
+
+        for sel, table in zip(selected, get_extreme_events(eu_df, selected, predictions, model)):
+            st.write(table)
+            st.caption(f&#34;Extreme events of the {sel} variable on EU-7 countries&#34;)
+
+        &#39;&#39;&#39;
+        col1, col2 = st.columns(2)
+        x_col = col1.selectbox(&#34;Select the x variable&#34;, columns, key = &#34;regimes_densitiy_x&#34;)
+        y_cols = col2.multiselect(&#34;Select the y variable(s)&#34;, [c for c in columns if c!= x_col], [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;], key = &#34;regimes_density_y&#34;)
+
+        
+        st.write(
+            plot_densities_vs_variable(eu_df, x_col, y_cols,
+                                       os.path.join(path, &#39;EU-7&#39;, model, f&#39;densities_{x_col}_{&#34;_&#34;.join(y_cols)}_regimes.png&#39;)))
+        st.caption(f&#34;Probability densities of {&#39;,&#39;.join(y_cols)} variables against {x_col} variable by regime&#34;)
+        &#39;&#39;&#39;
+
+        selected = st.multiselect(&#34;Select the variables you want to plot&#34;, columns, [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;], key = &#34;boxplot&#34;)
+        st.write(
+            boxplot(eu_df, [&#39;Regime&#39;], selected,
+                    os.path.join(path, &#39;EU-7&#39;, model, f&#39;boxplots_{&#34;_&#34;.join(selected)}_regimes.png&#39;))
+        )
+        st.caption(&#34;Boxplots of variables under regimes&#34;)
+
+        st.write(
+            boxplot_monthly(eu_df, [&#39;Regime&#39;, &#39;Month&#39;], selected,
+                            os.path.join(path, &#39;EU-7&#39;, model, f&#39;boxplots_{&#34;_&#34;.join(selected)}_regimes_monthly.png&#39;))
+        )
+        st.caption(&#34;Monthly Boxplots of variables under regimes&#34;)
+
+        monthly_stats = eu_df.groupby([eu_df.index.month, &#39;Regime&#39;]).mean()
+        st.dataframe(monthly_stats)
+
+        selected = st.multiselect(&#34;Select the variables you want to plot&#34;, columns, [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;], key = &#34;barplot&#34;)
+        st.write(
+            plot_bars(monthly_stats, selected,
+                      os.path.join(path, &#39;EU-7&#39;, model, f&#39;barplot_{&#34;_&#34;.join(selected)}_regimes_monthly.png&#39;))
+        )
+
+        st.caption(f&#34;Bar plots of the {&#39;,&#39;.join(selected)} variables under regimes&#34;)
+
+        ### SCATTER
+        regimes = st.multiselect(&#34;Select one or more regimes&#34;, eu_df[&#39;Regime&#39;].unique().tolist(), eu_df[&#39;Regime&#39;].unique().tolist(), key = &#34;regimes_select&#34;)
+        col1, col2 = st.columns(2)
+        x_col = col1.selectbox(&#34;Select the x variable&#34;, columns, key=&#34;regimes_x&#34;)
+        y_col = col2.selectbox(&#34;Select the y variable&#34;, columns, key=&#34;regimes_y&#34;)
+        col1.write(
+            plot_scatter_by_regime(eu_df[eu_df.index.map(pd.tseries.offsets.BDay().onOffset)],
+                                        x_col, y_col, regimes, os.path.join(path, &#39;EU-7&#39;, model,f&#39;distributions_{x_col}_{y_col}_regimes_bdays.png&#39;)))
+
+        col1.caption(f&#34;{x_col} and {y_col} variables against under regimes on Busines Days&#34;)
+        col2.write(
+            plot_scatter_by_regime(eu_df[[not elem for elem in eu_df.index.map(pd.tseries.offsets.BDay().onOffset)]],
+                                   x_col, y_col, regimes, os.path.join(path, &#39;EU-7&#39;, model, f&#39;distributions_{x_col}_{y_col}_regimes_bdays.png&#39;)))
+        col2.caption(f&#34;{x_col} and {y_col} variables against under regimes on Day Offs&#34;)
+
+        selected_cols = st.multiselect(&#34;Select the variable(s)&#34;, columns, [&#39;Load&#39;], key=&#34;maps_columns_regimes&#34;)
+
+        st.write(
+            plot_maps_by_regime(eu_df.reset_index(level=0), &#39;EU-7&#39;, selected_cols,
+                      os.path.join(path, &#39;EU-7&#39;, model, f&#39;maps_{&#34;_&#34;.join(selected_cols)}_regimes.png&#39;)))
+
+def plot_country(country, df, predictions, pcs):
+    try:
+        os.makedirs(os.path.join(path, country))
+    except OSError as oserr:
+        print(oserr)
+
+
+    country_df = filter_by_country(df, country)
+    columns = country_df.columns
+
+    st.subheader(&#34;Principal Components of the Regimes&#34;)
+    with st.expander(&#39;&#39;, expanded=True):
+        selected = st.multiselect(&#34;Select one or more variables&#34;, columns, [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;, &#39;Load&#39;], key = &#34;pcs&#34;)
+        st.write(
+            plot_3Dpcs(country_df, pcs, selected,
+                       os.path.join(path, country, &#39;scatter_measure_pcs.png&#39;))
+        )
+        st.caption(f&#34;Point distributions of the {&#39;,&#39;.join(selected)} variables with respect to the PCS&#34;)
+
+    st.subheader(&#39;Variable vs. Variable&#39;)
+    with st.expander(&#39;&#39;, expanded=True):
+        col1, col2 = st.columns(2)
+        x_col = col1.selectbox(&#34;Select the x variable&#34;, columns)
+        y_col = col2.selectbox(&#34;Select the y variable&#34;, columns)
+        col1.write(
+            plot_scatter(country_df[country_df.index.map(pd.tseries.offsets.BDay().onOffset)], x_col, y_col,
+                         os.path.join(path, country, f&#39;{x_col}_vs_{y_col}_bdays.png&#39;),
+                         c=country_df[country_df.index.map(pd.tseries.offsets.BDay().onOffset)][x_col],
+                         cmap=&#39;RdBu_r&#39;)
+        )
+        col1.caption(f&#34;Distribution {x_col} vs. {y_col} on Business Days&#34;)
+
+        col2.write(
+            plot_scatter(country_df[[not elem for elem in country_df.index.map(pd.tseries.offsets.BDay().onOffset)]],
+                         x_col, y_col, os.path.join(path, country, f&#39;{x_col}_vs_{y_col}_holidays.png&#39;),
+                         c=country_df[[not elem for elem in country_df.index.map(pd.tseries.offsets.BDay().onOffset)]][
+                             x_col], cmap=&#39;RdBu_r&#39;)
+        )
+        col2.caption(f&#34;Distribution {x_col} vs. {y_col} on Day Offs&#34;)
+
+    st.subheader(&#34;Regimes&#34;)
+    with st.expander(&#39;&#39;, expanded = True):
+        model = st.selectbox(&#34;Select the model&#34;, predictions.columns.get_level_values(0).unique())
+        try:
+            os.makedirs(os.path.join(path, country, model))
+        except OSError as oserr:
+            print(oserr)
+
+        country_df = filter_by_preds(country_df, predictions, model)
+
+        selected = st.multiselect(&#34;Select one or more variables&#34;, columns, [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;, &#39;Load&#39;], key = &#34;regimes&#34;)
+        st.write(
+            plot_distribution_by_regime_days(country_df, selected, predictions, model,
+                                             os.path.join(path, country, model, f&#39;distributions_{&#34;_&#34;.join(selected)}_regimes_days.png&#39;)))
+        st.caption(f&#34;Distribution of the {&#39;,&#39;.join(selected)} variables under regimes on Business Days (left) and Day Offs (right)&#34;)
+
+        st.write(
+            plot_distribution_by_regime_monthly(country_df, selected,
+                                            predictions, model, os.path.join(path, country, model,f&#39;distributions_monthly_{&#34;_&#34;.join(selected)}_regimes.png&#39;)))
+        st.caption(f&#34;Distribution of the {&#39;,&#39;.join(selected)} variables under regimes at a monthly level&#34;)
+
+        col1, col2 = st.columns(2)
+        col1.write(
+            plot_extreme_events(country_df[country_df.index.map(pd.tseries.offsets.BDay().onOffset)], selected,
+                                predictions, model, os.path.join(path, country, model,f&#39;extreme_events_{&#34;_&#34;.join(selected)}_regimes_bdays.png&#39;)))
+        col1.caption(f&#34;Extreme events of the {&#39;,&#39;.join(selected)} variables under regimes on Busines Days&#34;)
+
+        col2.write(
+            plot_extreme_events(country_df[[not elem for elem in country_df.index.map(pd.tseries.offsets.BDay().onOffset)]],
+                                selected, predictions, model,
+                                os.path.join(path, country, model, f&#39;extreme_events_{&#34;_&#34;.join(selected)}_regimes_holidays.png&#39;)))
+        col2.caption(f&#34;Extreme events of the {&#39;,&#39;.join(selected)} variables under regimes on Days Off&#34;)
+
+        col1, col2 = st.columns(2)
+        x_col = col1.selectbox(&#34;Select the x variable&#34;, columns, key = &#34;regimes_densitiy_x&#34;)
+        y_cols = col2.multiselect(&#34;Select the y variable(s)&#34;, [c for c in columns if c!= x_col], [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;], key = &#34;regimes_density_y&#34;)
+        st.write(
+            plot_densities_vs_variable(country_df, x_col, y_cols,
+                                       os.path.join(path, country, model, f&#39;densities_{x_col}_{&#34;_&#34;.join(y_cols)}_regimes.png&#39;)))
+        st.caption(f&#34;Probability densities of {&#39;,&#39;.join(y_cols)} variables against {x_col} variable by regime&#34;)
+
+        selected = st.multiselect(&#34;Select the variables you want to plot&#34;, columns, [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;], key = &#34;boxplot&#34;)
+        st.write(
+            boxplot(country_df, [&#39;Regime&#39;], selected,
+                    os.path.join(path, country, model, f&#39;boxplots_{&#34;_&#34;.join(selected)}_regimes.png&#39;))
+        )
+        st.caption(f&#34;Boxplots of {&#39;,&#39;.join(selected)} variables under regimes&#34;)
+
+        st.write(
+            boxplot_monthly(country_df, [&#39;Regime&#39;, &#39;Month&#39;], selected,
+                            os.path.join(path, country, model, f&#39;boxplots_{&#34;_&#34;.join(selected)}_regimes_monthly.png&#39;))
+        )
+        st.caption(f&#34;Monthly Boxplots of {&#39;,&#39;.join(selected)} variables under regimes&#34;)
+
+        monthly_stats = country_df.groupby([country_df.index.month, &#39;Regime&#39;]).mean()
+        st.dataframe(monthly_stats)
+
+        selected = st.multiselect(&#34;Select the variables you want to plot&#34;, columns, [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;], key = &#34;barplot&#34;)
+        st.write(
+            plot_bars(monthly_stats, selected,
+                      os.path.join(path, country, model, f&#39;barplot_{&#34;_&#34;.join(selected)}_regimes_monthly.png&#39;))
+        )
+
+        st.caption(f&#34;Bar plots of the {&#39;,&#39;.join(selected)} variables under regimes&#34;)
+
+        ### SCATTER
+        regimes = st.multiselect(&#34;Select one or more regimes&#34;, country_df[&#39;Regime&#39;].unique().tolist(), country_df[&#39;Regime&#39;].unique().tolist(), key = &#34;regimes_select&#34;)
+        col1, col2 = st.columns(2)
+        x_col = col1.selectbox(&#34;Select the x variable&#34;, columns, key=&#34;regimes_x&#34;)
+        y_col = col2.selectbox(&#34;Select the y variable&#34;, columns, key=&#34;regimes_y&#34;)
+        col1.write(
+            plot_scatter_by_regime(country_df[country_df.index.map(pd.tseries.offsets.BDay().onOffset)],
+                                        x_col, y_col, regimes, os.path.join(path, country, model,f&#39;distributions_{x_col}_{y_col}_regimes_bdays.png&#39;)))
+
+        col1.caption(f&#34;{x_col} and {y_col} variables against under regimes on Busines Days&#34;)
+        col2.write(
+            plot_scatter_by_regime(country_df[[not elem for elem in country_df.index.map(pd.tseries.offsets.BDay().onOffset)]],
+                                   x_col, y_col, regimes, os.path.join(path, country, model, f&#39;distributions_{x_col}_{y_col}_regimes_bdays.png&#39;)))
+        col2.caption(f&#34;{x_col} and {y_col} variables against under regimes on Day Offs&#34;)
+
+
+        selected_cols = st.multiselect(&#34;Select the variable(s)&#34;, columns, [&#39;Load&#39;], key=&#34;maps_columns_regimes&#34;)
+
+        st.write(
+            plot_maps_by_regime(country_df.reset_index(level=0), country, selected_cols,
+                      os.path.join(path, country, model, f&#39;maps_{&#34;_&#34;.join(selected_cols)}_regimes.png&#39;)))
+
+def plot_subseasonal_forecasts(df, subseasonal_df, shortterm_df, predictions):
+    model = st.selectbox(&#34;Select the model&#34;, predictions.columns.get_level_values(0).unique())
+    col1, col2 = st.columns(2)
+    countries = col1.selectbox(&#34;Select the coutry&#34;, df.index.get_level_values(0).unique().tolist() + [&#39;EU-7&#39;], key = &#34;countries_subseasonal&#34;)
+    try:
+        os.makedirs(os.path.join(path, &#34;Subseasonal_forecast&#34;, countries, model))
+        os.makedirs(os.path.join(path, &#34;Subseasonal_forecast&#34;, &#34;ECMWF_weights&#34;))
+    except OSError as oserr:
+        print(oserr)
+
+    variables = col2.multiselect(&#34;Select the variables&#34;, df.columns.values.tolist(), [&#39;Load&#39;,&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;], key = &#34;variables_subseasonal&#34;)
+
+    st.write(
+        get_forecast_errors(subseasonal_df, predictions, model,
+                            os.path.join(path, &#34;Subseasonal_forecast&#34;, &#34;ECMWF_weights&#34;, &#34;forecast_errors&#34;)))
+    st.write(get_average_weights_forecast(subseasonal_df, predictions, model))
+
+    dates = subseasonal_df.index.get_level_values(0)#.unique().intersection(predictions.index)
+    date = st.slider(&#34;Select a forecast date&#34;,
+                     min_value=dates[0].date()+timedelta(7), max_value=dates[-1].date(), step=timedelta(1))
+    st.subheader(&#34;Historical distributions&#34;)
+    month = date.month if date.month in MONTHS else min(MONTHS, key=lambda x: abs(x-date.month))
+
+    filtered_df = filter_by_country(df, countries).loc[
+        filter_by_country(df, countries).index.intersection(predictions.loc[predictions.index.month == month].index)]
+    st.write(
+        plot_distribution_by_regime(filtered_df, variables, predictions, model, os.path.join(path, &#34;Subseasonal_forecast&#34;, countries, model, &#34;historical_distribution.png&#34;)))
+
+    forecast = filter_forecast(subseasonal_df, date, backward = False)
+    st.write(plot_weights_forecast(forecast, date,  os.path.join(path, &#34;Subseasonal_forecast&#34;,&#34;ECMWF_weights&#34;, date.strftime(&#34;%Y%m%d&#34;)+&#34;.png&#34;)))
+    forecast = bayesian_forecasts(subseasonal_df, forecast, predictions, model)
+    st.write(plot_weights_forecast(forecast, date,  os.path.join(path, &#34;Subseasonal_forecast&#34;,&#34;ECMWF_weights&#34;, date.strftime(&#34;%Y%m%d&#34;)+&#34;.png&#34;)))
+
+    try:
+        short_term = shortterm_df.xs(date.strftime(&#34;%Y-%m-%d&#34;), level = 1)
+    except:
+        short_term = None
+    predictions_weights = predictions.xs(model, level = 0, axis = 1).loc[date:date+timedelta(days = len(forecast))].drop(&#39;Prediction&#39;, axis = 1)
+    st.write(plot_weights_forecast(predictions_weights.reindex(columns = sorted(predictions_weights.columns)),
+                                    date, os.path.join(path, &#34;Subseasonal_forecast&#34;,&#34;model_weights&#34;, date.strftime(&#34;%Y%m%d&#34;)+&#34;.png&#34;)))
+    #st.write(
+    #    plot_forecast_distribution(df, forecast, predictions, countries, variables, date, model, os.path.join(path, &#34;Subseasonal_forecast&#34;, countries, model)))
+
+    st.write(
+        plot_forecast_boxplots(filtered_df, forecast, predictions, countries, variables, date, model,
+                                   os.path.join(path, &#34;Subseasonal_forecast&#34;, countries, model)))
+    st.write(
+        plot_forecast_anomalies(filtered_df, forecast, short_term, predictions, countries, variables, date, model,
+                                   os.path.join(path, &#34;Subseasonal_forecast&#34;, countries, model)))
+
+def plot_MF(df, predictions, targets, reservoir, inflow, groundwater):
+    st.subheader(&#34;Comparison with Metéo-France targets&#34;)
+
+    targets = targets.xs(&#39;Distance&#39;, level=0, axis=1)
+    predictions = predictions.loc[predictions.index.intersection(targets.index)]
+    models = predictions.columns.get_level_values(0).unique().tolist()
+
+    st.write(
+        plot_conf_matrix(predictions.loc[:, (models, REGIMES)], targets.drop(&#39;Prediction&#39;, axis=1),
+                         models))
+    st.caption(f&#34;Confusion matrices of the {&#39;, &#39;.join(models)} against Metéo-France targets&#34;)
+
+    st.write(
+        plot_multiclass_roc(predictions.loc[:, (models, REGIMES)],
+                            targets.drop(&#39;Prediction&#39;, axis=1), models))
+    st.caption(f&#34;ROC curves of the {&#39;, &#39;.join(models)} against Metéo-France targets&#34;)
+
+    model = st.selectbox(&#34;Select one or more models&#34;, models, key = &#39;model_multiselect&#39;)
+    predictions = predictions.xs(model, level=0, axis=1).reindex(sorted(targets.columns), axis=1)
+    targets = targets.loc[targets.index.intersection(predictions.index)]
+
+    st.write(
+        plot_historical_probabilities(targets, pivot = True, title = &#39;../imgs/stacked_bar_MF.png&#39;))
+    st.caption(f&#34;Historical monthly regimes probabilities of Metéo-France targets&#34;)
+
+    st.write(
+        plot_historical_probabilities(predictions.drop(&#39;Prediction&#39;, axis = 1), title = &#39;../imgs/stacked_bar_predictionsVAE.png&#39;))
+    st.caption(f&#34;Historical monthly regimes probabilities of {model}&#34;)
+
+    st.write(
+        plot_historical_counts(targets, pivot = True, title = &#39;../imgs/count_winter_MF.png&#39;))
+    st.write(
+        plot_historical_counts(predictions.drop(&#39;Prediction&#39;, axis = 1), title = &#39;../imgs/count_winter_predictionsVAE.png&#39;))
+
+    if SEASON == &#39;Winter&#39;:
+        f1, f2, f3 = plot_hydro_corr(predictions.drop(&#39;Prediction&#39;, axis = 1), reservoir, inflow, groundwater)
+        st.write(f1)
+        st.write(f2)
+        st.write(f3)
+
+def plot_dynamics_model(predictions, targets):
+    st.subheader(&#34;Dynamics&#34;)
+    model = st.selectbox(&#34;Select a model&#34;, predictions.columns.get_level_values(0).unique().tolist())
+    days = st.slider(&#34;Select a range of days to evaluate the transitions&#34;, min_value = 1, max_value= 30, step = 1)
+    stats = get_state_transitions(predictions,days)
+    plot_dynamics(stats)
+    image = Image.open(f&#34;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/scripts/mc_imgs/{model}.png&#34;)
+    st.image(image, caption=f&#34;{model} dynamics&#34;)
+
+    model = st.selectbox(&#34;Select a model&#34;, [&#39;GMM&#39;, &#39;Bayesian-GMM&#39;])
+    year = st.selectbox(&#34;Select a winter&#34;, predictions.index.year.unique()[:-1])
+    st.write(
+        compare_dynamics(predictions.loc[str(year)+&#34;-12-01&#34;:].iloc[:90],
+                         targets.xs(&#39;Distance&#39;, level = 0, axis = 1).loc[str(year)+&#34;-12-01&#34;:].iloc[:90],
+                         model, &#39;../imgs/compare_dynamics_MF.png&#39;))
+
+
+def build_webpage(true_df, synthetic_df, synthetic_mapped, subseasonal_df, shortterm_df, predictions, targets_MF, reservoir, inflow, groundwater, pcs):
+    st.title(&#34;Energy and Weather Variables Dashboard&#34;)
+    countries = synthetic_df.index.get_level_values(0).unique().tolist()
+    options = [&#39;EU-7&#39;] + countries + [&#39;Sub-seasonal Forecasts&#39;, &#39;Metéo-France&#39;, &#39;Model Dynamics&#39;, &#39;Comparison True Measurements and Synthetic Data&#39;]
+    sel_opt = st.selectbox(&#34;Select an option&#34;, options)
+
+    if sel_opt in countries:
+        plot_country(sel_opt, true_df, predictions, pcs)
+
+    else:
+        if sel_opt == &#34;Comparison True Measurements and Synthetic Data&#34;:
+            plot_comparison(true_df, synthetic_mapped)
+        elif sel_opt == &#34;EU-7&#34;:
+            plot_EU7(synthetic_mapped, predictions, pcs)
+        elif sel_opt == &#34;Sub-seasonal Forecasts&#34;:
+            plot_subseasonal_forecasts(synthetic_df, subseasonal_df, shortterm_df, predictions)
+        elif sel_opt == &#34;Metéo-France&#34;:
+            plot_MF(synthetic_df, predictions, targets_MF, reservoir, inflow, groundwater)
+        else:
+            plot_dynamics_model(predictions, targets_MF)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="dashboard.utils.website.build_webpage"><code class="name flex">
+<span>def <span class="ident">build_webpage</span></span>(<span>true_df, synthetic_df, synthetic_mapped, subseasonal_df, shortterm_df, predictions, targets_MF, reservoir, inflow, groundwater, pcs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def build_webpage(true_df, synthetic_df, synthetic_mapped, subseasonal_df, shortterm_df, predictions, targets_MF, reservoir, inflow, groundwater, pcs):
+    st.title(&#34;Energy and Weather Variables Dashboard&#34;)
+    countries = synthetic_df.index.get_level_values(0).unique().tolist()
+    options = [&#39;EU-7&#39;] + countries + [&#39;Sub-seasonal Forecasts&#39;, &#39;Metéo-France&#39;, &#39;Model Dynamics&#39;, &#39;Comparison True Measurements and Synthetic Data&#39;]
+    sel_opt = st.selectbox(&#34;Select an option&#34;, options)
+
+    if sel_opt in countries:
+        plot_country(sel_opt, true_df, predictions, pcs)
+
+    else:
+        if sel_opt == &#34;Comparison True Measurements and Synthetic Data&#34;:
+            plot_comparison(true_df, synthetic_mapped)
+        elif sel_opt == &#34;EU-7&#34;:
+            plot_EU7(synthetic_mapped, predictions, pcs)
+        elif sel_opt == &#34;Sub-seasonal Forecasts&#34;:
+            plot_subseasonal_forecasts(synthetic_df, subseasonal_df, shortterm_df, predictions)
+        elif sel_opt == &#34;Metéo-France&#34;:
+            plot_MF(synthetic_df, predictions, targets_MF, reservoir, inflow, groundwater)
+        else:
+            plot_dynamics_model(predictions, targets_MF)</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.website.plot_EU7"><code class="name flex">
+<span>def <span class="ident">plot_EU7</span></span>(<span>df, predictions, pcs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_EU7(df, predictions, pcs):
+    try:
+        os.makedirs(os.path.join(path, &#39;EU-7&#39;))
+    except OSError as oserr:
+        print(oserr)
+    columns = df.columns
+
+    st.subheader(&#39;Distributions&#39;)
+    with st.expander(&#39;&#39;, expanded = True):
+        selected = st.multiselect(&#34;Select the variables you want to plot&#34;, columns, [&#34;Total Wind Obs&#34;, &#34;Total Wind Capacity&#34;, &#34;Total Solar Obs&#34;, &#34;Total Solar Capacity&#34;], key=&#34;distribution_vars&#34;)
+        st.write(
+            plot_distribution(df, selected,
+                          os.path.join(path, &#39;EU-7&#39;, &#39;energy_vars_distribution.png&#39;)))
+        st.caption(f&#34;Distribution of {&#39;,&#39;.join(selected)} variables for EU-7&#34;)
+
+    st.subheader(&#39;Monthly trends&#39;)
+    with st.expander(&#39;&#39;, expanded = True):
+        selected = st.multiselect(&#34;Select the variables you want to plot&#34;, columns, [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;, &#39;Load&#39;], key=&#34;trends_vars&#34;)
+        st.write(
+            plot_bands(df, df.index.get_level_values(1).month, selected,
+                   &#39;Month&#39;, &#39;&#39;, os.path.join(path, &#39;EU-7&#39;, &#39;bands_energy_vars.png&#39;)))
+        st.caption(f&#34;Monthly trends of the {&#39;,&#39;.join(selected)} variables&#34;)
+
+    st.subheader(&#39;Variable vs. Variable&#39;)
+    with st.expander(&#39;&#39;, expanded = True):
+        col1, col2 = st.columns(2)
+        x_col = col1.selectbox(&#34;Select the x variable&#34;, columns)
+        y_col = col2.selectbox(&#34;Select the y variable&#34;, columns)
+        col1.write(
+            plot_scatter(df[df.index.get_level_values(1).map(pd.tseries.offsets.BDay().onOffset)], x_col, y_col,
+                         os.path.join(path, &#39;EU-7&#39;, f&#39;{x_col}_vs_{y_col}_bdays.png&#39;),
+                         c=df[df.index.get_level_values(1).map(pd.tseries.offsets.BDay().onOffset)][x_col],
+                         cmap=&#39;RdBu_r&#39;)
+        )
+        col1.caption(f&#34;Distribution {x_col} vs. {y_col} on Business Days&#34;)
+
+        col2.write(
+            plot_scatter(df[[not elem for elem in df.index.get_level_values(1).map(pd.tseries.offsets.BDay().onOffset)]],
+                         x_col, y_col, os.path.join(path, &#39;EU-7&#39;, f&#39;{x_col}_vs_{y_col}_holidays.png&#39;),
+                         c=df[[not elem for elem in df.index.get_level_values(1).map(pd.tseries.offsets.BDay().onOffset)]][x_col], cmap=&#39;RdBu_r&#39;)
+        )
+        col2.caption(f&#34;Distribution {x_col} vs. {y_col} on Day Offs&#34;)
+
+    st.subheader(&#34;Maps&#34;)
+    with st.expander(&#39;&#39;, expanded=True):
+        selected_date = st.selectbox(&#34;Select one date&#34;, df.index.get_level_values(1), format_func = lambda x: x.strftime(&#34;%d, %B, %Y&#34;), key=&#34;maps_dates&#34;)
+        selected_cols = st.multiselect(&#34;Select the variable(s)&#34;, columns, [&#39;Load&#39;], key=&#34;maps_columns&#34;)
+
+        st.write(
+            plot_maps(df.reset_index(level=0), &#39;EU-7&#39;, selected_cols, selected_date,
+                      os.path.join(path, &#39;EU-7&#39;, f&#39;maps_{&#34;_&#34;.join(selected_cols)}.png&#39;)))
+
+    st.subheader(&#34;Regimes&#34;)
+    with st.expander(&#39;&#39;, expanded = True):
+        model = st.selectbox(&#34;Select the model&#34;, predictions.columns.get_level_values(0).unique())
+        try:
+            os.makedirs(os.path.join(path, &#39;EU-7&#39;, model))
+        except OSError as oserr:
+            print(oserr)
+
+        eu_df = filter_by_preds(df.reset_index(level=0), predictions, model)
+        selected = st.multiselect(&#34;Select one or more variables&#34;, columns, [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;, &#39;Load&#39;], key = &#34;regimes&#34;)
+
+        for sel, statistic in zip(selected, get_distribution_by_regime(eu_df, selected, predictions, model)):
+            st.write(statistic)
+            statistic.to_csv(f&#34;{sel}.csv&#34;)
+            st.caption(f&#34;Moments of the distribution of the {sel} variable under regimes&#34;)
+        st.write(
+            plot_distribution_by_regime_days(eu_df, selected, predictions, model,
+                                             os.path.join(path, &#39;EU-7&#39;, model,f&#39;distributions_{&#34;_&#34;.join(selected)}_regimes_days.png&#39;)))
+        st.caption(f&#34;Distribution of the {&#39;,&#39;.join(selected)} variables under regimes on Business Days (left) and Day Offs (right)&#34;)
+
+        st.write(
+            plot_distribution_by_regime_monthly(eu_df, selected,
+                                            predictions, model, os.path.join(path, &#39;EU-7&#39;, model,f&#39;distributions_monthly_{&#34;_&#34;.join(selected)}_regimes.png&#39;)))
+        st.caption(f&#34;Distribution of the {&#39;,&#39;.join(selected)} variables under regimes at a monthly level&#34;)
+
+        for sel, table in zip(selected, get_extreme_events(eu_df, selected, predictions, model)):
+            st.write(table)
+            st.caption(f&#34;Extreme events of the {sel} variable on EU-7 countries&#34;)
+
+        &#39;&#39;&#39;
+        col1, col2 = st.columns(2)
+        x_col = col1.selectbox(&#34;Select the x variable&#34;, columns, key = &#34;regimes_densitiy_x&#34;)
+        y_cols = col2.multiselect(&#34;Select the y variable(s)&#34;, [c for c in columns if c!= x_col], [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;], key = &#34;regimes_density_y&#34;)
+
+        
+        st.write(
+            plot_densities_vs_variable(eu_df, x_col, y_cols,
+                                       os.path.join(path, &#39;EU-7&#39;, model, f&#39;densities_{x_col}_{&#34;_&#34;.join(y_cols)}_regimes.png&#39;)))
+        st.caption(f&#34;Probability densities of {&#39;,&#39;.join(y_cols)} variables against {x_col} variable by regime&#34;)
+        &#39;&#39;&#39;
+
+        selected = st.multiselect(&#34;Select the variables you want to plot&#34;, columns, [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;], key = &#34;boxplot&#34;)
+        st.write(
+            boxplot(eu_df, [&#39;Regime&#39;], selected,
+                    os.path.join(path, &#39;EU-7&#39;, model, f&#39;boxplots_{&#34;_&#34;.join(selected)}_regimes.png&#39;))
+        )
+        st.caption(&#34;Boxplots of variables under regimes&#34;)
+
+        st.write(
+            boxplot_monthly(eu_df, [&#39;Regime&#39;, &#39;Month&#39;], selected,
+                            os.path.join(path, &#39;EU-7&#39;, model, f&#39;boxplots_{&#34;_&#34;.join(selected)}_regimes_monthly.png&#39;))
+        )
+        st.caption(&#34;Monthly Boxplots of variables under regimes&#34;)
+
+        monthly_stats = eu_df.groupby([eu_df.index.month, &#39;Regime&#39;]).mean()
+        st.dataframe(monthly_stats)
+
+        selected = st.multiselect(&#34;Select the variables you want to plot&#34;, columns, [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;], key = &#34;barplot&#34;)
+        st.write(
+            plot_bars(monthly_stats, selected,
+                      os.path.join(path, &#39;EU-7&#39;, model, f&#39;barplot_{&#34;_&#34;.join(selected)}_regimes_monthly.png&#39;))
+        )
+
+        st.caption(f&#34;Bar plots of the {&#39;,&#39;.join(selected)} variables under regimes&#34;)
+
+        ### SCATTER
+        regimes = st.multiselect(&#34;Select one or more regimes&#34;, eu_df[&#39;Regime&#39;].unique().tolist(), eu_df[&#39;Regime&#39;].unique().tolist(), key = &#34;regimes_select&#34;)
+        col1, col2 = st.columns(2)
+        x_col = col1.selectbox(&#34;Select the x variable&#34;, columns, key=&#34;regimes_x&#34;)
+        y_col = col2.selectbox(&#34;Select the y variable&#34;, columns, key=&#34;regimes_y&#34;)
+        col1.write(
+            plot_scatter_by_regime(eu_df[eu_df.index.map(pd.tseries.offsets.BDay().onOffset)],
+                                        x_col, y_col, regimes, os.path.join(path, &#39;EU-7&#39;, model,f&#39;distributions_{x_col}_{y_col}_regimes_bdays.png&#39;)))
+
+        col1.caption(f&#34;{x_col} and {y_col} variables against under regimes on Busines Days&#34;)
+        col2.write(
+            plot_scatter_by_regime(eu_df[[not elem for elem in eu_df.index.map(pd.tseries.offsets.BDay().onOffset)]],
+                                   x_col, y_col, regimes, os.path.join(path, &#39;EU-7&#39;, model, f&#39;distributions_{x_col}_{y_col}_regimes_bdays.png&#39;)))
+        col2.caption(f&#34;{x_col} and {y_col} variables against under regimes on Day Offs&#34;)
+
+        selected_cols = st.multiselect(&#34;Select the variable(s)&#34;, columns, [&#39;Load&#39;], key=&#34;maps_columns_regimes&#34;)
+
+        st.write(
+            plot_maps_by_regime(eu_df.reset_index(level=0), &#39;EU-7&#39;, selected_cols,
+                      os.path.join(path, &#39;EU-7&#39;, model, f&#39;maps_{&#34;_&#34;.join(selected_cols)}_regimes.png&#39;)))</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.website.plot_MF"><code class="name flex">
+<span>def <span class="ident">plot_MF</span></span>(<span>df, predictions, targets, reservoir, inflow, groundwater)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_MF(df, predictions, targets, reservoir, inflow, groundwater):
+    st.subheader(&#34;Comparison with Metéo-France targets&#34;)
+
+    targets = targets.xs(&#39;Distance&#39;, level=0, axis=1)
+    predictions = predictions.loc[predictions.index.intersection(targets.index)]
+    models = predictions.columns.get_level_values(0).unique().tolist()
+
+    st.write(
+        plot_conf_matrix(predictions.loc[:, (models, REGIMES)], targets.drop(&#39;Prediction&#39;, axis=1),
+                         models))
+    st.caption(f&#34;Confusion matrices of the {&#39;, &#39;.join(models)} against Metéo-France targets&#34;)
+
+    st.write(
+        plot_multiclass_roc(predictions.loc[:, (models, REGIMES)],
+                            targets.drop(&#39;Prediction&#39;, axis=1), models))
+    st.caption(f&#34;ROC curves of the {&#39;, &#39;.join(models)} against Metéo-France targets&#34;)
+
+    model = st.selectbox(&#34;Select one or more models&#34;, models, key = &#39;model_multiselect&#39;)
+    predictions = predictions.xs(model, level=0, axis=1).reindex(sorted(targets.columns), axis=1)
+    targets = targets.loc[targets.index.intersection(predictions.index)]
+
+    st.write(
+        plot_historical_probabilities(targets, pivot = True, title = &#39;../imgs/stacked_bar_MF.png&#39;))
+    st.caption(f&#34;Historical monthly regimes probabilities of Metéo-France targets&#34;)
+
+    st.write(
+        plot_historical_probabilities(predictions.drop(&#39;Prediction&#39;, axis = 1), title = &#39;../imgs/stacked_bar_predictionsVAE.png&#39;))
+    st.caption(f&#34;Historical monthly regimes probabilities of {model}&#34;)
+
+    st.write(
+        plot_historical_counts(targets, pivot = True, title = &#39;../imgs/count_winter_MF.png&#39;))
+    st.write(
+        plot_historical_counts(predictions.drop(&#39;Prediction&#39;, axis = 1), title = &#39;../imgs/count_winter_predictionsVAE.png&#39;))
+
+    if SEASON == &#39;Winter&#39;:
+        f1, f2, f3 = plot_hydro_corr(predictions.drop(&#39;Prediction&#39;, axis = 1), reservoir, inflow, groundwater)
+        st.write(f1)
+        st.write(f2)
+        st.write(f3)</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.website.plot_comparison"><code class="name flex">
+<span>def <span class="ident">plot_comparison</span></span>(<span>true_df, synthetic_df)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_comparison(true_df, synthetic_df):
+    try:
+        os.makedirs(os.path.join(path, &#39;Comparison&#39;))
+    except OSError as oserr:
+        print(oserr)
+    columns = [c for c in true_df.columns.intersection(synthetic_df.columns)]
+    tmp, tmp_synth = true_df[columns], synthetic_df[columns]
+    countries = tmp.index.get_level_values(0).intersection(tmp_synth.index.get_level_values(0))
+    tmp = tmp.loc[countries]
+    tmp_synth = tmp_synth.loc[countries]
+
+
+    st.subheader(&#34;Time series comparison&#34;)
+    with st.expander(&#39;&#39;, expanded = True):
+        selected = st.multiselect(&#34;Select the variables you want to plot&#34;, columns, [&#39;Total Wind Obs&#39;, &#39;Total Wind Capacity&#39;], key = &#34;ts_vars&#34;)
+        years = st.multiselect(&#34;Select an year to show&#34;, range(2011, 2022), [2020], key = &#34;ts_years&#34;)
+        st.write(
+            compare_timeseries(tmp.reset_index(level=0)[tmp.reset_index(level=0).index.year.isin(years)], tmp_synth.reset_index(level=0)[tmp_synth.reset_index(level=0).index.year.isin(years)],
+                               selected, [&#39;True&#39;, &#39;Synthetic&#39;],
+                               os.path.join(path, &#39;Comparison&#39;, &#39;energy_vars_ts.png&#39;)))
+
+        st.caption(f&#34;Comparison of the time-series of the {&#39;,&#39;.join(selected)} variables for synthetic data (1979-2021) and true measurements (2011-2021)&#34;)
+
+        st.write(
+            compare_timeseries(tmp.reset_index(level=0)[tmp.reset_index(level=0).index.year.isin(years)], tmp.diff().reset_index(level=0)[tmp.reset_index(level=0).index.year.isin(years)],
+                               selected,
+                               [&#39;True&#39;, &#39;Correlated&#39;],
+                               os.path.join(path, &#39;Comparison&#39;, &#39;energy_vars_ts_correlated.png&#39;)))
+        st.caption(f&#34;Detrended true time-series  of the {&#39;,&#39;.join(selected)} variables&#34;)
+
+    st.subheader(&#34;Distribution comparison&#34;)
+
+    with st.expander(&#39;&#39;, expanded = True):
+        period = st.radio(&#34;Compare:&#34;, (&#39;Same Period&#39;,&#39;All History&#39;))
+        if period == &#39;Same Period&#39;:
+            idx = tmp.index
+            print(len(idx))
+        else:
+            idx = tmp_synth.index
+            print(len(idx))
+
+        selected = st.multiselect(&#34;Select the variables you want to plot&#34;, columns, [&#34;Total Wind Obs&#34;, &#34;Total Wind Capacity&#34;, &#34;Total Solar Obs&#34;, &#34;Total Solar Capacity&#34;], key=&#34;distributions_vars&#34;)
+        st.write(
+            compare_distributions(tmp, tmp_synth.loc[idx], selected, [&#39;True&#39;, &#39;Synthetic&#39;],
+                                  os.path.join(path, &#39;Comparison&#39;, &#39;energy_vars_distribution.png&#39;)))
+        st.caption(f&#34;Distribution of the {&#39;,&#39;.join(selected)} variables across the synthetic (orange) and true measurements (blue) datasets&#34;)
+
+        st.write(
+            compare_distributions_by_country(tmp, tmp_synth.loc[idx], selected, [&#39;True&#39;, &#39;Synthetic&#39;],
+                                             os.path.join(path, &#39;Comparison&#39;, &#39;energy_vars_distribution_by_country.png&#39;)))
+        st.caption(f&#34;Distribution of the {&#39;,&#39;.join(selected)} variables divided by countires across the synthetic (orange) and true measurements (blue) datasets&#34;)
+
+        stats = pd.DataFrame(columns=pd.MultiIndex.from_tuples(
+            itertools.product([&#39;Mean&#39;, &#39;Std&#39;, &#39;Skewness&#39;, &#39;Kurtosis&#39;], [&#39;True&#39;, &#39;Synthetic&#39;])),
+            index=selected)
+        for col in stats.index:
+            for dtf, ind in zip([tmp, tmp_synth.loc[idx]], [&#39;True&#39;, &#39;Synthetic&#39;]):
+                val = dtf[col]
+                mean = val.mean(skipna=True)
+                stats.loc[col, (&#39;Mean&#39;, ind)] = mean
+                std = val.std(skipna=True)
+                stats.loc[col, (&#39;Std&#39;, ind)] = std
+                stats.loc[col, (&#39;Skewness&#39;, ind)] = ((val ** 3).mean(skipna=True) - 3 * mean * (
+                        std ** 2) - mean ** 3) / std ** 3
+                stats.loc[col, (&#39;Kurtosis&#39;, ind)] = ((val - mean) ** 4).mean(skipna=True) / std ** 4
+
+        stats.to_csv(&#34;stats.csv&#34;)
+        st.write(stats)
+        st.caption(&#34;The four statistical moments of the synthetic-data and true-data distributions&#34;)</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.website.plot_country"><code class="name flex">
+<span>def <span class="ident">plot_country</span></span>(<span>country, df, predictions, pcs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_country(country, df, predictions, pcs):
+    try:
+        os.makedirs(os.path.join(path, country))
+    except OSError as oserr:
+        print(oserr)
+
+
+    country_df = filter_by_country(df, country)
+    columns = country_df.columns
+
+    st.subheader(&#34;Principal Components of the Regimes&#34;)
+    with st.expander(&#39;&#39;, expanded=True):
+        selected = st.multiselect(&#34;Select one or more variables&#34;, columns, [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;, &#39;Load&#39;], key = &#34;pcs&#34;)
+        st.write(
+            plot_3Dpcs(country_df, pcs, selected,
+                       os.path.join(path, country, &#39;scatter_measure_pcs.png&#39;))
+        )
+        st.caption(f&#34;Point distributions of the {&#39;,&#39;.join(selected)} variables with respect to the PCS&#34;)
+
+    st.subheader(&#39;Variable vs. Variable&#39;)
+    with st.expander(&#39;&#39;, expanded=True):
+        col1, col2 = st.columns(2)
+        x_col = col1.selectbox(&#34;Select the x variable&#34;, columns)
+        y_col = col2.selectbox(&#34;Select the y variable&#34;, columns)
+        col1.write(
+            plot_scatter(country_df[country_df.index.map(pd.tseries.offsets.BDay().onOffset)], x_col, y_col,
+                         os.path.join(path, country, f&#39;{x_col}_vs_{y_col}_bdays.png&#39;),
+                         c=country_df[country_df.index.map(pd.tseries.offsets.BDay().onOffset)][x_col],
+                         cmap=&#39;RdBu_r&#39;)
+        )
+        col1.caption(f&#34;Distribution {x_col} vs. {y_col} on Business Days&#34;)
+
+        col2.write(
+            plot_scatter(country_df[[not elem for elem in country_df.index.map(pd.tseries.offsets.BDay().onOffset)]],
+                         x_col, y_col, os.path.join(path, country, f&#39;{x_col}_vs_{y_col}_holidays.png&#39;),
+                         c=country_df[[not elem for elem in country_df.index.map(pd.tseries.offsets.BDay().onOffset)]][
+                             x_col], cmap=&#39;RdBu_r&#39;)
+        )
+        col2.caption(f&#34;Distribution {x_col} vs. {y_col} on Day Offs&#34;)
+
+    st.subheader(&#34;Regimes&#34;)
+    with st.expander(&#39;&#39;, expanded = True):
+        model = st.selectbox(&#34;Select the model&#34;, predictions.columns.get_level_values(0).unique())
+        try:
+            os.makedirs(os.path.join(path, country, model))
+        except OSError as oserr:
+            print(oserr)
+
+        country_df = filter_by_preds(country_df, predictions, model)
+
+        selected = st.multiselect(&#34;Select one or more variables&#34;, columns, [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;, &#39;Load&#39;], key = &#34;regimes&#34;)
+        st.write(
+            plot_distribution_by_regime_days(country_df, selected, predictions, model,
+                                             os.path.join(path, country, model, f&#39;distributions_{&#34;_&#34;.join(selected)}_regimes_days.png&#39;)))
+        st.caption(f&#34;Distribution of the {&#39;,&#39;.join(selected)} variables under regimes on Business Days (left) and Day Offs (right)&#34;)
+
+        st.write(
+            plot_distribution_by_regime_monthly(country_df, selected,
+                                            predictions, model, os.path.join(path, country, model,f&#39;distributions_monthly_{&#34;_&#34;.join(selected)}_regimes.png&#39;)))
+        st.caption(f&#34;Distribution of the {&#39;,&#39;.join(selected)} variables under regimes at a monthly level&#34;)
+
+        col1, col2 = st.columns(2)
+        col1.write(
+            plot_extreme_events(country_df[country_df.index.map(pd.tseries.offsets.BDay().onOffset)], selected,
+                                predictions, model, os.path.join(path, country, model,f&#39;extreme_events_{&#34;_&#34;.join(selected)}_regimes_bdays.png&#39;)))
+        col1.caption(f&#34;Extreme events of the {&#39;,&#39;.join(selected)} variables under regimes on Busines Days&#34;)
+
+        col2.write(
+            plot_extreme_events(country_df[[not elem for elem in country_df.index.map(pd.tseries.offsets.BDay().onOffset)]],
+                                selected, predictions, model,
+                                os.path.join(path, country, model, f&#39;extreme_events_{&#34;_&#34;.join(selected)}_regimes_holidays.png&#39;)))
+        col2.caption(f&#34;Extreme events of the {&#39;,&#39;.join(selected)} variables under regimes on Days Off&#34;)
+
+        col1, col2 = st.columns(2)
+        x_col = col1.selectbox(&#34;Select the x variable&#34;, columns, key = &#34;regimes_densitiy_x&#34;)
+        y_cols = col2.multiselect(&#34;Select the y variable(s)&#34;, [c for c in columns if c!= x_col], [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;], key = &#34;regimes_density_y&#34;)
+        st.write(
+            plot_densities_vs_variable(country_df, x_col, y_cols,
+                                       os.path.join(path, country, model, f&#39;densities_{x_col}_{&#34;_&#34;.join(y_cols)}_regimes.png&#39;)))
+        st.caption(f&#34;Probability densities of {&#39;,&#39;.join(y_cols)} variables against {x_col} variable by regime&#34;)
+
+        selected = st.multiselect(&#34;Select the variables you want to plot&#34;, columns, [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;], key = &#34;boxplot&#34;)
+        st.write(
+            boxplot(country_df, [&#39;Regime&#39;], selected,
+                    os.path.join(path, country, model, f&#39;boxplots_{&#34;_&#34;.join(selected)}_regimes.png&#39;))
+        )
+        st.caption(f&#34;Boxplots of {&#39;,&#39;.join(selected)} variables under regimes&#34;)
+
+        st.write(
+            boxplot_monthly(country_df, [&#39;Regime&#39;, &#39;Month&#39;], selected,
+                            os.path.join(path, country, model, f&#39;boxplots_{&#34;_&#34;.join(selected)}_regimes_monthly.png&#39;))
+        )
+        st.caption(f&#34;Monthly Boxplots of {&#39;,&#39;.join(selected)} variables under regimes&#34;)
+
+        monthly_stats = country_df.groupby([country_df.index.month, &#39;Regime&#39;]).mean()
+        st.dataframe(monthly_stats)
+
+        selected = st.multiselect(&#34;Select the variables you want to plot&#34;, columns, [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;], key = &#34;barplot&#34;)
+        st.write(
+            plot_bars(monthly_stats, selected,
+                      os.path.join(path, country, model, f&#39;barplot_{&#34;_&#34;.join(selected)}_regimes_monthly.png&#39;))
+        )
+
+        st.caption(f&#34;Bar plots of the {&#39;,&#39;.join(selected)} variables under regimes&#34;)
+
+        ### SCATTER
+        regimes = st.multiselect(&#34;Select one or more regimes&#34;, country_df[&#39;Regime&#39;].unique().tolist(), country_df[&#39;Regime&#39;].unique().tolist(), key = &#34;regimes_select&#34;)
+        col1, col2 = st.columns(2)
+        x_col = col1.selectbox(&#34;Select the x variable&#34;, columns, key=&#34;regimes_x&#34;)
+        y_col = col2.selectbox(&#34;Select the y variable&#34;, columns, key=&#34;regimes_y&#34;)
+        col1.write(
+            plot_scatter_by_regime(country_df[country_df.index.map(pd.tseries.offsets.BDay().onOffset)],
+                                        x_col, y_col, regimes, os.path.join(path, country, model,f&#39;distributions_{x_col}_{y_col}_regimes_bdays.png&#39;)))
+
+        col1.caption(f&#34;{x_col} and {y_col} variables against under regimes on Busines Days&#34;)
+        col2.write(
+            plot_scatter_by_regime(country_df[[not elem for elem in country_df.index.map(pd.tseries.offsets.BDay().onOffset)]],
+                                   x_col, y_col, regimes, os.path.join(path, country, model, f&#39;distributions_{x_col}_{y_col}_regimes_bdays.png&#39;)))
+        col2.caption(f&#34;{x_col} and {y_col} variables against under regimes on Day Offs&#34;)
+
+
+        selected_cols = st.multiselect(&#34;Select the variable(s)&#34;, columns, [&#39;Load&#39;], key=&#34;maps_columns_regimes&#34;)
+
+        st.write(
+            plot_maps_by_regime(country_df.reset_index(level=0), country, selected_cols,
+                      os.path.join(path, country, model, f&#39;maps_{&#34;_&#34;.join(selected_cols)}_regimes.png&#39;)))</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.website.plot_dynamics_model"><code class="name flex">
+<span>def <span class="ident">plot_dynamics_model</span></span>(<span>predictions, targets)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_dynamics_model(predictions, targets):
+    st.subheader(&#34;Dynamics&#34;)
+    model = st.selectbox(&#34;Select a model&#34;, predictions.columns.get_level_values(0).unique().tolist())
+    days = st.slider(&#34;Select a range of days to evaluate the transitions&#34;, min_value = 1, max_value= 30, step = 1)
+    stats = get_state_transitions(predictions,days)
+    plot_dynamics(stats)
+    image = Image.open(f&#34;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/scripts/mc_imgs/{model}.png&#34;)
+    st.image(image, caption=f&#34;{model} dynamics&#34;)
+
+    model = st.selectbox(&#34;Select a model&#34;, [&#39;GMM&#39;, &#39;Bayesian-GMM&#39;])
+    year = st.selectbox(&#34;Select a winter&#34;, predictions.index.year.unique()[:-1])
+    st.write(
+        compare_dynamics(predictions.loc[str(year)+&#34;-12-01&#34;:].iloc[:90],
+                         targets.xs(&#39;Distance&#39;, level = 0, axis = 1).loc[str(year)+&#34;-12-01&#34;:].iloc[:90],
+                         model, &#39;../imgs/compare_dynamics_MF.png&#39;))</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.website.plot_subseasonal_forecasts"><code class="name flex">
+<span>def <span class="ident">plot_subseasonal_forecasts</span></span>(<span>df, subseasonal_df, shortterm_df, predictions)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_subseasonal_forecasts(df, subseasonal_df, shortterm_df, predictions):
+    model = st.selectbox(&#34;Select the model&#34;, predictions.columns.get_level_values(0).unique())
+    col1, col2 = st.columns(2)
+    countries = col1.selectbox(&#34;Select the coutry&#34;, df.index.get_level_values(0).unique().tolist() + [&#39;EU-7&#39;], key = &#34;countries_subseasonal&#34;)
+    try:
+        os.makedirs(os.path.join(path, &#34;Subseasonal_forecast&#34;, countries, model))
+        os.makedirs(os.path.join(path, &#34;Subseasonal_forecast&#34;, &#34;ECMWF_weights&#34;))
+    except OSError as oserr:
+        print(oserr)
+
+    variables = col2.multiselect(&#34;Select the variables&#34;, df.columns.values.tolist(), [&#39;Load&#39;,&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;], key = &#34;variables_subseasonal&#34;)
+
+    st.write(
+        get_forecast_errors(subseasonal_df, predictions, model,
+                            os.path.join(path, &#34;Subseasonal_forecast&#34;, &#34;ECMWF_weights&#34;, &#34;forecast_errors&#34;)))
+    st.write(get_average_weights_forecast(subseasonal_df, predictions, model))
+
+    dates = subseasonal_df.index.get_level_values(0)#.unique().intersection(predictions.index)
+    date = st.slider(&#34;Select a forecast date&#34;,
+                     min_value=dates[0].date()+timedelta(7), max_value=dates[-1].date(), step=timedelta(1))
+    st.subheader(&#34;Historical distributions&#34;)
+    month = date.month if date.month in MONTHS else min(MONTHS, key=lambda x: abs(x-date.month))
+
+    filtered_df = filter_by_country(df, countries).loc[
+        filter_by_country(df, countries).index.intersection(predictions.loc[predictions.index.month == month].index)]
+    st.write(
+        plot_distribution_by_regime(filtered_df, variables, predictions, model, os.path.join(path, &#34;Subseasonal_forecast&#34;, countries, model, &#34;historical_distribution.png&#34;)))
+
+    forecast = filter_forecast(subseasonal_df, date, backward = False)
+    st.write(plot_weights_forecast(forecast, date,  os.path.join(path, &#34;Subseasonal_forecast&#34;,&#34;ECMWF_weights&#34;, date.strftime(&#34;%Y%m%d&#34;)+&#34;.png&#34;)))
+    forecast = bayesian_forecasts(subseasonal_df, forecast, predictions, model)
+    st.write(plot_weights_forecast(forecast, date,  os.path.join(path, &#34;Subseasonal_forecast&#34;,&#34;ECMWF_weights&#34;, date.strftime(&#34;%Y%m%d&#34;)+&#34;.png&#34;)))
+
+    try:
+        short_term = shortterm_df.xs(date.strftime(&#34;%Y-%m-%d&#34;), level = 1)
+    except:
+        short_term = None
+    predictions_weights = predictions.xs(model, level = 0, axis = 1).loc[date:date+timedelta(days = len(forecast))].drop(&#39;Prediction&#39;, axis = 1)
+    st.write(plot_weights_forecast(predictions_weights.reindex(columns = sorted(predictions_weights.columns)),
+                                    date, os.path.join(path, &#34;Subseasonal_forecast&#34;,&#34;model_weights&#34;, date.strftime(&#34;%Y%m%d&#34;)+&#34;.png&#34;)))
+    #st.write(
+    #    plot_forecast_distribution(df, forecast, predictions, countries, variables, date, model, os.path.join(path, &#34;Subseasonal_forecast&#34;, countries, model)))
+
+    st.write(
+        plot_forecast_boxplots(filtered_df, forecast, predictions, countries, variables, date, model,
+                                   os.path.join(path, &#34;Subseasonal_forecast&#34;, countries, model)))
+    st.write(
+        plot_forecast_anomalies(filtered_df, forecast, short_term, predictions, countries, variables, date, model,
+                                   os.path.join(path, &#34;Subseasonal_forecast&#34;, countries, model)))</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="dashboard.utils" href="index.html">dashboard.utils</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="dashboard.utils.website.build_webpage" href="#dashboard.utils.website.build_webpage">build_webpage</a></code></li>
+<li><code><a title="dashboard.utils.website.plot_EU7" href="#dashboard.utils.website.plot_EU7">plot_EU7</a></code></li>
+<li><code><a title="dashboard.utils.website.plot_MF" href="#dashboard.utils.website.plot_MF">plot_MF</a></code></li>
+<li><code><a title="dashboard.utils.website.plot_comparison" href="#dashboard.utils.website.plot_comparison">plot_comparison</a></code></li>
+<li><code><a title="dashboard.utils.website.plot_country" href="#dashboard.utils.website.plot_country">plot_country</a></code></li>
+<li><code><a title="dashboard.utils.website.plot_dynamics_model" href="#dashboard.utils.website.plot_dynamics_model">plot_dynamics_model</a></code></li>
+<li><code><a title="dashboard.utils.website.plot_subseasonal_forecasts" href="#dashboard.utils.website.plot_subseasonal_forecasts">plot_subseasonal_forecasts</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,1373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>dashboard.utils.data API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>dashboard.utils.data</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from dashboard.utils.config import *
+import numpy as np
+import pandas as pd
+import os
+import itertools
+import streamlit as st
+from datetime import timedelta, datetime
+path = &#34;energy_imgs&#34;
+
+@st.cache
+def load_predictions(filename = &#39;predictions_VAE.csv&#39;):
+    &#39;&#39;&#39;
+    Method to load the models&#39; predictions from file
+    Args:
+        filename: the name of the file containing the predictions
+
+    Returns:
+        A pandas DataFrame containing the predictions
+
+    &#39;&#39;&#39;
+    predictions = pd.read_csv(f&#39;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/scripts/predictions/{filename}.csv&#39;,
+                              header=[0, 1], index_col=0)
+
+    for method in predictions.columns.get_level_values(0).unique():
+        predictions[(method, &#39;Prediction&#39;)] = predictions.xs(method, axis=1).apply(
+            lambda x: predictions.xs(method, axis=1).columns[np.argmax(x)], axis=1)
+    predictions.index = pd.to_datetime(predictions.index, dayfirst=True)
+
+    return predictions
+
+@st.cache
+def load_pcs():
+    &#39;&#39;&#39;
+    Method to load the Principal Components of the weather regimes
+    Returns:
+        A pandas DataFrame contaning the Principal Components of the weather regimes
+
+    &#39;&#39;&#39;
+    pcs = pd.read_csv(&#39;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/scripts/files/pcs.csv&#39;, header=0, index_col=0)
+    pcs.index = pd.to_datetime(pcs.index)
+    return pcs
+
+@st.cache
+def filter_by_preds(df, predictions, model):
+    &#39;&#39;&#39;
+    Method to incorporate predictions inside a DataFrame of energy variables for the common dates
+    Args:
+        df: a pandas DataFrame containing data on energy variables
+        predictions: a pandas DataFraem containing predictions of historical daily weather regimes
+        model: a str indicating the model whose predictions are considered
+
+    Returns:
+        a pandas DataFrame of energy variables with the related regime associated for each of the date
+
+    &#39;&#39;&#39;
+    preds = predictions.xs(&#39;Prediction&#39;, level=1, axis=1)
+    # accurate_preds = preds[preds.eq(preds.iloc[:, 0], axis=0).all(1)].apply(lambda x: x.unique()[0], axis=1)
+    accurate_preds = preds[model]
+    df = df.loc[df.index.intersection(accurate_preds.index)]
+    df[&#39;Regime&#39;] = accurate_preds[df.index.intersection(accurate_preds.index)]
+
+    return df
+
+@st.cache
+def filter_by_country(df, country):
+    &#39;&#39;&#39;
+    Method to filter a DataFrame of energy variables by country
+    Args:
+        df: a pandas DataFrame containing energy-variables, with a MultiIndex whose level 0 contains the reference to the countries
+        country: a str indicating which country to query for
+
+    Returns:
+        a pandas DataFrame filtered by country
+
+    &#39;&#39;&#39;
+    country_df = df.xs(country, level=0).copy()
+    country_df.index = pd.to_datetime(country_df.index)
+    country_df.dropna(how=&#39;all&#39;, inplace=True, axis=1)
+    country_df.dropna(how=&#39;all&#39;, inplace=True, axis=0)
+
+    return country_df
+
+@st.cache(allow_output_mutation=True)
+def filter_forecast(subseasonal_df, date, backward = True):
+    &#39;&#39;&#39;
+    A method to filter a DataFrame containing sub-seasonal forecasts
+    Args:
+        subseasonal_df: a pandas DataFrame containing an historical series of sub-seasonal forecasts
+        date: the date to filter by
+        backward: boolean indicating if filtering in backward mode (i.e. fixing the date as the forecasted date) or not (i.e. fixing the date as the forecasting date)
+
+    Returns:
+        a pandas DataFrame with the selected sub-seasonal forecasts
+
+    &#39;&#39;&#39;
+    if backward:
+        forecast = subseasonal_df.loc[pd.IndexSlice[:, date.strftime(&#34;%Y-%m-%d&#34;), :], :].copy()
+        forecast.reset_index(level=[1, 2], drop=True, inplace=True)
+        forecast = forecast.resample(&#34;W-MON&#34;, label=&#39;left&#39;, closed=&#39;left&#39;).agg(&#39;last&#39;)
+    else:
+        def nearest(index, date):
+            return min(index, key=lambda x: abs(x.date()-date))
+        forecast = subseasonal_df.loc[pd.IndexSlice[nearest(subseasonal_df.index.get_level_values(0), date).strftime(&#34;%Y-%m-%d&#34;), :, :], :].copy()
+        forecast.reset_index(level=[0, 2], drop=True, inplace=True)
+    forecast = forecast.reindex(sorted(forecast.columns), axis=1)
+    forecast = forecast.apply(lambda x: x + x[&#39;Unknown&#39;] * x if x[&#39;Unknown&#39;] != 1 else 0.25, axis=1, result_type = &#39;broadcast&#39;)
+    forecast = forecast.drop(&#39;Unknown&#39;, axis=1).apply(lambda x: x / x.sum(), axis=1)
+    return forecast
+
+@st.cache
+def get_state_transitions(predictions, window=1):
+    &#39;&#39;&#39;
+    A method to obtain the transition robabilities associated to the weather regimes predictions
+    Args:
+        predictions: a pandas DataFrame containing predictions of historical daily weather regimes
+        window: the minimum window in number of days to consider a transition valid
+
+    Returns:
+        A pandas DataFrame containing the transition probabilities between each pair of regimes, under each model
+
+    &#39;&#39;&#39;
+    stats = pd.DataFrame(columns=list(itertools.product(REGIMES, REGIMES)),
+                         index=[&#39;K-Means&#39;, &#39;Bayesian-GMM&#39;, &#39;GMM&#39;]
+                         )
+    stats.columns = pd.MultiIndex.from_tuples(stats.columns)
+    stats.fillna(value=0, inplace=True)
+
+    for method in stats.index:
+        tmp = predictions[method].copy()
+        # tmp[&#39;Prediction&#39;] = tmp.apply(lambda x: tmp.columns[np.argmax(x)], axis = 1)
+        tmp[&#39;Pred&#39;] = tmp[&#39;Prediction&#39;].map({k:v for v, k in enumerate(REGIMES)})
+        tmp[&#39;mask&#39;] = tmp[&#39;Pred&#39;].shift() - tmp[&#39;Pred&#39;] == 0
+        tmp[&#39;inv_mask&#39;] = ~tmp[&#39;mask&#39;]
+        tmp[&#39;cumsum&#39;] = tmp[&#39;inv_mask&#39;].cumsum()
+        dates = []
+        for i in range(1, tmp[&#39;cumsum&#39;].max() + 1):
+            tmp2 = tmp[tmp[&#39;cumsum&#39;] == i]
+            if len(tmp2) &gt;= window:
+                for j in range(window - 1, len(tmp2)):
+                    dates.append(tmp2.index[j])
+
+        for i, (ind, row) in enumerate(tmp.loc[dates].iterrows()):
+            if i &gt; 0:
+                pred = row[&#39;Prediction&#39;]
+                prec = prev_row[&#39;Prediction&#39;]
+                stats.at[method, (prec, pred)] += 1
+            prev_row = row
+
+    for regime in stats.columns.get_level_values(0):
+        for method in stats.index:
+            stats.loc[method, (regime, slice(None))] /= stats.loc[method].xs(regime, level=0).sum()
+    stats = stats.round(2)
+
+    return stats
+
+@st.cache
+def load_measurements():
+    &#39;&#39;&#39;
+    Method to load the true measurements of energy variable from the repository of observations
+    Returns:
+        A pandas DataFrame containing the historical series of measurements, indexed by date and country
+
+    &#39;&#39;&#39;
+    print(os.listdir(&#39;.&#39;))
+    if &#34;measurements.csv&#34; not in os.listdir(&#39;./dashboard&#39;):
+        READ_PATH = &#39;P:/CH/Weather Data/METEOLOGICA/OBSERVATIONS&#39;
+        COUNTRIES = [&#39;ES&#39;, &#39;FR&#39;, &#39;GE&#39;, &#39;UK&#39; , &#39;NE&#39;, &#39;IT&#39;]
+        TYPE = [&#34;LOAD&#34;, &#34;PRICE&#34;, &#34;WIND&#34;, &#34;SOLAR&#34;, &#34;HYDRO&#34;]
+        YEARS = list(map(str, range(2011, 2021)))
+
+        true_df = pd.DataFrame()
+        for country in os.listdir(READ_PATH):
+            if country in COUNTRIES:
+                for year in YEARS:
+                    for typeof in TYPE:
+                        try:
+                            cols = [&#34;Start&#34;, &#34;End&#34;]
+
+                            if typeof == &#34;WIND&#34;:
+                                if country == &#34;UK&#34;:
+                                    cols += [&#34;Wind Embedded Capacity&#34;, &#34;Wind Capacity&#34;, &#34;Wind Embedded Obs&#34;, &#34;Wind Obs&#34;]
+                                elif country in [&#34;NE&#34;, &#34;IT&#34;]:
+                                    cols = [&#34;Start&#34;, &#34;Wind Obs&#34;, &#34;Wind Capacity&#34;]
+                                else:
+                                    cols += [&#34;Wind Capacity&#34;, &#34;Wind Obs&#34;]
+
+
+                            elif typeof == &#34;SOLAR&#34;:
+                                if country == &#34;UK&#34;:
+                                    cols += [&#39;Solar Photo Capacity&#39;, &#39;#solar&#39;, &#39;Solar Photo Obs&#39;]
+                                elif country in [&#34;NE&#34;, &#34;IT&#34;]:
+                                    cols = [&#34;Start&#34;, &#34;Solar Photo Obs&#34;, &#34;Solar Photo Capacity&#34;]
+                                else:
+                                    cols += [&#39;Solar Photo Capacity&#39;, &#39;Solar Photo Obs&#39;]
+
+                                if country == &#34;ES&#34;:
+                                    cols += [&#39;Solar Thermal Capacity&#39;, &#39;Solar Thermal Obs&#39;]
+
+
+                            elif typeof == &#34;LOAD&#34;:
+                                if country not in [&#34;NE&#34;, &#34;IT&#34;]:
+                                    cols += [&#34;Load&#34;]
+                                else:
+                                    cols = [&#34;Start&#34;, &#34;Load&#34;]
+
+
+                            elif typeof == &#34;HYDRO&#34;:
+                                if country == &#34;ES&#34;:
+                                    cols += [&#34;#hydro1&#34;, &#34;#hydro2&#34;]
+
+                                if country == &#34;IT&#34;:
+                                    cols = [&#34;Start&#34;, &#34;Hydro RoR Obs&#34;, &#34;Hydro Reservoir Obs&#34;]
+                                else:
+                                    cols += [&#39;Hydro RoR Obs&#39;, &#39;Total Hydro Obs&#39;]
+
+
+                            else:
+                                cols += [&#34;Price&#34;]
+
+                            temp_df = pd.read_csv(
+                                &#34;/&#34;.join([READ_PATH, country, &#39;_&#39;.join([country, typeof, year])]) + &#39;.csv&#39;, sep=&#34;;&#34;,
+                                # index_col = [0,1],
+                                skiprows=range(0, 7), header=0)
+                            temp_df.columns = cols
+                            temp_df.drop([label for label in temp_df.columns if &#39;#&#39; in label], axis=1, inplace=True)
+                            temp_df[&#39;Country&#39;] = country
+                            temp_df.set_index([&#34;Start&#34;, &#34;Country&#34;], inplace=True)
+
+                            if country in [&#34;IT&#34;, &#34;NE&#34;]:
+                                temp_df[
+                                    [col for col in temp_df.columns if
+                                     any(el in col for el in [&#34;Obs&#34;, &#34;Capacity&#34;, &#34;Load&#34;])]] /= 1000
+                            if country == &#34;IT&#34; and typeof == &#34;HYDRO&#34;:
+                                temp_df[&#39;Total Hydro Obs&#39;] = temp_df[&#39;Hydro RoR Obs&#39;] + temp_df[&#39;Hydro Reservoir Obs&#39;]
+
+                            true_df = true_df.append(temp_df)
+
+                        except Exception as e:
+                            print(e)
+                            print(&#34;Corrupted or not existing file: {}&#34;.format(&#39;_&#39;.join([country, typeof, year]) + &#39;.csv&#39;))
+
+        true_df = true_df.reset_index().set_index(&#39;Start&#39;)
+        true_df.index = pd.to_datetime(true_df.index)
+        true_df = true_df.groupby(&#39;Country&#39;).resample(&#39;D&#39;).mean()
+
+        nan_mask = true_df[&#39;Wind Capacity&#39;].isnull() &amp; true_df[&#39;Wind Embedded Capacity&#39;].isnull()
+        true_df[&#39;Total Wind Capacity&#39;] = true_df[&#39;Wind Capacity&#39;].fillna(0) + true_df[&#39;Wind Embedded Capacity&#39;].fillna(0)
+        true_df[&#39;Total Wind Capacity&#39;][nan_mask] = np.nan
+
+        nan_mask = true_df[&#39;Wind Obs&#39;].isnull() &amp; true_df[&#39;Wind Embedded Obs&#39;].isnull()
+        true_df[&#39;Total Wind Obs&#39;] = true_df[&#39;Wind Obs&#39;].fillna(0) + true_df[&#39;Wind Embedded Obs&#39;].fillna(0)
+        true_df[&#39;Total Wind Obs&#39;][nan_mask] = np.nan
+
+        nan_mask = true_df[&#39;Solar Photo Capacity&#39;].isnull() &amp; true_df[&#39;Solar Thermal Capacity&#39;].isnull()
+        true_df[&#39;Total Solar Capacity&#39;] = true_df[&#39;Solar Photo Capacity&#39;].fillna(0) + true_df[&#39;Solar Thermal Capacity&#39;].fillna(0)
+        true_df[&#39;Total Solar Capacity&#39;][nan_mask] = np.nan
+
+        nan_mask = true_df[&#39;Solar Photo Obs&#39;].isnull() &amp; true_df[&#39;Solar Thermal Obs&#39;].isnull()
+        true_df[&#39;Total Solar Obs&#39;] = true_df[&#39;Solar Photo Obs&#39;].fillna(0) + true_df[&#39;Solar Thermal Obs&#39;].fillna(0)
+        true_df[&#39;Total Solar Obs&#39;][nan_mask] = np.nan
+
+        true_df[&#39;Hydro Reservoir Obs&#39;] = true_df[&#39;Total Hydro Obs&#39;] - true_df[&#39;Hydro Reservoir Obs&#39;]
+
+        true_df[&#39;Wind Load Factor&#39;] = true_df[&#39;Total Wind Obs&#39;] / true_df[&#39;Total Wind Capacity&#39;]
+        true_df[&#39;Solar Load Factor&#39;] = true_df[&#39;Total Solar Obs&#39;] / true_df[&#39;Total Solar Capacity&#39;]
+    else:
+        true_df = pd.read_csv(&#34;dashboard/measurements.csv&#34;, index_col =[0,1], parse_dates = True)
+    return true_df
+
+@st.cache
+def load_synthetic_data():
+    &#39;&#39;&#39;
+    Method to load the synthetic data measurements of energy variables
+    Returns:
+        A pandas DataFrame containing the synthetic measurements of energy variables, indexed by date and country
+
+    &#39;&#39;&#39;
+    if &#39;synthetic.csv&#39; not in os.listdir(&#39;./dashboard&#39;):
+        READ_PATH = &#39;W:/UK/Reserach/Private/WEATHER/STAGE_ABALDO/dataset/Energy_Indicators_Copernicus&#39;
+        FOLDERS = [&#39;dataset-sis-energy-derived-reanalysis_ENERGY&#39;, &#39;dataset-sis-energy-derived-reanalysis_WEATHER&#39;]
+        COUNTRIES = [&#39;BE&#39;, &#39;ES&#39;, &#39;FR&#39;, &#39;DE&#39;, &#39;IT&#39;, &#39;NL&#39;, &#39;UK&#39;]
+        TYPE = {&#39;dataset-sis-energy-derived-reanalysis_ENERGY&#39;: {
+            &#34;EDM_PWR&#34;: &#34;Load&#34;, &#34;HydroReservoir_CFR&#34;: &#34;Hydro Load Factor&#34;, &#34;HydroReservoir_PWR&#34;: &#34;Hydro Reservoir Obs&#34;,
+            &#34;HydroRunOfRiver_CFR&#34;: &#34;Hydro RoR Load Factor&#34;, &#34;HydroRunOfRiver_PWR&#34;: &#34;Hydro RoR Obs&#34;,
+            &#34;PV_CFR&#34;: &#34;Solar Photo Load Factor&#34;, &#34;PV_PWR&#34;: &#34;Solar Photo Obs&#34;,
+            &#34;WindOffshore_CFR&#34;: &#34;Wind Offshore Load Factor&#34;, &#34;WindOffshore_PWR&#34;: &#34;Wind Offshore Obs&#34;,
+            &#34;WindOnshore_CFR&#34;: &#34;Wind Onshore Load Factor&#34;, &#34;WindOnshore_PWR&#34;: &#34;Wind Onshore Obs&#34;
+        },
+            &#39;dataset-sis-energy-derived-reanalysis_WEATHER&#39;: {
+                &#34;AirTemp_2m&#34;: &#34;Temperature&#34;, &#34;GHI&#34;: &#34;Irradiance&#34;, &#34;MeanSeaLevel&#34;: &#34;Sea Level Pressure&#34;,
+                &#34;TotalPrecip&#34;: &#34;Precipitation&#34;, &#34;WindSpeed_10m&#34;: &#34;Wind Speed (10m)&#34;, &#34;WindSpeed_100m&#34;: &#34;Wind Speed (100m)&#34;
+            }
+        }
+        YEARS = &#34;1979-2021&#34;
+        synthetic_df = pd.DataFrame(columns=[v for d in TYPE.values() for v in d.values()])
+
+        for folder in FOLDERS:
+            for file in TYPE[folder]:
+                tmp = pd.read_csv(os.path.join(READ_PATH, folder, file + &#34;_&#34; + YEARS + &#34;.csv&#34;),
+                                  comment=&#39;#&#39;, index_col=0, usecols=[&#39;Date&#39;] + COUNTRIES)
+                tmp.index = pd.to_datetime(tmp.index)
+                # tmp = tmp[tmp.index.month.isin([12,1,2])]
+                tmp.reset_index(inplace=True)
+                tmp = pd.melt(tmp, id_vars=&#39;Date&#39;, var_name=&#39;Country&#39;, value_vars=COUNTRIES, value_name=TYPE[folder][file])
+                tmp[&#39;Country&#39;] = tmp[&#39;Country&#39;].map(
+                    {&#39;DE&#39;: &#39;GE&#39;, &#39;NL&#39;: &#39;NE&#39;, &#39;IT&#39;: &#39;IT&#39;, &#39;UK&#39;: &#39;UK&#39;, &#39;FR&#39;: &#39;FR&#39;, &#39;BE&#39;: &#39;BE&#39;, &#39;ES&#39;: &#39;ES&#39;})
+                tmp.set_index([&#39;Country&#39;, &#39;Date&#39;], inplace=True)
+                if synthetic_df.empty:
+                    synthetic_df = tmp.copy()
+                else:
+                    synthetic_df = synthetic_df.append(tmp)
+
+        synthetic_df = synthetic_df.max(level=[0, 1]).dropna(how=&#39;all&#39;, axis=1)
+        synthetic_df[[&#39;Load&#39;, &#39;Hydro Reservoir Obs&#39;, &#39;Hydro RoR Obs&#39;, &#39;Solar Photo Obs&#39;, &#39;Wind Offshore Obs&#39;,
+                      &#39;Wind Onshore Obs&#39;]] /= 1000
+        synthetic_df[&#39;Temperature&#39;] -= 273
+        nan_mask = synthetic_df[&#39;Wind Offshore Obs&#39;].isnull() &amp; synthetic_df[&#39;Wind Onshore Obs&#39;].isnull()
+        synthetic_df[&#39;Total Wind Obs&#39;] = synthetic_df[&#39;Wind Offshore Obs&#39;].fillna(value=0) + \
+                                         synthetic_df[&#39;Wind Onshore Obs&#39;].fillna(value=0)
+        synthetic_df[&#39;Total Wind Obs&#39;][nan_mask] = np.nan
+        synthetic_df[&#39;Total Wind Capacity&#39;] = synthetic_df[&#39;Wind Offshore Obs&#39;].fillna(value=0) / synthetic_df[
+            &#39;Wind Offshore Load Factor&#39;] + \
+                                              synthetic_df[&#39;Wind Onshore Obs&#39;].fillna(value=0) / synthetic_df[
+                                                  &#39;Wind Onshore Load Factor&#39;]
+        synthetic_df[&#39;Total Wind Capacity&#39;][nan_mask] = np.nan
+        synthetic_df[&#39;Wind Load Factor&#39;] = synthetic_df[&#39;Total Wind Obs&#39;] / synthetic_df[&#39;Total Wind Capacity&#39;]
+        synthetic_df[&#39;Solar Load Factor&#39;] = synthetic_df[&#39;Solar Photo Load Factor&#39;]
+        synthetic_df[&#39;Total Solar Capacity&#39;] = synthetic_df[&#39;Solar Photo Obs&#39;] / synthetic_df[&#39;Solar Load Factor&#39;]
+        synthetic_df[&#39;Total Solar Obs&#39;] = synthetic_df[&#39;Solar Photo Obs&#39;]
+    else:
+        synthetic_df = pd.read_csv(&#34;dashboard/synthetic.csv&#34;, index_col = [0,1], parse_dates = True)
+    return synthetic_df
+
+@st.cache
+def build_data(true_df, synthetic_df):
+    &#39;&#39;&#39;
+    Method to merge the true and synthetic observation of energy variables
+    Args:
+        true_df: a pandas DataFrame containing the true measurements
+        synthetic_df: a pandas DataFrame containing the synthetic measurements
+
+    Returns:
+        A pandas DataFrame containing the merged true and synthetic measurements. For the common dates, the true reference overwrites the synthetic one
+
+    &#39;&#39;&#39;
+    df = synthetic_df.copy()
+    df.loc[true_df.index, true_df.columns.intersection(df.columns)] = true_df
+    other_cols = [c for c in true_df.columns if c not in true_df.columns.intersection(df.columns)]
+    df = pd.concat([df, true_df[other_cols]], axis=1)
+    df.rename_axis([&#34;Country&#34;, &#34;Date&#34;], inplace = True)
+    return df
+
+@st.cache
+def load_subseasonal():
+    &#39;&#39;&#39;
+    Method to load the sub-seasonal forecasts from the repository
+    Returns:
+        A pandas DataFrame containing the sub-seasonal forecasts indexed by the forecasting and forecasted dates, and the step identifying the shift in days between the two
+
+    &#39;&#39;&#39;
+    path = &#39;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/dataset/Weather_Regime_ECMWF&#39;
+    df = pd.DataFrame(columns=[&#39;Step&#39;, &#39;NAO+&#39;, &#39;SB&#39;, &#39;NAO-&#39;, &#39;AR&#39;])
+    for file in os.listdir(path):
+        with open(path + &#39;/&#39; + file, &#34;r&#34;) as f:
+            next(f)
+            date = next(f).strip()
+            year, month, day = date[:4], date[4:6], date[6:8]
+            date = &#34;-&#34;.join([year, month, day])
+
+        temp_df = pd.read_csv(path + &#39;/&#39; + file, skiprows=[0, 1], header=0, index_col=False, sep=&#39;:&#39;,
+                              usecols=range(0, 6))
+        temp_df.columns = names = [&#39;Step&#39;, &#39;NAO+&#39;, &#39;SB&#39;, &#39;NAO-&#39;, &#39;AR&#39;, &#39;Unknown&#39;]
+        temp_df[&#39;Step&#39;] //= 24
+        temp_df.index = [date] * len(temp_df)
+        temp_df.fillna(value=0, inplace=True)
+
+        def get_len(x):
+            if isinstance(x, str):
+                x = len(x.strip().split(&#34;,&#34;)) - 1
+            return x
+
+        temp_df = temp_df.apply(lambda serie: serie.apply(lambda x: get_len(x)))
+        df = df.append(temp_df)
+    df.index = pd.to_datetime(df.index)
+    df.reset_index(inplace=True)
+    df.rename(columns={&#34;index&#34;: &#34;Actual Date&#34;}, inplace=True)
+    df[&#39;Forecast Date&#39;] = df.apply(lambda x: x[&#39;Actual Date&#39;] + timedelta(days=x[&#39;Step&#39;]), axis=1)
+    df.set_index([&#39;Actual Date&#39;, &#39;Forecast Date&#39;, &#39;Step&#39;], inplace=True)
+    #df = df[np.logical_and(df.index.get_level_values(0).month.isin([1, 2, 12]),
+    #                        df.index.get_level_values(1).month.isin([1, 2, 12]))]
+    for col in df.columns:
+        df[col] = pd.to_numeric(df[col])
+
+    df.loc[:, [&#34;NAO+&#34;, &#34;SB&#34;, &#34;AR&#34;, &#34;NAO-&#34;, &#34;Unknown&#34;]] = df.loc[:, [&#34;NAO+&#34;, &#34;SB&#34;, &#34;AR&#34;, &#34;NAO-&#34;, &#34;Unknown&#34;]].div(
+        df.sum(axis=1), axis=0)
+    df.dropna(how=&#39;any&#39;, inplace=True)
+    df.to_csv(&#34;subseasonal_full.csv&#34;)
+    return df
+
+@st.cache
+def load_shortterm():
+    &#39;&#39;&#39;
+    Method to load the short-term forecasts from the repository
+    Returns:
+        A pandas DataFrame containing the short-term forecasts indexed by the forecasting and the forecasted dates
+
+    &#39;&#39;&#39;
+    path = &#39;P:/CH/Weather Data/METEOLOGICA/HISTORICAL_FORECAST/WIND/Wind_GER_2018-2020_11am.csv&#39;
+    df = pd.read_csv(path, header = 0, parse_dates=True,
+                     names = [&#39;Forecast Date&#39;,&#39;_&#39;,&#39;ECMWF_ENS&#39;,&#39;ECMWF_HRES&#39;,&#39;GFS&#39;,&#39;p10&#39;,&#39;Meteologica&#39;,&#39;p90&#39;,&#39;Capacity&#39;,&#39;Observation&#39;,&#39;Leadtime&#39;])
+    df.drop([&#39;_&#39;,&#39;p10&#39;,&#39;p90&#39;], inplace = True, axis = 1)
+    df.dropna(subset = [&#39;ECMWF_ENS&#39;,&#39;ECMWF_HRES&#39;,&#39;GFS&#39;,&#39;Meteologica&#39;], inplace=True)
+    df[&#39;Forecast Date&#39;] = pd.to_datetime(df[&#39;Forecast Date&#39;])
+    df[&#39;Leadtime&#39;] = df[&#39;Leadtime&#39;].map(lambda x: x.split(&#34;-&#34;)[1]).astype(int)
+    df = df.groupby([pd.Grouper(freq=&#39;D&#39;, key=&#39;Forecast Date&#39;), df[&#39;Leadtime&#39;]]).agg(lambda x : x.mean(skipna=True))
+    df.reset_index(inplace = True)
+    df[&#39;Actual Date&#39;] = df.apply(lambda x: x[&#39;Forecast Date&#39;] - timedelta(days = x[&#39;Leadtime&#39;]), axis = 1)
+    df.set_index([&#39;Actual Date&#39;,&#39;Forecast Date&#39;], inplace = True)
+    df.drop(&#39;Leadtime&#39;, axis = 1, inplace = True)
+    for col in [&#39;ECMWF_ENS&#39;,&#39;ECMWF_HRES&#39;,&#39;GFS&#39;,&#39;Meteologica&#39;]:
+        df[col] /= df[&#39;Capacity&#39;]
+
+    df.sort_index(level=[&#39;Actual Date&#39;,&#39;Forecast Date&#39;], inplace=True)
+    df.to_csv(&#34;dashboard/short_term_forecasts_20182020.csv&#34;)
+    return df
+
+
+@st.cache
+def load_MF_targets(season = &#39;Winter&#39;, filter_dates = False):
+    &#39;&#39;&#39;
+    Method to loas the Meteo-France historical predictions from the repository
+    Args:
+        filter_dates: boolean indicating whrther to maintain the dates whose predictions are coherent under both the two methods used by Meteo-France
+
+    Returns:
+        A pandas DataFrame containing predictions of historical daily weather regimes as predicted by Meteo-France
+
+    &#39;&#39;&#39;
+
+    if &#39;targets_MF.csv&#39; in os.listdir(&#39;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/dataset&#39;):
+        targets = pd.read_csv(&#39;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/dataset/targets_MF.csv&#39;, index_col=0,
+                              header=[0, 1, 2])
+        targets.index = pd.to_datetime(targets.index)
+        targets = targets.xs(season, axis = 1, level = 0)
+        if filter_dates:
+            targets = targets[targets[(&#39;Distance&#39;, &#39;Prediction&#39;)] == targets[(&#39;Correlation&#39;, &#39;Prediction&#39;)]]
+    else:
+        path = &#39;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/dataset/MeteoFrance&#39;
+        dist_df, corr_df = [], []
+        for file in os.listdir(path):
+            if any(col in file for col in [&#39;EQM&#39;, &#39;COREL&#39;]):
+                temp_df = pd.read_csv(os.path.join(path, file), sep=r&#39;\s+&#39;,
+                                      index_col=None)
+                col_names = {&#34;H_ZO&#34;: (&#34;Winter&#34;, &#34;NAO+&#34;), &#34;H_AR&#34;: (&#34;Winter&#34;, &#34;AR&#34;),
+                             &#34;H_EA&#34;: (&#34;Winter&#34;, &#34;SB&#34;), &#34;H_AL&#34;: (&#34;Winter&#34;, &#34;NAO-&#34;),
+                             &#34;E_GA&#34;: (&#34;Summer&#34;, &#34;NAO-&#34;), &#34;E_AL&#34;: (&#34;Summer&#34;, &#34;AL&#34;),
+                             &#34;E_EA&#34;: (&#34;Summer&#34;, &#34;SB&#34;), &#34;E_ZO&#34;: (&#34;Summer&#34;, &#34;Zonal&#34;)}
+                temp_df = temp_df[col_names.keys()]
+                temp_df.dropna(how=&#39;all&#39;, axis=1, inplace=True)
+                temp_df.rename(columns=col_names, inplace=True)
+                temp_df.index = temp_df.index.map(lambda x: datetime.strptime(str(x), &#34;%Y%m%d&#34;))
+                if &#39;EQM&#39; in file:
+                    dist_df.append(temp_df)
+                else:
+                    corr_df.append(temp_df)
+        dist_df, corr_df = pd.concat(dist_df), pd.concat(corr_df)
+        dist_df.columns = pd.MultiIndex.from_tuples(dist_df.columns)
+        dist_df = pd.concat([dist_df], axis=1, keys=[&#39;Distance&#39;]).swaplevel(0, 1, 1)
+        corr_df.columns = pd.MultiIndex.from_tuples(corr_df.columns)
+        corr_df = pd.concat([corr_df], axis=1, keys=[&#39;Correlation&#39;]).swaplevel(0, 1, 1)
+        targets = pd.concat([dist_df, corr_df], axis=1)
+        for targets in [&#39;Winter&#39;, &#39;Summer&#39;]:
+            targets[(season, &#39;Distance&#39;, &#39;Prediction&#39;)] = targets.xs(season, axis=1, level=0).xs(&#39;Distance&#39;, axis=1, level=0). \
+                apply(lambda x: targets.xs(season, axis=1, level=0).xs(&#39;Distance&#39;, axis=1, level=0). \
+                      columns[np.argmin(x)], axis=1)
+        for season in [&#39;Winter&#39;, &#39;Summer&#39;]:
+            targets[(season, &#39;Correlation&#39;, &#39;Prediction&#39;)] = targets.xs(season, axis=1, level=0).xs(&#39;Correlation&#39;, axis=1,
+                                                                                          level=0). \
+                apply(lambda x: targets.xs(season, axis=1, level=0).xs(&#39;Correlation&#39;, axis=1, level=0). \
+                      columns[np.argmax(x)], axis=1)
+        targets.to_csv(&#39;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/dataset/targets_MF.csv&#39;)
+
+    targets = targets[targets.index.month.isin(MONTHS)]
+    targets = targets.reindex(sorted(targets.columns, key=lambda x: (x[0], x[1])), axis=1)
+    return targets
+
+@st.cache
+def load_hydro():
+    &#39;&#39;&#39;
+    Method to load data about Hydro energy variables
+    Returns:
+        Three pandas DataFrames containing historical synthetic values of water reservoir filling, inflow and snow groundwater variables
+
+    &#39;&#39;&#39;
+    reservoir = pd.read_csv(&#34;dashboard/np_hydro_reservoir_water_filling_mwh_d_synthetic.csv&#34;, header = 0, parse_dates=True, index_col = 0)
+    inflow = pd.read_csv(&#34;dashboard/np_hydro_inflow_mwh_d_synthetic.csv&#34;, header = 0, parse_dates=True, index_col = 0)
+    groundwater = pd.read_csv(&#34;dashboard/np_hydro_snowandgroundwater_mwh_d_synthetic.csv&#34;, header = 0, parse_dates=True, index_col = 0)
+    reservoir /= 1e6
+    inflow /= 1e6
+    groundwater /= 1e6
+    return reservoir, inflow, groundwater
+
+def create_forecast_file(df, subseasonal_df):
+    today = datetime.today().date()
+    forecast = filter_forecast(subseasonal_df, today, backward = False)
+    old_forecast = filter_forecast(subseasonal_df, today - timedelta(days = 3), backward=False)
+
+    distributions = pd.read_csv(&#39;moments_4regimes_EU7.csv&#39;, index_col = [0,1,2,3], header = 0)
+    distribution_month = min(distributions.index.get_level_values(0), key = lambda x: abs(x - today.month))
+    distributions = distributions.xs(distribution_month, level = 0)
+
+    def create_file(df, forecast, distributions, distribution_month):
+        dfs = []
+        for variable in [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;, &#39;Load&#39;, &#39;Temperature&#39;]:
+            for country in distributions.index.get_level_values(0).unique():
+                print(country)
+                if country != &#39;EU-7&#39;:
+                    country_df = df.xs(country, level = 0)
+                else:
+                    if variable != &#39;Load&#39;:
+                        country_df = df.groupby(df.index.get_level_values(1)).mean()
+                    else:
+                        country_df = df.groupby(df.index.get_level_values(1)).sum()
+
+                variable_df = country_df.loc[country_df.index.month == distribution_month, variable]
+                normal = variable_df.mean()
+                variable_distribution = distributions.xs(country, level = 0).xs(&#39;mean&#39;, level = 0).loc[:, variable]
+                forecasted_values = np.dot(forecast, variable_distribution)
+                forecasted_values = (forecasted_values - normal) *100/ normal
+                dfs.append(pd.DataFrame(dict(Date = forecast.index.values,
+                        Country = [country]*len(forecast),
+                        Variable = [variable]*len(forecast),
+                        Anomaly = forecasted_values)))
+        file = pd.concat(dfs)
+        file.set_index(&#39;Date&#39;, inplace = True)
+        file[&#39;Variable&#39;] = file[&#39;Variable&#39;].map({&#34;Wind Load Factor&#34;: &#34;Wind&#34;, &#34;Solar Load Factor&#34;: &#34;Solar&#34;, &#34;Load&#34;:&#34;Load&#34;, &#34;Temperature&#34;:&#34;Temperature&#34;})
+        return file
+
+    file = create_file(df, forecast, distributions, distribution_month)
+    old_file = create_file(df, old_forecast, distributions, distribution_month)
+    file.loc[file.index.intersection(old_file.index),&#39;Anomaly_old&#39;] = old_file.loc[file.index.intersection(old_file.index),&#39;Anomaly&#39;]
+    file[&#39;Difference&#39;] = file[&#39;Anomaly&#39;] - file[&#39;Anomaly_old&#39;]
+    file.to_csv(f&#39;W:\\UK\\Research\\Private\\WEATHER\\REGULAR_MONITORING\\PBI_UPDATE\\WEATHER_REGIMES\\ARCHIVES\\forecast_{today.strftime(&#34;%Y%m%d&#34;)}.csv&#39;)
+    file.to_csv(f&#39;W:\\UK\\Research\\Private\\WEATHER\\REGULAR_MONITORING\\PBI_UPDATE\\WEATHER_REGIMES\\regime_forecast.csv&#39;)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="dashboard.utils.data.build_data"><code class="name flex">
+<span>def <span class="ident">build_data</span></span>(<span>true_df, synthetic_df)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to merge the true and synthetic observation of energy variables</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>true_df</code></strong></dt>
+<dd>a pandas DataFrame containing the true measurements</dd>
+<dt><strong><code>synthetic_df</code></strong></dt>
+<dd>a pandas DataFrame containing the synthetic measurements</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A pandas DataFrame containing the merged true and synthetic measurements. For the common dates, the true reference overwrites the synthetic one</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@st.cache
+def build_data(true_df, synthetic_df):
+    &#39;&#39;&#39;
+    Method to merge the true and synthetic observation of energy variables
+    Args:
+        true_df: a pandas DataFrame containing the true measurements
+        synthetic_df: a pandas DataFrame containing the synthetic measurements
+
+    Returns:
+        A pandas DataFrame containing the merged true and synthetic measurements. For the common dates, the true reference overwrites the synthetic one
+
+    &#39;&#39;&#39;
+    df = synthetic_df.copy()
+    df.loc[true_df.index, true_df.columns.intersection(df.columns)] = true_df
+    other_cols = [c for c in true_df.columns if c not in true_df.columns.intersection(df.columns)]
+    df = pd.concat([df, true_df[other_cols]], axis=1)
+    df.rename_axis([&#34;Country&#34;, &#34;Date&#34;], inplace = True)
+    return df</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.data.create_forecast_file"><code class="name flex">
+<span>def <span class="ident">create_forecast_file</span></span>(<span>df, subseasonal_df)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_forecast_file(df, subseasonal_df):
+    today = datetime.today().date()
+    forecast = filter_forecast(subseasonal_df, today, backward = False)
+    old_forecast = filter_forecast(subseasonal_df, today - timedelta(days = 3), backward=False)
+
+    distributions = pd.read_csv(&#39;moments_4regimes_EU7.csv&#39;, index_col = [0,1,2,3], header = 0)
+    distribution_month = min(distributions.index.get_level_values(0), key = lambda x: abs(x - today.month))
+    distributions = distributions.xs(distribution_month, level = 0)
+
+    def create_file(df, forecast, distributions, distribution_month):
+        dfs = []
+        for variable in [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;, &#39;Load&#39;, &#39;Temperature&#39;]:
+            for country in distributions.index.get_level_values(0).unique():
+                print(country)
+                if country != &#39;EU-7&#39;:
+                    country_df = df.xs(country, level = 0)
+                else:
+                    if variable != &#39;Load&#39;:
+                        country_df = df.groupby(df.index.get_level_values(1)).mean()
+                    else:
+                        country_df = df.groupby(df.index.get_level_values(1)).sum()
+
+                variable_df = country_df.loc[country_df.index.month == distribution_month, variable]
+                normal = variable_df.mean()
+                variable_distribution = distributions.xs(country, level = 0).xs(&#39;mean&#39;, level = 0).loc[:, variable]
+                forecasted_values = np.dot(forecast, variable_distribution)
+                forecasted_values = (forecasted_values - normal) *100/ normal
+                dfs.append(pd.DataFrame(dict(Date = forecast.index.values,
+                        Country = [country]*len(forecast),
+                        Variable = [variable]*len(forecast),
+                        Anomaly = forecasted_values)))
+        file = pd.concat(dfs)
+        file.set_index(&#39;Date&#39;, inplace = True)
+        file[&#39;Variable&#39;] = file[&#39;Variable&#39;].map({&#34;Wind Load Factor&#34;: &#34;Wind&#34;, &#34;Solar Load Factor&#34;: &#34;Solar&#34;, &#34;Load&#34;:&#34;Load&#34;, &#34;Temperature&#34;:&#34;Temperature&#34;})
+        return file
+
+    file = create_file(df, forecast, distributions, distribution_month)
+    old_file = create_file(df, old_forecast, distributions, distribution_month)
+    file.loc[file.index.intersection(old_file.index),&#39;Anomaly_old&#39;] = old_file.loc[file.index.intersection(old_file.index),&#39;Anomaly&#39;]
+    file[&#39;Difference&#39;] = file[&#39;Anomaly&#39;] - file[&#39;Anomaly_old&#39;]
+    file.to_csv(f&#39;W:\\UK\\Research\\Private\\WEATHER\\REGULAR_MONITORING\\PBI_UPDATE\\WEATHER_REGIMES\\ARCHIVES\\forecast_{today.strftime(&#34;%Y%m%d&#34;)}.csv&#39;)
+    file.to_csv(f&#39;W:\\UK\\Research\\Private\\WEATHER\\REGULAR_MONITORING\\PBI_UPDATE\\WEATHER_REGIMES\\regime_forecast.csv&#39;)</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.data.filter_by_country"><code class="name flex">
+<span>def <span class="ident">filter_by_country</span></span>(<span>df, country)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to filter a DataFrame of energy variables by country</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>df</code></strong></dt>
+<dd>a pandas DataFrame containing energy-variables, with a MultiIndex whose level 0 contains the reference to the countries</dd>
+<dt><strong><code>country</code></strong></dt>
+<dd>a str indicating which country to query for</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>a pandas DataFrame filtered by country</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@st.cache
+def filter_by_country(df, country):
+    &#39;&#39;&#39;
+    Method to filter a DataFrame of energy variables by country
+    Args:
+        df: a pandas DataFrame containing energy-variables, with a MultiIndex whose level 0 contains the reference to the countries
+        country: a str indicating which country to query for
+
+    Returns:
+        a pandas DataFrame filtered by country
+
+    &#39;&#39;&#39;
+    country_df = df.xs(country, level=0).copy()
+    country_df.index = pd.to_datetime(country_df.index)
+    country_df.dropna(how=&#39;all&#39;, inplace=True, axis=1)
+    country_df.dropna(how=&#39;all&#39;, inplace=True, axis=0)
+
+    return country_df</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.data.filter_by_preds"><code class="name flex">
+<span>def <span class="ident">filter_by_preds</span></span>(<span>df, predictions, model)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to incorporate predictions inside a DataFrame of energy variables for the common dates</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>df</code></strong></dt>
+<dd>a pandas DataFrame containing data on energy variables</dd>
+<dt><strong><code>predictions</code></strong></dt>
+<dd>a pandas DataFraem containing predictions of historical daily weather regimes</dd>
+<dt><strong><code>model</code></strong></dt>
+<dd>a str indicating the model whose predictions are considered</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>a pandas DataFrame of energy variables with the related regime associated for each of the date</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@st.cache
+def filter_by_preds(df, predictions, model):
+    &#39;&#39;&#39;
+    Method to incorporate predictions inside a DataFrame of energy variables for the common dates
+    Args:
+        df: a pandas DataFrame containing data on energy variables
+        predictions: a pandas DataFraem containing predictions of historical daily weather regimes
+        model: a str indicating the model whose predictions are considered
+
+    Returns:
+        a pandas DataFrame of energy variables with the related regime associated for each of the date
+
+    &#39;&#39;&#39;
+    preds = predictions.xs(&#39;Prediction&#39;, level=1, axis=1)
+    # accurate_preds = preds[preds.eq(preds.iloc[:, 0], axis=0).all(1)].apply(lambda x: x.unique()[0], axis=1)
+    accurate_preds = preds[model]
+    df = df.loc[df.index.intersection(accurate_preds.index)]
+    df[&#39;Regime&#39;] = accurate_preds[df.index.intersection(accurate_preds.index)]
+
+    return df</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.data.filter_forecast"><code class="name flex">
+<span>def <span class="ident">filter_forecast</span></span>(<span>subseasonal_df, date, backward=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A method to filter a DataFrame containing sub-seasonal forecasts</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>subseasonal_df</code></strong></dt>
+<dd>a pandas DataFrame containing an historical series of sub-seasonal forecasts</dd>
+<dt><strong><code>date</code></strong></dt>
+<dd>the date to filter by</dd>
+<dt><strong><code>backward</code></strong></dt>
+<dd>boolean indicating if filtering in backward mode (i.e. fixing the date as the forecasted date) or not (i.e. fixing the date as the forecasting date)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>a pandas DataFrame with the selected sub-seasonal forecasts</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@st.cache(allow_output_mutation=True)
+def filter_forecast(subseasonal_df, date, backward = True):
+    &#39;&#39;&#39;
+    A method to filter a DataFrame containing sub-seasonal forecasts
+    Args:
+        subseasonal_df: a pandas DataFrame containing an historical series of sub-seasonal forecasts
+        date: the date to filter by
+        backward: boolean indicating if filtering in backward mode (i.e. fixing the date as the forecasted date) or not (i.e. fixing the date as the forecasting date)
+
+    Returns:
+        a pandas DataFrame with the selected sub-seasonal forecasts
+
+    &#39;&#39;&#39;
+    if backward:
+        forecast = subseasonal_df.loc[pd.IndexSlice[:, date.strftime(&#34;%Y-%m-%d&#34;), :], :].copy()
+        forecast.reset_index(level=[1, 2], drop=True, inplace=True)
+        forecast = forecast.resample(&#34;W-MON&#34;, label=&#39;left&#39;, closed=&#39;left&#39;).agg(&#39;last&#39;)
+    else:
+        def nearest(index, date):
+            return min(index, key=lambda x: abs(x.date()-date))
+        forecast = subseasonal_df.loc[pd.IndexSlice[nearest(subseasonal_df.index.get_level_values(0), date).strftime(&#34;%Y-%m-%d&#34;), :, :], :].copy()
+        forecast.reset_index(level=[0, 2], drop=True, inplace=True)
+    forecast = forecast.reindex(sorted(forecast.columns), axis=1)
+    forecast = forecast.apply(lambda x: x + x[&#39;Unknown&#39;] * x if x[&#39;Unknown&#39;] != 1 else 0.25, axis=1, result_type = &#39;broadcast&#39;)
+    forecast = forecast.drop(&#39;Unknown&#39;, axis=1).apply(lambda x: x / x.sum(), axis=1)
+    return forecast</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.data.get_state_transitions"><code class="name flex">
+<span>def <span class="ident">get_state_transitions</span></span>(<span>predictions, window=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A method to obtain the transition robabilities associated to the weather regimes predictions</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>predictions</code></strong></dt>
+<dd>a pandas DataFrame containing predictions of historical daily weather regimes</dd>
+<dt><strong><code>window</code></strong></dt>
+<dd>the minimum window in number of days to consider a transition valid</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A pandas DataFrame containing the transition probabilities between each pair of regimes, under each model</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@st.cache
+def get_state_transitions(predictions, window=1):
+    &#39;&#39;&#39;
+    A method to obtain the transition robabilities associated to the weather regimes predictions
+    Args:
+        predictions: a pandas DataFrame containing predictions of historical daily weather regimes
+        window: the minimum window in number of days to consider a transition valid
+
+    Returns:
+        A pandas DataFrame containing the transition probabilities between each pair of regimes, under each model
+
+    &#39;&#39;&#39;
+    stats = pd.DataFrame(columns=list(itertools.product(REGIMES, REGIMES)),
+                         index=[&#39;K-Means&#39;, &#39;Bayesian-GMM&#39;, &#39;GMM&#39;]
+                         )
+    stats.columns = pd.MultiIndex.from_tuples(stats.columns)
+    stats.fillna(value=0, inplace=True)
+
+    for method in stats.index:
+        tmp = predictions[method].copy()
+        # tmp[&#39;Prediction&#39;] = tmp.apply(lambda x: tmp.columns[np.argmax(x)], axis = 1)
+        tmp[&#39;Pred&#39;] = tmp[&#39;Prediction&#39;].map({k:v for v, k in enumerate(REGIMES)})
+        tmp[&#39;mask&#39;] = tmp[&#39;Pred&#39;].shift() - tmp[&#39;Pred&#39;] == 0
+        tmp[&#39;inv_mask&#39;] = ~tmp[&#39;mask&#39;]
+        tmp[&#39;cumsum&#39;] = tmp[&#39;inv_mask&#39;].cumsum()
+        dates = []
+        for i in range(1, tmp[&#39;cumsum&#39;].max() + 1):
+            tmp2 = tmp[tmp[&#39;cumsum&#39;] == i]
+            if len(tmp2) &gt;= window:
+                for j in range(window - 1, len(tmp2)):
+                    dates.append(tmp2.index[j])
+
+        for i, (ind, row) in enumerate(tmp.loc[dates].iterrows()):
+            if i &gt; 0:
+                pred = row[&#39;Prediction&#39;]
+                prec = prev_row[&#39;Prediction&#39;]
+                stats.at[method, (prec, pred)] += 1
+            prev_row = row
+
+    for regime in stats.columns.get_level_values(0):
+        for method in stats.index:
+            stats.loc[method, (regime, slice(None))] /= stats.loc[method].xs(regime, level=0).sum()
+    stats = stats.round(2)
+
+    return stats</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.data.load_MF_targets"><code class="name flex">
+<span>def <span class="ident">load_MF_targets</span></span>(<span>season='Winter', filter_dates=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to loas the Meteo-France historical predictions from the repository</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>filter_dates</code></strong></dt>
+<dd>boolean indicating whrther to maintain the dates whose predictions are coherent under both the two methods used by Meteo-France</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A pandas DataFrame containing predictions of historical daily weather regimes as predicted by Meteo-France</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@st.cache
+def load_MF_targets(season = &#39;Winter&#39;, filter_dates = False):
+    &#39;&#39;&#39;
+    Method to loas the Meteo-France historical predictions from the repository
+    Args:
+        filter_dates: boolean indicating whrther to maintain the dates whose predictions are coherent under both the two methods used by Meteo-France
+
+    Returns:
+        A pandas DataFrame containing predictions of historical daily weather regimes as predicted by Meteo-France
+
+    &#39;&#39;&#39;
+
+    if &#39;targets_MF.csv&#39; in os.listdir(&#39;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/dataset&#39;):
+        targets = pd.read_csv(&#39;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/dataset/targets_MF.csv&#39;, index_col=0,
+                              header=[0, 1, 2])
+        targets.index = pd.to_datetime(targets.index)
+        targets = targets.xs(season, axis = 1, level = 0)
+        if filter_dates:
+            targets = targets[targets[(&#39;Distance&#39;, &#39;Prediction&#39;)] == targets[(&#39;Correlation&#39;, &#39;Prediction&#39;)]]
+    else:
+        path = &#39;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/dataset/MeteoFrance&#39;
+        dist_df, corr_df = [], []
+        for file in os.listdir(path):
+            if any(col in file for col in [&#39;EQM&#39;, &#39;COREL&#39;]):
+                temp_df = pd.read_csv(os.path.join(path, file), sep=r&#39;\s+&#39;,
+                                      index_col=None)
+                col_names = {&#34;H_ZO&#34;: (&#34;Winter&#34;, &#34;NAO+&#34;), &#34;H_AR&#34;: (&#34;Winter&#34;, &#34;AR&#34;),
+                             &#34;H_EA&#34;: (&#34;Winter&#34;, &#34;SB&#34;), &#34;H_AL&#34;: (&#34;Winter&#34;, &#34;NAO-&#34;),
+                             &#34;E_GA&#34;: (&#34;Summer&#34;, &#34;NAO-&#34;), &#34;E_AL&#34;: (&#34;Summer&#34;, &#34;AL&#34;),
+                             &#34;E_EA&#34;: (&#34;Summer&#34;, &#34;SB&#34;), &#34;E_ZO&#34;: (&#34;Summer&#34;, &#34;Zonal&#34;)}
+                temp_df = temp_df[col_names.keys()]
+                temp_df.dropna(how=&#39;all&#39;, axis=1, inplace=True)
+                temp_df.rename(columns=col_names, inplace=True)
+                temp_df.index = temp_df.index.map(lambda x: datetime.strptime(str(x), &#34;%Y%m%d&#34;))
+                if &#39;EQM&#39; in file:
+                    dist_df.append(temp_df)
+                else:
+                    corr_df.append(temp_df)
+        dist_df, corr_df = pd.concat(dist_df), pd.concat(corr_df)
+        dist_df.columns = pd.MultiIndex.from_tuples(dist_df.columns)
+        dist_df = pd.concat([dist_df], axis=1, keys=[&#39;Distance&#39;]).swaplevel(0, 1, 1)
+        corr_df.columns = pd.MultiIndex.from_tuples(corr_df.columns)
+        corr_df = pd.concat([corr_df], axis=1, keys=[&#39;Correlation&#39;]).swaplevel(0, 1, 1)
+        targets = pd.concat([dist_df, corr_df], axis=1)
+        for targets in [&#39;Winter&#39;, &#39;Summer&#39;]:
+            targets[(season, &#39;Distance&#39;, &#39;Prediction&#39;)] = targets.xs(season, axis=1, level=0).xs(&#39;Distance&#39;, axis=1, level=0). \
+                apply(lambda x: targets.xs(season, axis=1, level=0).xs(&#39;Distance&#39;, axis=1, level=0). \
+                      columns[np.argmin(x)], axis=1)
+        for season in [&#39;Winter&#39;, &#39;Summer&#39;]:
+            targets[(season, &#39;Correlation&#39;, &#39;Prediction&#39;)] = targets.xs(season, axis=1, level=0).xs(&#39;Correlation&#39;, axis=1,
+                                                                                          level=0). \
+                apply(lambda x: targets.xs(season, axis=1, level=0).xs(&#39;Correlation&#39;, axis=1, level=0). \
+                      columns[np.argmax(x)], axis=1)
+        targets.to_csv(&#39;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/dataset/targets_MF.csv&#39;)
+
+    targets = targets[targets.index.month.isin(MONTHS)]
+    targets = targets.reindex(sorted(targets.columns, key=lambda x: (x[0], x[1])), axis=1)
+    return targets</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.data.load_hydro"><code class="name flex">
+<span>def <span class="ident">load_hydro</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to load data about Hydro energy variables</p>
+<h2 id="returns">Returns</h2>
+<p>Three pandas DataFrames containing historical synthetic values of water reservoir filling, inflow and snow groundwater variables</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@st.cache
+def load_hydro():
+    &#39;&#39;&#39;
+    Method to load data about Hydro energy variables
+    Returns:
+        Three pandas DataFrames containing historical synthetic values of water reservoir filling, inflow and snow groundwater variables
+
+    &#39;&#39;&#39;
+    reservoir = pd.read_csv(&#34;dashboard/np_hydro_reservoir_water_filling_mwh_d_synthetic.csv&#34;, header = 0, parse_dates=True, index_col = 0)
+    inflow = pd.read_csv(&#34;dashboard/np_hydro_inflow_mwh_d_synthetic.csv&#34;, header = 0, parse_dates=True, index_col = 0)
+    groundwater = pd.read_csv(&#34;dashboard/np_hydro_snowandgroundwater_mwh_d_synthetic.csv&#34;, header = 0, parse_dates=True, index_col = 0)
+    reservoir /= 1e6
+    inflow /= 1e6
+    groundwater /= 1e6
+    return reservoir, inflow, groundwater</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.data.load_measurements"><code class="name flex">
+<span>def <span class="ident">load_measurements</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to load the true measurements of energy variable from the repository of observations</p>
+<h2 id="returns">Returns</h2>
+<p>A pandas DataFrame containing the historical series of measurements, indexed by date and country</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@st.cache
+def load_measurements():
+    &#39;&#39;&#39;
+    Method to load the true measurements of energy variable from the repository of observations
+    Returns:
+        A pandas DataFrame containing the historical series of measurements, indexed by date and country
+
+    &#39;&#39;&#39;
+    print(os.listdir(&#39;.&#39;))
+    if &#34;measurements.csv&#34; not in os.listdir(&#39;./dashboard&#39;):
+        READ_PATH = &#39;P:/CH/Weather Data/METEOLOGICA/OBSERVATIONS&#39;
+        COUNTRIES = [&#39;ES&#39;, &#39;FR&#39;, &#39;GE&#39;, &#39;UK&#39; , &#39;NE&#39;, &#39;IT&#39;]
+        TYPE = [&#34;LOAD&#34;, &#34;PRICE&#34;, &#34;WIND&#34;, &#34;SOLAR&#34;, &#34;HYDRO&#34;]
+        YEARS = list(map(str, range(2011, 2021)))
+
+        true_df = pd.DataFrame()
+        for country in os.listdir(READ_PATH):
+            if country in COUNTRIES:
+                for year in YEARS:
+                    for typeof in TYPE:
+                        try:
+                            cols = [&#34;Start&#34;, &#34;End&#34;]
+
+                            if typeof == &#34;WIND&#34;:
+                                if country == &#34;UK&#34;:
+                                    cols += [&#34;Wind Embedded Capacity&#34;, &#34;Wind Capacity&#34;, &#34;Wind Embedded Obs&#34;, &#34;Wind Obs&#34;]
+                                elif country in [&#34;NE&#34;, &#34;IT&#34;]:
+                                    cols = [&#34;Start&#34;, &#34;Wind Obs&#34;, &#34;Wind Capacity&#34;]
+                                else:
+                                    cols += [&#34;Wind Capacity&#34;, &#34;Wind Obs&#34;]
+
+
+                            elif typeof == &#34;SOLAR&#34;:
+                                if country == &#34;UK&#34;:
+                                    cols += [&#39;Solar Photo Capacity&#39;, &#39;#solar&#39;, &#39;Solar Photo Obs&#39;]
+                                elif country in [&#34;NE&#34;, &#34;IT&#34;]:
+                                    cols = [&#34;Start&#34;, &#34;Solar Photo Obs&#34;, &#34;Solar Photo Capacity&#34;]
+                                else:
+                                    cols += [&#39;Solar Photo Capacity&#39;, &#39;Solar Photo Obs&#39;]
+
+                                if country == &#34;ES&#34;:
+                                    cols += [&#39;Solar Thermal Capacity&#39;, &#39;Solar Thermal Obs&#39;]
+
+
+                            elif typeof == &#34;LOAD&#34;:
+                                if country not in [&#34;NE&#34;, &#34;IT&#34;]:
+                                    cols += [&#34;Load&#34;]
+                                else:
+                                    cols = [&#34;Start&#34;, &#34;Load&#34;]
+
+
+                            elif typeof == &#34;HYDRO&#34;:
+                                if country == &#34;ES&#34;:
+                                    cols += [&#34;#hydro1&#34;, &#34;#hydro2&#34;]
+
+                                if country == &#34;IT&#34;:
+                                    cols = [&#34;Start&#34;, &#34;Hydro RoR Obs&#34;, &#34;Hydro Reservoir Obs&#34;]
+                                else:
+                                    cols += [&#39;Hydro RoR Obs&#39;, &#39;Total Hydro Obs&#39;]
+
+
+                            else:
+                                cols += [&#34;Price&#34;]
+
+                            temp_df = pd.read_csv(
+                                &#34;/&#34;.join([READ_PATH, country, &#39;_&#39;.join([country, typeof, year])]) + &#39;.csv&#39;, sep=&#34;;&#34;,
+                                # index_col = [0,1],
+                                skiprows=range(0, 7), header=0)
+                            temp_df.columns = cols
+                            temp_df.drop([label for label in temp_df.columns if &#39;#&#39; in label], axis=1, inplace=True)
+                            temp_df[&#39;Country&#39;] = country
+                            temp_df.set_index([&#34;Start&#34;, &#34;Country&#34;], inplace=True)
+
+                            if country in [&#34;IT&#34;, &#34;NE&#34;]:
+                                temp_df[
+                                    [col for col in temp_df.columns if
+                                     any(el in col for el in [&#34;Obs&#34;, &#34;Capacity&#34;, &#34;Load&#34;])]] /= 1000
+                            if country == &#34;IT&#34; and typeof == &#34;HYDRO&#34;:
+                                temp_df[&#39;Total Hydro Obs&#39;] = temp_df[&#39;Hydro RoR Obs&#39;] + temp_df[&#39;Hydro Reservoir Obs&#39;]
+
+                            true_df = true_df.append(temp_df)
+
+                        except Exception as e:
+                            print(e)
+                            print(&#34;Corrupted or not existing file: {}&#34;.format(&#39;_&#39;.join([country, typeof, year]) + &#39;.csv&#39;))
+
+        true_df = true_df.reset_index().set_index(&#39;Start&#39;)
+        true_df.index = pd.to_datetime(true_df.index)
+        true_df = true_df.groupby(&#39;Country&#39;).resample(&#39;D&#39;).mean()
+
+        nan_mask = true_df[&#39;Wind Capacity&#39;].isnull() &amp; true_df[&#39;Wind Embedded Capacity&#39;].isnull()
+        true_df[&#39;Total Wind Capacity&#39;] = true_df[&#39;Wind Capacity&#39;].fillna(0) + true_df[&#39;Wind Embedded Capacity&#39;].fillna(0)
+        true_df[&#39;Total Wind Capacity&#39;][nan_mask] = np.nan
+
+        nan_mask = true_df[&#39;Wind Obs&#39;].isnull() &amp; true_df[&#39;Wind Embedded Obs&#39;].isnull()
+        true_df[&#39;Total Wind Obs&#39;] = true_df[&#39;Wind Obs&#39;].fillna(0) + true_df[&#39;Wind Embedded Obs&#39;].fillna(0)
+        true_df[&#39;Total Wind Obs&#39;][nan_mask] = np.nan
+
+        nan_mask = true_df[&#39;Solar Photo Capacity&#39;].isnull() &amp; true_df[&#39;Solar Thermal Capacity&#39;].isnull()
+        true_df[&#39;Total Solar Capacity&#39;] = true_df[&#39;Solar Photo Capacity&#39;].fillna(0) + true_df[&#39;Solar Thermal Capacity&#39;].fillna(0)
+        true_df[&#39;Total Solar Capacity&#39;][nan_mask] = np.nan
+
+        nan_mask = true_df[&#39;Solar Photo Obs&#39;].isnull() &amp; true_df[&#39;Solar Thermal Obs&#39;].isnull()
+        true_df[&#39;Total Solar Obs&#39;] = true_df[&#39;Solar Photo Obs&#39;].fillna(0) + true_df[&#39;Solar Thermal Obs&#39;].fillna(0)
+        true_df[&#39;Total Solar Obs&#39;][nan_mask] = np.nan
+
+        true_df[&#39;Hydro Reservoir Obs&#39;] = true_df[&#39;Total Hydro Obs&#39;] - true_df[&#39;Hydro Reservoir Obs&#39;]
+
+        true_df[&#39;Wind Load Factor&#39;] = true_df[&#39;Total Wind Obs&#39;] / true_df[&#39;Total Wind Capacity&#39;]
+        true_df[&#39;Solar Load Factor&#39;] = true_df[&#39;Total Solar Obs&#39;] / true_df[&#39;Total Solar Capacity&#39;]
+    else:
+        true_df = pd.read_csv(&#34;dashboard/measurements.csv&#34;, index_col =[0,1], parse_dates = True)
+    return true_df</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.data.load_pcs"><code class="name flex">
+<span>def <span class="ident">load_pcs</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to load the Principal Components of the weather regimes</p>
+<h2 id="returns">Returns</h2>
+<p>A pandas DataFrame contaning the Principal Components of the weather regimes</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@st.cache
+def load_pcs():
+    &#39;&#39;&#39;
+    Method to load the Principal Components of the weather regimes
+    Returns:
+        A pandas DataFrame contaning the Principal Components of the weather regimes
+
+    &#39;&#39;&#39;
+    pcs = pd.read_csv(&#39;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/scripts/files/pcs.csv&#39;, header=0, index_col=0)
+    pcs.index = pd.to_datetime(pcs.index)
+    return pcs</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.data.load_predictions"><code class="name flex">
+<span>def <span class="ident">load_predictions</span></span>(<span>filename='predictions_VAE.csv')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to load the models' predictions from file</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>filename</code></strong></dt>
+<dd>the name of the file containing the predictions</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A pandas DataFrame containing the predictions</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@st.cache
+def load_predictions(filename = &#39;predictions_VAE.csv&#39;):
+    &#39;&#39;&#39;
+    Method to load the models&#39; predictions from file
+    Args:
+        filename: the name of the file containing the predictions
+
+    Returns:
+        A pandas DataFrame containing the predictions
+
+    &#39;&#39;&#39;
+    predictions = pd.read_csv(f&#39;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/scripts/predictions/{filename}.csv&#39;,
+                              header=[0, 1], index_col=0)
+
+    for method in predictions.columns.get_level_values(0).unique():
+        predictions[(method, &#39;Prediction&#39;)] = predictions.xs(method, axis=1).apply(
+            lambda x: predictions.xs(method, axis=1).columns[np.argmax(x)], axis=1)
+    predictions.index = pd.to_datetime(predictions.index, dayfirst=True)
+
+    return predictions</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.data.load_shortterm"><code class="name flex">
+<span>def <span class="ident">load_shortterm</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to load the short-term forecasts from the repository</p>
+<h2 id="returns">Returns</h2>
+<p>A pandas DataFrame containing the short-term forecasts indexed by the forecasting and the forecasted dates</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@st.cache
+def load_shortterm():
+    &#39;&#39;&#39;
+    Method to load the short-term forecasts from the repository
+    Returns:
+        A pandas DataFrame containing the short-term forecasts indexed by the forecasting and the forecasted dates
+
+    &#39;&#39;&#39;
+    path = &#39;P:/CH/Weather Data/METEOLOGICA/HISTORICAL_FORECAST/WIND/Wind_GER_2018-2020_11am.csv&#39;
+    df = pd.read_csv(path, header = 0, parse_dates=True,
+                     names = [&#39;Forecast Date&#39;,&#39;_&#39;,&#39;ECMWF_ENS&#39;,&#39;ECMWF_HRES&#39;,&#39;GFS&#39;,&#39;p10&#39;,&#39;Meteologica&#39;,&#39;p90&#39;,&#39;Capacity&#39;,&#39;Observation&#39;,&#39;Leadtime&#39;])
+    df.drop([&#39;_&#39;,&#39;p10&#39;,&#39;p90&#39;], inplace = True, axis = 1)
+    df.dropna(subset = [&#39;ECMWF_ENS&#39;,&#39;ECMWF_HRES&#39;,&#39;GFS&#39;,&#39;Meteologica&#39;], inplace=True)
+    df[&#39;Forecast Date&#39;] = pd.to_datetime(df[&#39;Forecast Date&#39;])
+    df[&#39;Leadtime&#39;] = df[&#39;Leadtime&#39;].map(lambda x: x.split(&#34;-&#34;)[1]).astype(int)
+    df = df.groupby([pd.Grouper(freq=&#39;D&#39;, key=&#39;Forecast Date&#39;), df[&#39;Leadtime&#39;]]).agg(lambda x : x.mean(skipna=True))
+    df.reset_index(inplace = True)
+    df[&#39;Actual Date&#39;] = df.apply(lambda x: x[&#39;Forecast Date&#39;] - timedelta(days = x[&#39;Leadtime&#39;]), axis = 1)
+    df.set_index([&#39;Actual Date&#39;,&#39;Forecast Date&#39;], inplace = True)
+    df.drop(&#39;Leadtime&#39;, axis = 1, inplace = True)
+    for col in [&#39;ECMWF_ENS&#39;,&#39;ECMWF_HRES&#39;,&#39;GFS&#39;,&#39;Meteologica&#39;]:
+        df[col] /= df[&#39;Capacity&#39;]
+
+    df.sort_index(level=[&#39;Actual Date&#39;,&#39;Forecast Date&#39;], inplace=True)
+    df.to_csv(&#34;dashboard/short_term_forecasts_20182020.csv&#34;)
+    return df</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.data.load_subseasonal"><code class="name flex">
+<span>def <span class="ident">load_subseasonal</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to load the sub-seasonal forecasts from the repository</p>
+<h2 id="returns">Returns</h2>
+<p>A pandas DataFrame containing the sub-seasonal forecasts indexed by the forecasting and forecasted dates, and the step identifying the shift in days between the two</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@st.cache
+def load_subseasonal():
+    &#39;&#39;&#39;
+    Method to load the sub-seasonal forecasts from the repository
+    Returns:
+        A pandas DataFrame containing the sub-seasonal forecasts indexed by the forecasting and forecasted dates, and the step identifying the shift in days between the two
+
+    &#39;&#39;&#39;
+    path = &#39;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/dataset/Weather_Regime_ECMWF&#39;
+    df = pd.DataFrame(columns=[&#39;Step&#39;, &#39;NAO+&#39;, &#39;SB&#39;, &#39;NAO-&#39;, &#39;AR&#39;])
+    for file in os.listdir(path):
+        with open(path + &#39;/&#39; + file, &#34;r&#34;) as f:
+            next(f)
+            date = next(f).strip()
+            year, month, day = date[:4], date[4:6], date[6:8]
+            date = &#34;-&#34;.join([year, month, day])
+
+        temp_df = pd.read_csv(path + &#39;/&#39; + file, skiprows=[0, 1], header=0, index_col=False, sep=&#39;:&#39;,
+                              usecols=range(0, 6))
+        temp_df.columns = names = [&#39;Step&#39;, &#39;NAO+&#39;, &#39;SB&#39;, &#39;NAO-&#39;, &#39;AR&#39;, &#39;Unknown&#39;]
+        temp_df[&#39;Step&#39;] //= 24
+        temp_df.index = [date] * len(temp_df)
+        temp_df.fillna(value=0, inplace=True)
+
+        def get_len(x):
+            if isinstance(x, str):
+                x = len(x.strip().split(&#34;,&#34;)) - 1
+            return x
+
+        temp_df = temp_df.apply(lambda serie: serie.apply(lambda x: get_len(x)))
+        df = df.append(temp_df)
+    df.index = pd.to_datetime(df.index)
+    df.reset_index(inplace=True)
+    df.rename(columns={&#34;index&#34;: &#34;Actual Date&#34;}, inplace=True)
+    df[&#39;Forecast Date&#39;] = df.apply(lambda x: x[&#39;Actual Date&#39;] + timedelta(days=x[&#39;Step&#39;]), axis=1)
+    df.set_index([&#39;Actual Date&#39;, &#39;Forecast Date&#39;, &#39;Step&#39;], inplace=True)
+    #df = df[np.logical_and(df.index.get_level_values(0).month.isin([1, 2, 12]),
+    #                        df.index.get_level_values(1).month.isin([1, 2, 12]))]
+    for col in df.columns:
+        df[col] = pd.to_numeric(df[col])
+
+    df.loc[:, [&#34;NAO+&#34;, &#34;SB&#34;, &#34;AR&#34;, &#34;NAO-&#34;, &#34;Unknown&#34;]] = df.loc[:, [&#34;NAO+&#34;, &#34;SB&#34;, &#34;AR&#34;, &#34;NAO-&#34;, &#34;Unknown&#34;]].div(
+        df.sum(axis=1), axis=0)
+    df.dropna(how=&#39;any&#39;, inplace=True)
+    df.to_csv(&#34;subseasonal_full.csv&#34;)
+    return df</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.data.load_synthetic_data"><code class="name flex">
+<span>def <span class="ident">load_synthetic_data</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to load the synthetic data measurements of energy variables</p>
+<h2 id="returns">Returns</h2>
+<p>A pandas DataFrame containing the synthetic measurements of energy variables, indexed by date and country</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@st.cache
+def load_synthetic_data():
+    &#39;&#39;&#39;
+    Method to load the synthetic data measurements of energy variables
+    Returns:
+        A pandas DataFrame containing the synthetic measurements of energy variables, indexed by date and country
+
+    &#39;&#39;&#39;
+    if &#39;synthetic.csv&#39; not in os.listdir(&#39;./dashboard&#39;):
+        READ_PATH = &#39;W:/UK/Reserach/Private/WEATHER/STAGE_ABALDO/dataset/Energy_Indicators_Copernicus&#39;
+        FOLDERS = [&#39;dataset-sis-energy-derived-reanalysis_ENERGY&#39;, &#39;dataset-sis-energy-derived-reanalysis_WEATHER&#39;]
+        COUNTRIES = [&#39;BE&#39;, &#39;ES&#39;, &#39;FR&#39;, &#39;DE&#39;, &#39;IT&#39;, &#39;NL&#39;, &#39;UK&#39;]
+        TYPE = {&#39;dataset-sis-energy-derived-reanalysis_ENERGY&#39;: {
+            &#34;EDM_PWR&#34;: &#34;Load&#34;, &#34;HydroReservoir_CFR&#34;: &#34;Hydro Load Factor&#34;, &#34;HydroReservoir_PWR&#34;: &#34;Hydro Reservoir Obs&#34;,
+            &#34;HydroRunOfRiver_CFR&#34;: &#34;Hydro RoR Load Factor&#34;, &#34;HydroRunOfRiver_PWR&#34;: &#34;Hydro RoR Obs&#34;,
+            &#34;PV_CFR&#34;: &#34;Solar Photo Load Factor&#34;, &#34;PV_PWR&#34;: &#34;Solar Photo Obs&#34;,
+            &#34;WindOffshore_CFR&#34;: &#34;Wind Offshore Load Factor&#34;, &#34;WindOffshore_PWR&#34;: &#34;Wind Offshore Obs&#34;,
+            &#34;WindOnshore_CFR&#34;: &#34;Wind Onshore Load Factor&#34;, &#34;WindOnshore_PWR&#34;: &#34;Wind Onshore Obs&#34;
+        },
+            &#39;dataset-sis-energy-derived-reanalysis_WEATHER&#39;: {
+                &#34;AirTemp_2m&#34;: &#34;Temperature&#34;, &#34;GHI&#34;: &#34;Irradiance&#34;, &#34;MeanSeaLevel&#34;: &#34;Sea Level Pressure&#34;,
+                &#34;TotalPrecip&#34;: &#34;Precipitation&#34;, &#34;WindSpeed_10m&#34;: &#34;Wind Speed (10m)&#34;, &#34;WindSpeed_100m&#34;: &#34;Wind Speed (100m)&#34;
+            }
+        }
+        YEARS = &#34;1979-2021&#34;
+        synthetic_df = pd.DataFrame(columns=[v for d in TYPE.values() for v in d.values()])
+
+        for folder in FOLDERS:
+            for file in TYPE[folder]:
+                tmp = pd.read_csv(os.path.join(READ_PATH, folder, file + &#34;_&#34; + YEARS + &#34;.csv&#34;),
+                                  comment=&#39;#&#39;, index_col=0, usecols=[&#39;Date&#39;] + COUNTRIES)
+                tmp.index = pd.to_datetime(tmp.index)
+                # tmp = tmp[tmp.index.month.isin([12,1,2])]
+                tmp.reset_index(inplace=True)
+                tmp = pd.melt(tmp, id_vars=&#39;Date&#39;, var_name=&#39;Country&#39;, value_vars=COUNTRIES, value_name=TYPE[folder][file])
+                tmp[&#39;Country&#39;] = tmp[&#39;Country&#39;].map(
+                    {&#39;DE&#39;: &#39;GE&#39;, &#39;NL&#39;: &#39;NE&#39;, &#39;IT&#39;: &#39;IT&#39;, &#39;UK&#39;: &#39;UK&#39;, &#39;FR&#39;: &#39;FR&#39;, &#39;BE&#39;: &#39;BE&#39;, &#39;ES&#39;: &#39;ES&#39;})
+                tmp.set_index([&#39;Country&#39;, &#39;Date&#39;], inplace=True)
+                if synthetic_df.empty:
+                    synthetic_df = tmp.copy()
+                else:
+                    synthetic_df = synthetic_df.append(tmp)
+
+        synthetic_df = synthetic_df.max(level=[0, 1]).dropna(how=&#39;all&#39;, axis=1)
+        synthetic_df[[&#39;Load&#39;, &#39;Hydro Reservoir Obs&#39;, &#39;Hydro RoR Obs&#39;, &#39;Solar Photo Obs&#39;, &#39;Wind Offshore Obs&#39;,
+                      &#39;Wind Onshore Obs&#39;]] /= 1000
+        synthetic_df[&#39;Temperature&#39;] -= 273
+        nan_mask = synthetic_df[&#39;Wind Offshore Obs&#39;].isnull() &amp; synthetic_df[&#39;Wind Onshore Obs&#39;].isnull()
+        synthetic_df[&#39;Total Wind Obs&#39;] = synthetic_df[&#39;Wind Offshore Obs&#39;].fillna(value=0) + \
+                                         synthetic_df[&#39;Wind Onshore Obs&#39;].fillna(value=0)
+        synthetic_df[&#39;Total Wind Obs&#39;][nan_mask] = np.nan
+        synthetic_df[&#39;Total Wind Capacity&#39;] = synthetic_df[&#39;Wind Offshore Obs&#39;].fillna(value=0) / synthetic_df[
+            &#39;Wind Offshore Load Factor&#39;] + \
+                                              synthetic_df[&#39;Wind Onshore Obs&#39;].fillna(value=0) / synthetic_df[
+                                                  &#39;Wind Onshore Load Factor&#39;]
+        synthetic_df[&#39;Total Wind Capacity&#39;][nan_mask] = np.nan
+        synthetic_df[&#39;Wind Load Factor&#39;] = synthetic_df[&#39;Total Wind Obs&#39;] / synthetic_df[&#39;Total Wind Capacity&#39;]
+        synthetic_df[&#39;Solar Load Factor&#39;] = synthetic_df[&#39;Solar Photo Load Factor&#39;]
+        synthetic_df[&#39;Total Solar Capacity&#39;] = synthetic_df[&#39;Solar Photo Obs&#39;] / synthetic_df[&#39;Solar Load Factor&#39;]
+        synthetic_df[&#39;Total Solar Obs&#39;] = synthetic_df[&#39;Solar Photo Obs&#39;]
+    else:
+        synthetic_df = pd.read_csv(&#34;dashboard/synthetic.csv&#34;, index_col = [0,1], parse_dates = True)
+    return synthetic_df</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="dashboard.utils" href="index.html">dashboard.utils</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="dashboard.utils.data.build_data" href="#dashboard.utils.data.build_data">build_data</a></code></li>
+<li><code><a title="dashboard.utils.data.create_forecast_file" href="#dashboard.utils.data.create_forecast_file">create_forecast_file</a></code></li>
+<li><code><a title="dashboard.utils.data.filter_by_country" href="#dashboard.utils.data.filter_by_country">filter_by_country</a></code></li>
+<li><code><a title="dashboard.utils.data.filter_by_preds" href="#dashboard.utils.data.filter_by_preds">filter_by_preds</a></code></li>
+<li><code><a title="dashboard.utils.data.filter_forecast" href="#dashboard.utils.data.filter_forecast">filter_forecast</a></code></li>
+<li><code><a title="dashboard.utils.data.get_state_transitions" href="#dashboard.utils.data.get_state_transitions">get_state_transitions</a></code></li>
+<li><code><a title="dashboard.utils.data.load_MF_targets" href="#dashboard.utils.data.load_MF_targets">load_MF_targets</a></code></li>
+<li><code><a title="dashboard.utils.data.load_hydro" href="#dashboard.utils.data.load_hydro">load_hydro</a></code></li>
+<li><code><a title="dashboard.utils.data.load_measurements" href="#dashboard.utils.data.load_measurements">load_measurements</a></code></li>
+<li><code><a title="dashboard.utils.data.load_pcs" href="#dashboard.utils.data.load_pcs">load_pcs</a></code></li>
+<li><code><a title="dashboard.utils.data.load_predictions" href="#dashboard.utils.data.load_predictions">load_predictions</a></code></li>
+<li><code><a title="dashboard.utils.data.load_shortterm" href="#dashboard.utils.data.load_shortterm">load_shortterm</a></code></li>
+<li><code><a title="dashboard.utils.data.load_subseasonal" href="#dashboard.utils.data.load_subseasonal">load_subseasonal</a></code></li>
+<li><code><a title="dashboard.utils.data.load_synthetic_data" href="#dashboard.utils.data.load_synthetic_data">load_synthetic_data</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
