@@ -5,15 +5,15 @@ from modeling.utils.config import *
 from modeling.utils.plotting import *
 
 dt = build_data()
-dt = weighted_anomaly(dt)
+#dt = weighted_anomaly(dt)
 
-pivot_anomaly = flat_table(dt)
-
+#pivot_anomaly = flat_table(dt)
+reduction = 'VAE'
 if reduction == "PCA":
     reduced_anomaly = reduce_dim(pivot_anomaly, method='PCA', exp_variance=0.999)
     folder = 'pca'
 else:
-    reduced_anomaly = reduce_dim(dt, method='VAE', season = season)
+    reduced_anomaly = reduce_dim(dt, method='VAE', season = season, model = 'sigma_vae_statedict_5')
     folder = 'vae'
 
 eofs, pcs = eofs(pivot_anomaly)

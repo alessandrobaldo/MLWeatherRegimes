@@ -1,13 +1,13 @@
 {
-  "readpath": "P:/CH/Weather Data/ERA-5/SLP",
-  "variable": "SLP",
+  "readpath": "P:/CH/Weather Data/ERA-5/GEOPOTENTIAL",
+  "variable": "Geopotential-500hPa",
   "frequency": "hourly",
-  "months": "JunJulAug",
-  "years": "1979-2021",
+  "months": "DecJanFeb",
+  "years": "1979-2020",
   "lat": [20 ,80],
-  "long": [-90, 20],
+  "long": [-90, 30],
   "reduction": "pca",
   "model": "gmm",
-  "season": "SUMMER",
+  "season": "WINTER",
   "training": "True"
 }

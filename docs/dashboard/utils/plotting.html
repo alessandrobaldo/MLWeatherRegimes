@@ -423,6 +423,7 @@ def get_distribution_by_regime(df, cols, predictions, model, **kwargs):
 
             points = np.linspace(variable_df.min(), variable_df.max(), 1000)
             normal = variable_df.mean()
+            print(col,country,normal)
 
             means = {k: sum(points * v.pdf(points)) / sum(v.pdf(points))
                      for k, v in distributions_regimes.items()}
@@ -930,6 +931,7 @@ def plot_dynamics(stats):
     &#39;&#39;&#39;
     states = REGIMES
     fig, axs = plt.subplots(1, 3, figsize=(22.5, 7))
+
     for ax, method in zip(axs.flat, stats.index):
         Q = stats.loc[method].values.reshape((4, 4))
         Q = pd.DataFrame(Q, columns=states, index=states)
@@ -977,16 +979,18 @@ def compare_dynamics(predictions, targets, model, title = None, **kwargs):
     fig, ax = plt.subplots(1,1, figsize=(22.5,7))
 
     prob_model = predictions.xs(model, level = 0, axis = 1).drop(&#39;Prediction&#39;, axis = 1)
-    prob_model.reindex(columns = sorted(prob_model.columns)).plot(kind=&#39;line&#39;, linewidth = 2.1, ax = ax)
+    prob_model.reindex(columns = sorted(prob_model.columns)).plot(kind=&#39;line&#39;, linewidth = 3, ax = ax)
     colors = {line.get_label(): line.get_color() for line in ax.get_lines()}
 
     for idx, row in targets.iterrows():
         #print(row[&#39;Prediction&#39;])
-        ax.fill_betweenx([0., -0.02], [idx-timedelta(days=1)], [idx], color = colors[row[&#39;Prediction&#39;]], alpha = 1.)
+        ax.fill_betweenx([0., -0.04], [idx-timedelta(days=1)], [idx], color = colors[row[&#39;Prediction&#39;]], alpha = 1.)
     ax.tick_params(axis = &#39;both&#39;, which = &#39;both&#39;, labelsize = 16)
-    ax.set_ylabel(&#34;Probability&#34;, fontsize = 18)
+    ax.set_ylabel(&#34;Probability&#34;, fontsize = 20)
+    ax.legend(fontsize=20, loc=&#39;lower center&#39;, bbox_to_anchor=(0.5, -0.33), ncol=4, fancybox=True, shadow=True)
     if title:
         plt.savefig(title)
+
     return fig
 
 &#39;&#39;&#39;
@@ -1108,10 +1112,10 @@ def get_forecast_errors(subseasonal_df, predictions, model, title = None, **kwar
     forecast_errors = forecast_errors.groupby(&#39;Weeks&#39;).mean()
     &#39;&#39;&#39;
     forecast_errors = forecast_errors.groupby(forecast_errors.index.get_level_values(2)).mean() #by step
-    fig, ax = plt.subplots(1,1, figsize = (7,7))
+    fig, ax = plt.subplots(1,1, figsize = (15,7))
     forecast_errors.loc[:,sorted(forecast.columns)].plot(kind = &#39;line&#39;, marker = &#39;o&#39;, linewidth = 2, ax = ax)
     forecast_errors.loc[:,&#39;AVG&#39;].plot(kind = &#39;line&#39;, linestyle = &#39;--&#39;, linewidth = 1, color = &#39;k&#39;, ax = ax)
-    ax.set_xlabel(&#39;Weeks forward&#39;)
+    ax.set_xlabel(&#39;Step&#39;)
     ax.set_ylabel(&#39;Error&#39;)
     if title:
         fig.savefig(title + &#34;.png&#34;)
@@ -1135,8 +1139,9 @@ def get_average_weights_forecast(subseasonal_df, predictions, model):
                               result_type=&#39;broadcast&#39;)
     weights = weights.drop(&#39;Unknown&#39;, axis=1).apply(lambda x: x / x.sum(), axis=1)
     weights = weights.groupby(weights.index.get_level_values(2)).mean()
-    fig, ax = plt.subplots(1,1, figsize = (7,7))
+    fig, ax = plt.subplots(1,1, figsize = (15,7))
     weights.plot(kind = &#39;line&#39;, marker = &#39;o&#39;, linewidth = 2, ax = ax)
+    ax.set_ylabel(&#39;Average Weight&#39;)
 
     &#39;&#39;&#39;
     preds = predictions.xs(model, level = 0, axis = 1).drop(&#39;Prediction&#39;, axis = 1)
@@ -1447,6 +1452,26 @@ def plot_conf_matrix(predictions, targets, models, **kwargs):
         A matplotlib figure
 
     &#39;&#39;&#39;
+    fig, axs = plt.subplots(1, len(models), figsize=(7.5*len(models), 7), sharey = True)
+    cbar_ax = fig.add_axes([.91, .1, .02, .9])
+    for i, (model, ax)  in enumerate(zip(models, axs)):
+        conf_matrix = confusion_matrix(
+            np.argmin(targets.values, axis=1),
+            np.argmax(predictions.xs(model, level=0, axis=1).values, axis=1),
+            normalize=&#39;true&#39;) * 100
+        sns.heatmap(conf_matrix, ax = ax, cbar = i == 0, vmin = 0, vmax = 100, cbar_ax = None if i else cbar_ax,
+                    cbar_kws={&#39;format&#39;: &#39;%.0f%%&#39;}, annot = True, annot_kws={&#34;size&#34;: 20}, cmap=&#39;Blues&#39;,
+                    yticklabels=sorted(np.unique(predictions.columns.get_level_values(1))),
+                    xticklabels=sorted(np.unique(predictions.columns.get_level_values(1)))
+                    )
+        if i == 0:
+            ax.set_ylabel(&#34;Metéo-France&#34;, fontsize = 18, fontdict = {&#39;fontweight&#39;: &#39;bold&#39;})
+        ax.set_xlabel(model, fontsize = 18, fontdict = {&#39;fontweight&#39;: &#39;bold&#39;})
+        ax.tick_params(axis=&#39;x&#39;, rotation=0, labelsize = 16)
+        ax.tick_params(axis=&#39;y&#39;, rotation=0, labelsize = 16)
+
+    fig.tight_layout(rect = [0,0,.9,1])
+    &#39;&#39;&#39;
     conf_matrix = np.concatenate(
         [confusion_matrix(
             np.argmin(targets.values, axis=1),
@@ -1456,7 +1481,7 @@ def plot_conf_matrix(predictions, targets, models, **kwargs):
          ], axis=1)
 
     fig, ax = plt.subplots(1, 1, figsize=(7.5*len(models), 7))
-    sns.heatmap(conf_matrix, annot=True, ax=ax, cbar_kws={&#39;format&#39;: &#39;%.0f%%&#39;}, annot_kws={&#34;size&#34;: 16},
+    sns.heatmap(conf_matrix, annot=True, ax=ax, cbar_kws={&#39;format&#39;: &#39;%.0f%%&#39;}, annot_kws={&#34;size&#34;: 16}, cmap = &#39;Blues&#39;,
                 yticklabels=sorted(np.unique(predictions.columns.get_level_values(1))),
                 xticklabels=[&#34;\n&#34;.join(list(e)[::-1]) for e in
                              list(itertools.product(
@@ -1465,9 +1490,10 @@ def plot_conf_matrix(predictions, targets, models, **kwargs):
                 )
     ax.tick_params(axis=&#39;x&#39;, rotation=0)
     ax.tick_params(axis=&#39;y&#39;, rotation=0)
+    ax.set_ylabel(&#34;Metéo-France&#34;)
     for i in range(conf_matrix.shape[0], conf_matrix.shape[1] + 1, conf_matrix.shape[0]):
         ax.axvline(i, color=&#39;white&#39;)
-
+    &#39;&#39;&#39;
     return fig
 
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
@@ -1488,11 +1514,11 @@ def plot_multiclass_roc(predictions, targets, models, **kwargs):
     targets = label_binarize(np.argmin(targets.values, axis=1), classes=range(len(cols)))
     n_classes = targets.shape[1]
 
-    fig, axs = plt.subplots(1, len(models), figsize=(22.5, 7))
+    fig, axs = plt.subplots(1, len(models), figsize=(len(models)*7.5, 7), sharey = True)
     if not hasattr(axs, &#39;flat&#39;):
         axs = np.array([axs])
 
-    for ax, model in zip(axs.flat, models):
+    for j, (ax, model) in enumerate(zip(axs.flat, models)):
         roc_auc, tpr, fpr = dict(), dict(), dict()
         for i in range(n_classes):
             fpr[i], tpr[i], _ = roc_curve(targets[:, i], predictions.xs(model, level=0, axis=1).iloc[:, i])
@@ -1514,23 +1540,26 @@ def plot_multiclass_roc(predictions, targets, models, **kwargs):
         tpr[&#34;macro&#34;] = mean_tpr
         roc_auc[&#34;macro&#34;] = auc(fpr[&#34;macro&#34;], tpr[&#34;macro&#34;])
 
-        ax.plot(fpr[&#34;micro&#34;], tpr[&#34;micro&#34;], label=&#34;micro-average ROC curv (area = {0:0.2f})&#34;.format(roc_auc[&#34;micro&#34;]),
+        &#39;&#39;&#39;
+        ax.plot(fpr[&#34;micro&#34;], tpr[&#34;micro&#34;], label=&#34;micro-average ROC curve (area = {0:0.2f})&#34;.format(roc_auc[&#34;micro&#34;]),
                 color=&#39;deeppink&#39;, linestyle=&#34;:&#34;, linewidth=4)
 
-        ax.plot(fpr[&#34;macro&#34;], tpr[&#34;macro&#34;], label=&#34;micro-average ROC curv (area = {0:0.2f})&#34;.format(roc_auc[&#34;macro&#34;]),
+        ax.plot(fpr[&#34;macro&#34;], tpr[&#34;macro&#34;], label=&#34;micro-average ROC curve (area = {0:0.2f})&#34;.format(roc_auc[&#34;macro&#34;]),
                 color=&#39;navy&#39;, linestyle=&#34;:&#34;, linewidth=4)
-
+        &#39;&#39;&#39;
         for i in range(n_classes):
-            ax.plot(fpr[i], tpr[i], linewidth=2.1, label=&#34;ROC curve of class {0} (area: {1:0.2f})&#34;. \
+            ax.plot(fpr[i], tpr[i], linewidth=2.1, label=&#34;ROC curve {0}\n(area: {1:0.2f})&#34;. \
                     format(cols[i], roc_auc[i]))
 
         ax.plot([0, 1], [0, 1], &#39;k--&#39;, linewidth=2.1)
         ax.set_xlim([0.0, 1.0])
         ax.set_ylim([0.0, 1.05])
-        ax.set_xlabel(&#39;False Positive Rate (FPR)&#39;)
-        ax.set_ylabel(&#39;True Positive Rate (TPR)&#39;)
-        ax.legend(loc=&#34;lower right&#34;)
-        ax.set_title(model)
+        ax.set_xlabel(&#39;False Positive Rate (FPR)&#39;, fontsize = 18)
+        if j == 0:
+            ax.set_ylabel(&#39;True Positive Rate (TPR)&#39;, fontsize = 18)
+        ax.legend(loc=&#34;lower center&#34;, fontsize = 14, bbox_to_anchor = (.5, -.37), ncol = 2)
+
+        ax.set_title(model, fontdict = {&#39;fontsize&#39;: 18, &#39;fontweight&#39;: &#39;bold&#39;})
     return fig
 
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
@@ -1559,11 +1588,11 @@ def plot_historical_probabilities(targets, pivot = False, title = None, **kwargs
     if targets.columns.nlevels == 2:
         targets.columns = targets.columns.droplevel()
     targets.plot.bar(stacked=True, ax=ax, width=1.0, edgecolor=&#39;k&#39;)
-    ax.legend(targets.columns, bbox_to_anchor=(1.1, 1.05))
+    ax.legend(targets.columns, fontsize = 20,  loc = &#39;lower center&#39;, bbox_to_anchor=(.5, -0.3), ncol = 4)
     ax.set_ylim(0, 1)
-    ax.set_ylabel(&#34;CDF&#34;, fontsize=16)
+    ax.set_ylabel(&#34;CDF&#34;, fontsize=18)
     ax.set_xlabel(&#34;&#34;)
-    ax.tick_params(axis=&#39;both&#39;, which=&#39;major&#39;, labelsize=16)
+    ax.tick_params(axis=&#39;both&#39;, which=&#39;major&#39;, labelsize=18)
     ax.set_xticklabels([ts.strftime(&#39;%Y&#39;) if ts.year != targets.index[idx - 1].year
                         else &#34;&#34; for idx, ts in enumerate(targets.index)])
     ax.figure.autofmt_xdate(rotation=90, ha=&#39;center&#39;)
@@ -1622,10 +1651,10 @@ def plot_historical_counts(targets, pivot = False, title = None, **kwargs):
     fig, ax = plt.subplots(1, 1, figsize=(30, 7))
     targets.plot.bar(ax=ax, edgecolor=&#39;k&#39;)
     ax.set_ylim(0, 60)
-    ax.legend(targets.columns, bbox_to_anchor=(1.1, 1.05))
-    ax.set_ylabel(&#34;Number of Days&#34;, fontsize=16)
+    ax.legend(targets.columns, fontsize = 20,  loc = &#39;lower center&#39;, bbox_to_anchor=(.5, -0.3), ncol = 4)
+    ax.set_ylabel(&#34;Number of Days&#34;, fontsize=18)
     ax.set_xlabel(&#34;&#34;)
-    ax.tick_params(axis=&#39;both&#39;, which = &#39;major&#39;, labelsize = 16)
+    ax.tick_params(axis=&#39;both&#39;, which = &#39;major&#39;, labelsize = 18)
     if title is not None:
         plt.savefig(title, bbox_inches = &#39;tight&#39;)
     return fig
@@ -2102,16 +2131,18 @@ def compare_dynamics(predictions, targets, model, title = None, **kwargs):
     fig, ax = plt.subplots(1,1, figsize=(22.5,7))
 
     prob_model = predictions.xs(model, level = 0, axis = 1).drop(&#39;Prediction&#39;, axis = 1)
-    prob_model.reindex(columns = sorted(prob_model.columns)).plot(kind=&#39;line&#39;, linewidth = 2.1, ax = ax)
+    prob_model.reindex(columns = sorted(prob_model.columns)).plot(kind=&#39;line&#39;, linewidth = 3, ax = ax)
     colors = {line.get_label(): line.get_color() for line in ax.get_lines()}
 
     for idx, row in targets.iterrows():
         #print(row[&#39;Prediction&#39;])
-        ax.fill_betweenx([0., -0.02], [idx-timedelta(days=1)], [idx], color = colors[row[&#39;Prediction&#39;]], alpha = 1.)
+        ax.fill_betweenx([0., -0.04], [idx-timedelta(days=1)], [idx], color = colors[row[&#39;Prediction&#39;]], alpha = 1.)
     ax.tick_params(axis = &#39;both&#39;, which = &#39;both&#39;, labelsize = 16)
-    ax.set_ylabel(&#34;Probability&#34;, fontsize = 18)
+    ax.set_ylabel(&#34;Probability&#34;, fontsize = 20)
+    ax.legend(fontsize=20, loc=&#39;lower center&#39;, bbox_to_anchor=(0.5, -0.33), ncol=4, fancybox=True, shadow=True)
     if title:
         plt.savefig(title)
+
     return fig</code></pre>
 </details>
 </dd>
@@ -2211,8 +2242,9 @@ def get_average_weights_forecast(subseasonal_df, predictions, model):
                               result_type=&#39;broadcast&#39;)
     weights = weights.drop(&#39;Unknown&#39;, axis=1).apply(lambda x: x / x.sum(), axis=1)
     weights = weights.groupby(weights.index.get_level_values(2)).mean()
-    fig, ax = plt.subplots(1,1, figsize = (7,7))
+    fig, ax = plt.subplots(1,1, figsize = (15,7))
     weights.plot(kind = &#39;line&#39;, marker = &#39;o&#39;, linewidth = 2, ax = ax)
+    ax.set_ylabel(&#39;Average Weight&#39;)
 
     &#39;&#39;&#39;
     preds = predictions.xs(model, level = 0, axis = 1).drop(&#39;Prediction&#39;, axis = 1)
@@ -2283,6 +2315,7 @@ def get_distribution_by_regime(df, cols, predictions, model, **kwargs):
 
             points = np.linspace(variable_df.min(), variable_df.max(), 1000)
             normal = variable_df.mean()
+            print(col,country,normal)
 
             means = {k: sum(points * v.pdf(points)) / sum(v.pdf(points))
                      for k, v in distributions_regimes.items()}
@@ -2500,10 +2533,10 @@ def get_forecast_errors(subseasonal_df, predictions, model, title = None, **kwar
     forecast_errors = forecast_errors.groupby(&#39;Weeks&#39;).mean()
     &#39;&#39;&#39;
     forecast_errors = forecast_errors.groupby(forecast_errors.index.get_level_values(2)).mean() #by step
-    fig, ax = plt.subplots(1,1, figsize = (7,7))
+    fig, ax = plt.subplots(1,1, figsize = (15,7))
     forecast_errors.loc[:,sorted(forecast.columns)].plot(kind = &#39;line&#39;, marker = &#39;o&#39;, linewidth = 2, ax = ax)
     forecast_errors.loc[:,&#39;AVG&#39;].plot(kind = &#39;line&#39;, linestyle = &#39;--&#39;, linewidth = 1, color = &#39;k&#39;, ax = ax)
-    ax.set_xlabel(&#39;Weeks forward&#39;)
+    ax.set_xlabel(&#39;Step&#39;)
     ax.set_ylabel(&#39;Error&#39;)
     if title:
         fig.savefig(title + &#34;.png&#34;)
@@ -2796,6 +2829,26 @@ def plot_conf_matrix(predictions, targets, models, **kwargs):
         A matplotlib figure
 
     &#39;&#39;&#39;
+    fig, axs = plt.subplots(1, len(models), figsize=(7.5*len(models), 7), sharey = True)
+    cbar_ax = fig.add_axes([.91, .1, .02, .9])
+    for i, (model, ax)  in enumerate(zip(models, axs)):
+        conf_matrix = confusion_matrix(
+            np.argmin(targets.values, axis=1),
+            np.argmax(predictions.xs(model, level=0, axis=1).values, axis=1),
+            normalize=&#39;true&#39;) * 100
+        sns.heatmap(conf_matrix, ax = ax, cbar = i == 0, vmin = 0, vmax = 100, cbar_ax = None if i else cbar_ax,
+                    cbar_kws={&#39;format&#39;: &#39;%.0f%%&#39;}, annot = True, annot_kws={&#34;size&#34;: 20}, cmap=&#39;Blues&#39;,
+                    yticklabels=sorted(np.unique(predictions.columns.get_level_values(1))),
+                    xticklabels=sorted(np.unique(predictions.columns.get_level_values(1)))
+                    )
+        if i == 0:
+            ax.set_ylabel(&#34;Metéo-France&#34;, fontsize = 18, fontdict = {&#39;fontweight&#39;: &#39;bold&#39;})
+        ax.set_xlabel(model, fontsize = 18, fontdict = {&#39;fontweight&#39;: &#39;bold&#39;})
+        ax.tick_params(axis=&#39;x&#39;, rotation=0, labelsize = 16)
+        ax.tick_params(axis=&#39;y&#39;, rotation=0, labelsize = 16)
+
+    fig.tight_layout(rect = [0,0,.9,1])
+    &#39;&#39;&#39;
     conf_matrix = np.concatenate(
         [confusion_matrix(
             np.argmin(targets.values, axis=1),
@@ -2805,7 +2858,7 @@ def plot_conf_matrix(predictions, targets, models, **kwargs):
          ], axis=1)
 
     fig, ax = plt.subplots(1, 1, figsize=(7.5*len(models), 7))
-    sns.heatmap(conf_matrix, annot=True, ax=ax, cbar_kws={&#39;format&#39;: &#39;%.0f%%&#39;}, annot_kws={&#34;size&#34;: 16},
+    sns.heatmap(conf_matrix, annot=True, ax=ax, cbar_kws={&#39;format&#39;: &#39;%.0f%%&#39;}, annot_kws={&#34;size&#34;: 16}, cmap = &#39;Blues&#39;,
                 yticklabels=sorted(np.unique(predictions.columns.get_level_values(1))),
                 xticklabels=[&#34;\n&#34;.join(list(e)[::-1]) for e in
                              list(itertools.product(
@@ -2814,9 +2867,10 @@ def plot_conf_matrix(predictions, targets, models, **kwargs):
                 )
     ax.tick_params(axis=&#39;x&#39;, rotation=0)
     ax.tick_params(axis=&#39;y&#39;, rotation=0)
+    ax.set_ylabel(&#34;Metéo-France&#34;)
     for i in range(conf_matrix.shape[0], conf_matrix.shape[1] + 1, conf_matrix.shape[0]):
         ax.axvline(i, color=&#39;white&#39;)
-
+    &#39;&#39;&#39;
     return fig</code></pre>
 </details>
 </dd>
@@ -3225,6 +3279,7 @@ def plot_dynamics(stats):
     &#39;&#39;&#39;
     states = REGIMES
     fig, axs = plt.subplots(1, 3, figsize=(22.5, 7))
+
     for ax, method in zip(axs.flat, stats.index):
         Q = stats.loc[method].values.reshape((4, 4))
         Q = pd.DataFrame(Q, columns=states, index=states)
@@ -3665,10 +3720,10 @@ def plot_historical_counts(targets, pivot = False, title = None, **kwargs):
     fig, ax = plt.subplots(1, 1, figsize=(30, 7))
     targets.plot.bar(ax=ax, edgecolor=&#39;k&#39;)
     ax.set_ylim(0, 60)
-    ax.legend(targets.columns, bbox_to_anchor=(1.1, 1.05))
-    ax.set_ylabel(&#34;Number of Days&#34;, fontsize=16)
+    ax.legend(targets.columns, fontsize = 20,  loc = &#39;lower center&#39;, bbox_to_anchor=(.5, -0.3), ncol = 4)
+    ax.set_ylabel(&#34;Number of Days&#34;, fontsize=18)
     ax.set_xlabel(&#34;&#34;)
-    ax.tick_params(axis=&#39;both&#39;, which = &#39;major&#39;, labelsize = 16)
+    ax.tick_params(axis=&#39;both&#39;, which = &#39;major&#39;, labelsize = 18)
     if title is not None:
         plt.savefig(title, bbox_inches = &#39;tight&#39;)
     return fig</code></pre>
@@ -3722,11 +3777,11 @@ def plot_historical_probabilities(targets, pivot = False, title = None, **kwargs
     if targets.columns.nlevels == 2:
         targets.columns = targets.columns.droplevel()
     targets.plot.bar(stacked=True, ax=ax, width=1.0, edgecolor=&#39;k&#39;)
-    ax.legend(targets.columns, bbox_to_anchor=(1.1, 1.05))
+    ax.legend(targets.columns, fontsize = 20,  loc = &#39;lower center&#39;, bbox_to_anchor=(.5, -0.3), ncol = 4)
     ax.set_ylim(0, 1)
-    ax.set_ylabel(&#34;CDF&#34;, fontsize=16)
+    ax.set_ylabel(&#34;CDF&#34;, fontsize=18)
     ax.set_xlabel(&#34;&#34;)
-    ax.tick_params(axis=&#39;both&#39;, which=&#39;major&#39;, labelsize=16)
+    ax.tick_params(axis=&#39;both&#39;, which=&#39;major&#39;, labelsize=18)
     ax.set_xticklabels([ts.strftime(&#39;%Y&#39;) if ts.year != targets.index[idx - 1].year
                         else &#34;&#34; for idx, ts in enumerate(targets.index)])
     ax.figure.autofmt_xdate(rotation=90, ha=&#39;center&#39;)
@@ -4104,11 +4159,11 @@ def plot_multiclass_roc(predictions, targets, models, **kwargs):
     targets = label_binarize(np.argmin(targets.values, axis=1), classes=range(len(cols)))
     n_classes = targets.shape[1]
 
-    fig, axs = plt.subplots(1, len(models), figsize=(22.5, 7))
+    fig, axs = plt.subplots(1, len(models), figsize=(len(models)*7.5, 7), sharey = True)
     if not hasattr(axs, &#39;flat&#39;):
         axs = np.array([axs])
 
-    for ax, model in zip(axs.flat, models):
+    for j, (ax, model) in enumerate(zip(axs.flat, models)):
         roc_auc, tpr, fpr = dict(), dict(), dict()
         for i in range(n_classes):
             fpr[i], tpr[i], _ = roc_curve(targets[:, i], predictions.xs(model, level=0, axis=1).iloc[:, i])
@@ -4130,23 +4185,26 @@ def plot_multiclass_roc(predictions, targets, models, **kwargs):
         tpr[&#34;macro&#34;] = mean_tpr
         roc_auc[&#34;macro&#34;] = auc(fpr[&#34;macro&#34;], tpr[&#34;macro&#34;])
 
-        ax.plot(fpr[&#34;micro&#34;], tpr[&#34;micro&#34;], label=&#34;micro-average ROC curv (area = {0:0.2f})&#34;.format(roc_auc[&#34;micro&#34;]),
+        &#39;&#39;&#39;
+        ax.plot(fpr[&#34;micro&#34;], tpr[&#34;micro&#34;], label=&#34;micro-average ROC curve (area = {0:0.2f})&#34;.format(roc_auc[&#34;micro&#34;]),
                 color=&#39;deeppink&#39;, linestyle=&#34;:&#34;, linewidth=4)
 
-        ax.plot(fpr[&#34;macro&#34;], tpr[&#34;macro&#34;], label=&#34;micro-average ROC curv (area = {0:0.2f})&#34;.format(roc_auc[&#34;macro&#34;]),
+        ax.plot(fpr[&#34;macro&#34;], tpr[&#34;macro&#34;], label=&#34;micro-average ROC curve (area = {0:0.2f})&#34;.format(roc_auc[&#34;macro&#34;]),
                 color=&#39;navy&#39;, linestyle=&#34;:&#34;, linewidth=4)
-
+        &#39;&#39;&#39;
         for i in range(n_classes):
-            ax.plot(fpr[i], tpr[i], linewidth=2.1, label=&#34;ROC curve of class {0} (area: {1:0.2f})&#34;. \
+            ax.plot(fpr[i], tpr[i], linewidth=2.1, label=&#34;ROC curve {0}\n(area: {1:0.2f})&#34;. \
                     format(cols[i], roc_auc[i]))
 
         ax.plot([0, 1], [0, 1], &#39;k--&#39;, linewidth=2.1)
         ax.set_xlim([0.0, 1.0])
         ax.set_ylim([0.0, 1.05])
-        ax.set_xlabel(&#39;False Positive Rate (FPR)&#39;)
-        ax.set_ylabel(&#39;True Positive Rate (TPR)&#39;)
-        ax.legend(loc=&#34;lower right&#34;)
-        ax.set_title(model)
+        ax.set_xlabel(&#39;False Positive Rate (FPR)&#39;, fontsize = 18)
+        if j == 0:
+            ax.set_ylabel(&#39;True Positive Rate (TPR)&#39;, fontsize = 18)
+        ax.legend(loc=&#34;lower center&#34;, fontsize = 14, bbox_to_anchor = (.5, -.37), ncol = 2)
+
+        ax.set_title(model, fontdict = {&#39;fontsize&#39;: 18, &#39;fontweight&#39;: &#39;bold&#39;})
     return fig</code></pre>
 </details>
 </dd>

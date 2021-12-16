@@ -31,6 +31,7 @@ import numpy as np
 import pandas as pd
 import os
 import itertools
+import scipy
 import streamlit as st
 from datetime import timedelta, datetime
 path = &#34;energy_imgs&#34;
@@ -106,6 +107,7 @@ def filter_by_country(df, country):
     country_df.dropna(how=&#39;all&#39;, inplace=True, axis=1)
     country_df.dropna(how=&#39;all&#39;, inplace=True, axis=0)
 
+
     return country_df
 
 @st.cache(allow_output_mutation=True)
@@ -148,7 +150,7 @@ def get_state_transitions(predictions, window=1):
 
     &#39;&#39;&#39;
     stats = pd.DataFrame(columns=list(itertools.product(REGIMES, REGIMES)),
-                         index=[&#39;K-Means&#39;, &#39;Bayesian-GMM&#39;, &#39;GMM&#39;]
+                         index=predictions.columns.get_level_values(0).unique().tolist()
                          )
     stats.columns = pd.MultiIndex.from_tuples(stats.columns)
     stats.fillna(value=0, inplace=True)
@@ -303,7 +305,7 @@ def load_synthetic_data():
         A pandas DataFrame containing the synthetic measurements of energy variables, indexed by date and country
 
     &#39;&#39;&#39;
-    if &#39;synthetic.csv&#39; not in os.listdir(&#39;./dashboard&#39;):
+    if &#39;synthetic.csv&#39; not in os.listdir(&#39;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/scripts/src/dashboard&#39;):
         READ_PATH = &#39;W:/UK/Reserach/Private/WEATHER/STAGE_ABALDO/dataset/Energy_Indicators_Copernicus&#39;
         FOLDERS = [&#39;dataset-sis-energy-derived-reanalysis_ENERGY&#39;, &#39;dataset-sis-energy-derived-reanalysis_WEATHER&#39;]
         COUNTRIES = [&#39;BE&#39;, &#39;ES&#39;, &#39;FR&#39;, &#39;DE&#39;, &#39;IT&#39;, &#39;NL&#39;, &#39;UK&#39;]
@@ -356,7 +358,7 @@ def load_synthetic_data():
         synthetic_df[&#39;Total Solar Capacity&#39;] = synthetic_df[&#39;Solar Photo Obs&#39;] / synthetic_df[&#39;Solar Load Factor&#39;]
         synthetic_df[&#39;Total Solar Obs&#39;] = synthetic_df[&#39;Solar Photo Obs&#39;]
     else:
-        synthetic_df = pd.read_csv(&#34;dashboard/synthetic.csv&#34;, index_col = [0,1], parse_dates = True)
+        synthetic_df = pd.read_csv(&#34;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/scripts/src/dashboard/synthetic.csv&#34;, index_col = [0,1], parse_dates = True)
     return synthetic_df
 
 @st.cache
@@ -528,13 +530,62 @@ def load_hydro():
     groundwater /= 1e6
     return reservoir, inflow, groundwater
 
-def create_forecast_file(df, subseasonal_df):
-    today = datetime.today().date()
-    forecast = filter_forecast(subseasonal_df, today, backward = False)
-    old_forecast = filter_forecast(subseasonal_df, today - timedelta(days = 3), backward=False)
+def create_moments_file(df, predictions, model = &#39;GMM&#39;, variables = [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;, &#39;Load&#39;, &#39;Temperature&#39;], filename = None):
+    moments = pd.DataFrame(
+        index = pd.MultiIndex.from_tuples(itertools.product(predictions.index.month.unique(),df[&#39;Country&#39;].unique(), [&#39;mean&#39;,&#39;std&#39;],REGIMES)),
+        columns = variables
+    )
+    for col in variables:
+        for country in df[&#39;Country&#39;].unique().tolist() + [&#39;EU-7&#39;]:
+            if col == &#39;Load&#39;:
+                if country != &#39;EU-7&#39;:
+                    variable_df = df.loc[
+                        np.logical_and(df[&#39;Country&#39;] == country, df.index.map(pd.tseries.offsets.BDay().onOffset)), col]
+                else:
+                    variable_df = df.loc[df.index.map(pd.tseries.offsets.BDay().onOffset), col]
+                    variable_df = variable_df.groupby(variable_df.index).sum()
 
-    distributions = pd.read_csv(&#39;moments_4regimes_EU7.csv&#39;, index_col = [0,1,2,3], header = 0)
-    distribution_month = min(distributions.index.get_level_values(0), key = lambda x: abs(x - today.month))
+            else:
+                if country != &#39;EU-7&#39;:
+                    variable_df = df.loc[df[&#39;Country&#39;] == country, col]
+                else:
+                    variable_df = df.loc[:, col].groupby(df.index).mean()
+
+            variable_df.dropna(inplace=True)
+            for month in predictions.index.month.unique():
+                predictions_month = predictions.loc[predictions.index.month == month]
+                distributions_regimes = {
+                    regime: scipy.stats.gaussian_kde(variable_df.loc[predictions_month.index.intersection(variable_df.index)],
+                                                     weights=predictions_month.loc[
+                                                         predictions_month.index.intersection(variable_df.index), (
+                                                         model, regime)].values,
+                                                     bw_method=.1)
+                    for regime in sorted(REGIMES)}
+
+                points = np.linspace(variable_df.min(), variable_df.max(), 1000)
+
+                means = {k: sum(points * v.pdf(points)) / sum(v.pdf(points))
+                         for k, v in distributions_regimes.items()}
+
+                stds = {k: np.sqrt(np.sum([(p - v) ** 2 for p in points]) / len(points))
+                        for k, v in means.items()}
+
+                for regime in sorted(REGIMES):
+                    moments.loc[(month, country, &#39;mean&#39;,regime), col] = means[regime]
+                    moments.loc[(month, country, &#39;std&#39;, regime), col] = stds[regime]
+
+
+    moments.to_csv(f&#39;W:\\UK\\Research\\Private\\WEATHER\\STAGE_ABALDO\\scripts\\src\\{filename}.csv&#39;)
+
+
+
+
+def create_forecast_file(df, subseasonal_df, date, filename):
+    forecast = filter_forecast(subseasonal_df, date, backward = False)
+    old_forecast = filter_forecast(subseasonal_df, date - timedelta(days = 3), backward=False)
+
+    distributions = pd.read_csv(filename, index_col = [0,1,2,3], header = 0)
+    distribution_month = min(distributions.index.get_level_values(0), key = lambda x: abs(x - date.month))
     distributions = distributions.xs(distribution_month, level = 0)
 
     def create_file(df, forecast, distributions, distribution_month):
@@ -568,7 +619,7 @@ def create_forecast_file(df, subseasonal_df):
     old_file = create_file(df, old_forecast, distributions, distribution_month)
     file.loc[file.index.intersection(old_file.index),&#39;Anomaly_old&#39;] = old_file.loc[file.index.intersection(old_file.index),&#39;Anomaly&#39;]
     file[&#39;Difference&#39;] = file[&#39;Anomaly&#39;] - file[&#39;Anomaly_old&#39;]
-    file.to_csv(f&#39;W:\\UK\\Research\\Private\\WEATHER\\REGULAR_MONITORING\\PBI_UPDATE\\WEATHER_REGIMES\\ARCHIVES\\forecast_{today.strftime(&#34;%Y%m%d&#34;)}.csv&#39;)
+    file.to_csv(f&#39;W:\\UK\\Research\\Private\\WEATHER\\REGULAR_MONITORING\\PBI_UPDATE\\WEATHER_REGIMES\\ARCHIVES\\forecast_{date.strftime(&#34;%Y%m%d&#34;)}.csv&#39;)
     file.to_csv(f&#39;W:\\UK\\Research\\Private\\WEATHER\\REGULAR_MONITORING\\PBI_UPDATE\\WEATHER_REGIMES\\regime_forecast.csv&#39;)</code></pre>
 </details>
 </section>
@@ -618,7 +669,7 @@ def build_data(true_df, synthetic_df):
 </details>
 </dd>
 <dt id="dashboard.utils.data.create_forecast_file"><code class="name flex">
-<span>def <span class="ident">create_forecast_file</span></span>(<span>df, subseasonal_df)</span>
+<span>def <span class="ident">create_forecast_file</span></span>(<span>df, subseasonal_df, date, filename)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -626,13 +677,12 @@ def build_data(true_df, synthetic_df):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def create_forecast_file(df, subseasonal_df):
-    today = datetime.today().date()
-    forecast = filter_forecast(subseasonal_df, today, backward = False)
-    old_forecast = filter_forecast(subseasonal_df, today - timedelta(days = 3), backward=False)
+<pre><code class="python">def create_forecast_file(df, subseasonal_df, date, filename):
+    forecast = filter_forecast(subseasonal_df, date, backward = False)
+    old_forecast = filter_forecast(subseasonal_df, date - timedelta(days = 3), backward=False)
 
-    distributions = pd.read_csv(&#39;moments_4regimes_EU7.csv&#39;, index_col = [0,1,2,3], header = 0)
-    distribution_month = min(distributions.index.get_level_values(0), key = lambda x: abs(x - today.month))
+    distributions = pd.read_csv(filename, index_col = [0,1,2,3], header = 0)
+    distribution_month = min(distributions.index.get_level_values(0), key = lambda x: abs(x - date.month))
     distributions = distributions.xs(distribution_month, level = 0)
 
     def create_file(df, forecast, distributions, distribution_month):
@@ -666,8 +716,65 @@ def build_data(true_df, synthetic_df):
     old_file = create_file(df, old_forecast, distributions, distribution_month)
     file.loc[file.index.intersection(old_file.index),&#39;Anomaly_old&#39;] = old_file.loc[file.index.intersection(old_file.index),&#39;Anomaly&#39;]
     file[&#39;Difference&#39;] = file[&#39;Anomaly&#39;] - file[&#39;Anomaly_old&#39;]
-    file.to_csv(f&#39;W:\\UK\\Research\\Private\\WEATHER\\REGULAR_MONITORING\\PBI_UPDATE\\WEATHER_REGIMES\\ARCHIVES\\forecast_{today.strftime(&#34;%Y%m%d&#34;)}.csv&#39;)
+    file.to_csv(f&#39;W:\\UK\\Research\\Private\\WEATHER\\REGULAR_MONITORING\\PBI_UPDATE\\WEATHER_REGIMES\\ARCHIVES\\forecast_{date.strftime(&#34;%Y%m%d&#34;)}.csv&#39;)
     file.to_csv(f&#39;W:\\UK\\Research\\Private\\WEATHER\\REGULAR_MONITORING\\PBI_UPDATE\\WEATHER_REGIMES\\regime_forecast.csv&#39;)</code></pre>
+</details>
+</dd>
+<dt id="dashboard.utils.data.create_moments_file"><code class="name flex">
+<span>def <span class="ident">create_moments_file</span></span>(<span>df, predictions, model='GMM', variables=['Wind Load Factor', 'Solar Load Factor', 'Load', 'Temperature'], filename=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_moments_file(df, predictions, model = &#39;GMM&#39;, variables = [&#39;Wind Load Factor&#39;, &#39;Solar Load Factor&#39;, &#39;Load&#39;, &#39;Temperature&#39;], filename = None):
+    moments = pd.DataFrame(
+        index = pd.MultiIndex.from_tuples(itertools.product(predictions.index.month.unique(),df[&#39;Country&#39;].unique(), [&#39;mean&#39;,&#39;std&#39;],REGIMES)),
+        columns = variables
+    )
+    for col in variables:
+        for country in df[&#39;Country&#39;].unique().tolist() + [&#39;EU-7&#39;]:
+            if col == &#39;Load&#39;:
+                if country != &#39;EU-7&#39;:
+                    variable_df = df.loc[
+                        np.logical_and(df[&#39;Country&#39;] == country, df.index.map(pd.tseries.offsets.BDay().onOffset)), col]
+                else:
+                    variable_df = df.loc[df.index.map(pd.tseries.offsets.BDay().onOffset), col]
+                    variable_df = variable_df.groupby(variable_df.index).sum()
+
+            else:
+                if country != &#39;EU-7&#39;:
+                    variable_df = df.loc[df[&#39;Country&#39;] == country, col]
+                else:
+                    variable_df = df.loc[:, col].groupby(df.index).mean()
+
+            variable_df.dropna(inplace=True)
+            for month in predictions.index.month.unique():
+                predictions_month = predictions.loc[predictions.index.month == month]
+                distributions_regimes = {
+                    regime: scipy.stats.gaussian_kde(variable_df.loc[predictions_month.index.intersection(variable_df.index)],
+                                                     weights=predictions_month.loc[
+                                                         predictions_month.index.intersection(variable_df.index), (
+                                                         model, regime)].values,
+                                                     bw_method=.1)
+                    for regime in sorted(REGIMES)}
+
+                points = np.linspace(variable_df.min(), variable_df.max(), 1000)
+
+                means = {k: sum(points * v.pdf(points)) / sum(v.pdf(points))
+                         for k, v in distributions_regimes.items()}
+
+                stds = {k: np.sqrt(np.sum([(p - v) ** 2 for p in points]) / len(points))
+                        for k, v in means.items()}
+
+                for regime in sorted(REGIMES):
+                    moments.loc[(month, country, &#39;mean&#39;,regime), col] = means[regime]
+                    moments.loc[(month, country, &#39;std&#39;, regime), col] = stds[regime]
+
+
+    moments.to_csv(f&#39;W:\\UK\\Research\\Private\\WEATHER\\STAGE_ABALDO\\scripts\\src\\{filename}.csv&#39;)</code></pre>
 </details>
 </dd>
 <dt id="dashboard.utils.data.filter_by_country"><code class="name flex">
@@ -704,6 +811,7 @@ def filter_by_country(df, country):
     country_df.index = pd.to_datetime(country_df.index)
     country_df.dropna(how=&#39;all&#39;, inplace=True, axis=1)
     country_df.dropna(how=&#39;all&#39;, inplace=True, axis=0)
+
 
     return country_df</code></pre>
 </details>
@@ -829,7 +937,7 @@ def get_state_transitions(predictions, window=1):
 
     &#39;&#39;&#39;
     stats = pd.DataFrame(columns=list(itertools.product(REGIMES, REGIMES)),
-                         index=[&#39;K-Means&#39;, &#39;Bayesian-GMM&#39;, &#39;GMM&#39;]
+                         index=predictions.columns.get_level_values(0).unique().tolist()
                          )
     stats.columns = pd.MultiIndex.from_tuples(stats.columns)
     stats.fillna(value=0, inplace=True)
@@ -1272,7 +1380,7 @@ def load_synthetic_data():
         A pandas DataFrame containing the synthetic measurements of energy variables, indexed by date and country
 
     &#39;&#39;&#39;
-    if &#39;synthetic.csv&#39; not in os.listdir(&#39;./dashboard&#39;):
+    if &#39;synthetic.csv&#39; not in os.listdir(&#39;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/scripts/src/dashboard&#39;):
         READ_PATH = &#39;W:/UK/Reserach/Private/WEATHER/STAGE_ABALDO/dataset/Energy_Indicators_Copernicus&#39;
         FOLDERS = [&#39;dataset-sis-energy-derived-reanalysis_ENERGY&#39;, &#39;dataset-sis-energy-derived-reanalysis_WEATHER&#39;]
         COUNTRIES = [&#39;BE&#39;, &#39;ES&#39;, &#39;FR&#39;, &#39;DE&#39;, &#39;IT&#39;, &#39;NL&#39;, &#39;UK&#39;]
@@ -1325,7 +1433,7 @@ def load_synthetic_data():
         synthetic_df[&#39;Total Solar Capacity&#39;] = synthetic_df[&#39;Solar Photo Obs&#39;] / synthetic_df[&#39;Solar Load Factor&#39;]
         synthetic_df[&#39;Total Solar Obs&#39;] = synthetic_df[&#39;Solar Photo Obs&#39;]
     else:
-        synthetic_df = pd.read_csv(&#34;dashboard/synthetic.csv&#34;, index_col = [0,1], parse_dates = True)
+        synthetic_df = pd.read_csv(&#34;W:/UK/Research/Private/WEATHER/STAGE_ABALDO/scripts/src/dashboard/synthetic.csv&#34;, index_col = [0,1], parse_dates = True)
     return synthetic_df</code></pre>
 </details>
 </dd>
@@ -1349,6 +1457,7 @@ def load_synthetic_data():
 <ul class="">
 <li><code><a title="dashboard.utils.data.build_data" href="#dashboard.utils.data.build_data">build_data</a></code></li>
 <li><code><a title="dashboard.utils.data.create_forecast_file" href="#dashboard.utils.data.create_forecast_file">create_forecast_file</a></code></li>
+<li><code><a title="dashboard.utils.data.create_moments_file" href="#dashboard.utils.data.create_moments_file">create_moments_file</a></code></li>
 <li><code><a title="dashboard.utils.data.filter_by_country" href="#dashboard.utils.data.filter_by_country">filter_by_country</a></code></li>
 <li><code><a title="dashboard.utils.data.filter_by_preds" href="#dashboard.utils.data.filter_by_preds">filter_by_preds</a></code></li>
 <li><code><a title="dashboard.utils.data.filter_forecast" href="#dashboard.utils.data.filter_forecast">filter_forecast</a></code></li>

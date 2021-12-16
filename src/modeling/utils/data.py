@@ -2,6 +2,7 @@ import xarray as xr
 import numpy as np
 import pandas as pd
 import os
+import pickle
 from modeling.utils.tools import *
 from modeling.utils.sigma_vae import *
 from modeling.utils.loaders import *
@@ -132,6 +133,7 @@ def evaluate_normal(dt, domain='local', mode='flat', freq = 'm', start_date=None
             return dt.groupby('time.day').mean()
 
     elif domain == 'local' and mode == 'flat':
+        print("ok")
         return dt.mean(dim=["time"])
 
     elif domain == 'global' and mode == 'flat':
@@ -164,6 +166,7 @@ def evaluate_anomaly(observation, normal, mode='flat', freq = 'm'):
     '''
 
     if mode == 'flat':
+        print("ok")
         return observation - normal
     else:
         #month_day = pd.MultiIndex.from_arrays([observation['time.month'].values, observation['time.day'].values])
@@ -193,7 +196,7 @@ def weighted_anomaly(dt):
 
 
 @timing
-def build_data(normal='flat'):
+def build_data(normal_mode='flat', normal_freq = 'm'):
     '''
     Method to build dataframe, including normal and anomaly for each timeframe
     Args:
@@ -231,15 +234,10 @@ def build_data(normal='flat'):
 
         print("Evaluating the normal")
 
-        if normal != 'flat':
-            normal_dt = evaluate_normal(dt, domain='local', mode='dynamic', freq = 'm',start_date="01-01-1991")
-            print("Evaluating the anomaly")
-            anomaly_dt = evaluate_anomaly(dt, normal_dt, mode='dynamic')
-        else:
-            normal_dt = evaluate_normal(dt, domain='local', mode='flat', freq = 'm', start_date="01-01-1991")
-            # anomaly_dt = xr.apply_ufunc(lambda x, normal: x - normal, dt.groupby('time'), normal_dt)
-            print("Evaluating the anomaly")
-            anomaly_dt = evaluate_anomaly(dt, normal_dt, mode='flat', freq = 'm')
+
+        normal_dt = evaluate_normal(dt, domain='local', mode=normal_mode, freq = normal_freq, start_date="01-01-1991")
+        print("Evaluating the anomaly")
+        anomaly_dt = evaluate_anomaly(dt, normal_dt, mode=normal_mode, freq=normal_freq)
 
         print("Pushing the normal to file")
         to_nc(normal_dt, variable='normal')
@@ -325,7 +323,7 @@ def reduce_dim(dt, reshape='latlon', method='PCA', **kwargs):
     Args:
         df: an xarray Dataset
         method: the method used to perform dimensionality reduction, if not specified PCA is used
-        **kwargs: a dictionary of further parameters, like the percentage of explained variance used to retain the components or the name of the VAE model file
+        **kwargs: a dictionary of further parameters, like the percentage of explained variance used to retain the components or the name of the VAE model file, or the file name to save/load the PCA estimator
 
     Returns:
         a numpy.array reduced in the feature space
@@ -334,20 +332,32 @@ def reduce_dim(dt, reshape='latlon', method='PCA', **kwargs):
     if method == 'PCA':
         if dt.ndim != 2:
             dt = dt.squeeze()
-        pca = wrap(PCA(kwargs["exp_variance"] if "exp_variance" in kwargs else .95), reshapes=reshape)
-        reduced_dt = pca.fit_transform(dt)
+
+        if ' load_est' in kwargs:
+            pca = pickle.load(open('../models/' + kwargs['season'] + '/' + kwargs['load_est'], 'rb'))
+            reduced_dt = pca.transform(dt)
+
+        else:
+            pca = wrap(PCA(kwargs["exp_variance"] if "exp_variance" in kwargs else .95), reshapes=reshape)
+            reduced_dt = pca.fit_transform(dt)
+            if 'save_est' in kwargs:
+                pickle.dump(pca, open('../models/' + kwargs['season'] + '/' + kwargs['save_est'], 'wb'))
 
     elif method == "VAE":
         time_idx = dt.coords['time']
+        '''
         dt = dt.to_array()[0].values
         tfs = torchvision.transforms.Compose([
             torchvision.transforms.Resize((240, 480)),
             ToTensor()])
         loader = torch.utils.data.DataLoader(GeoDataset(dt, transforms = tfs), batch_size = 256, shuffle = False)
+        '''
+        dt = np.swapaxes(dt.to_array().values, 0, 1)
+        dt = torch.from_numpy(dt).type(torch.FloatTensor)
         vae = ConvVAE(args = Args(z_dim = 5 if '5' in kwargs['model'] else 7))
         vae.load_state_dict(torch.load('../models/'+kwargs['season']+'/' + kwargs['model'], map_location='cpu'))
         stack = []
-        for i, batch in enumerate(loader):
+        for i, batch in enumerate(torch.tensor_split(dt, tuple(range(256, len(dt), 256)))):
             print("\r", end="")
             print("Processing batch %d" % (i+ 1), end="")
             with torch.no_grad():

@@ -30,8 +30,10 @@
 import numpy as np
 import pandas as pd
 import os
+import pickle
 from modeling.utils.tools import *
 from modeling.utils.sigma_vae import *
+from modeling.utils.loaders import *
 from modeling.utils.config import *
 from sklearn_xarray import wrap
 from sklearn.decomposition import PCA
@@ -159,6 +161,7 @@ def evaluate_normal(dt, domain=&#39;local&#39;, mode=&#39;flat&#39;, freq = &#39
             return dt.groupby(&#39;time.day&#39;).mean()
 
     elif domain == &#39;local&#39; and mode == &#39;flat&#39;:
+        print(&#34;ok&#34;)
         return dt.mean(dim=[&#34;time&#34;])
 
     elif domain == &#39;global&#39; and mode == &#39;flat&#39;:
@@ -191,6 +194,7 @@ def evaluate_anomaly(observation, normal, mode=&#39;flat&#39;, freq = &#39;m&#39
     &#39;&#39;&#39;
 
     if mode == &#39;flat&#39;:
+        print(&#34;ok&#34;)
         return observation - normal
     else:
         #month_day = pd.MultiIndex.from_arrays([observation[&#39;time.month&#39;].values, observation[&#39;time.day&#39;].values])
@@ -220,7 +224,7 @@ def weighted_anomaly(dt):
 
 
 @timing
-def build_data(normal=&#39;flat&#39;):
+def build_data(normal_mode=&#39;flat&#39;, normal_freq = &#39;m&#39;):
     &#39;&#39;&#39;
     Method to build dataframe, including normal and anomaly for each timeframe
     Args:
@@ -258,15 +262,10 @@ def build_data(normal=&#39;flat&#39;):
 
         print(&#34;Evaluating the normal&#34;)
 
-        if normal != &#39;flat&#39;:
-            normal_dt = evaluate_normal(dt, domain=&#39;local&#39;, mode=&#39;dynamic&#39;, freq = &#39;m&#39;,start_date=&#34;01-01-1991&#34;)
-            print(&#34;Evaluating the anomaly&#34;)
-            anomaly_dt = evaluate_anomaly(dt, normal_dt, mode=&#39;dynamic&#39;)
-        else:
-            normal_dt = evaluate_normal(dt, domain=&#39;local&#39;, mode=&#39;flat&#39;, freq = &#39;m&#39;, start_date=&#34;01-01-1991&#34;)
-            # anomaly_dt = xr.apply_ufunc(lambda x, normal: x - normal, dt.groupby(&#39;time&#39;), normal_dt)
-            print(&#34;Evaluating the anomaly&#34;)
-            anomaly_dt = evaluate_anomaly(dt, normal_dt, mode=&#39;flat&#39;, freq = &#39;m&#39;)
+
+        normal_dt = evaluate_normal(dt, domain=&#39;local&#39;, mode=normal_mode, freq = normal_freq, start_date=&#34;01-01-1991&#34;)
+        print(&#34;Evaluating the anomaly&#34;)
+        anomaly_dt = evaluate_anomaly(dt, normal_dt, mode=normal_mode, freq=normal_freq)
 
         print(&#34;Pushing the normal to file&#34;)
         to_nc(normal_dt, variable=&#39;normal&#39;)
@@ -352,7 +351,7 @@ def reduce_dim(dt, reshape=&#39;latlon&#39;, method=&#39;PCA&#39;, **kwargs):
     Args:
         df: an xarray Dataset
         method: the method used to perform dimensionality reduction, if not specified PCA is used
-        **kwargs: a dictionary of further parameters, like the percentage of explained variance used to retain the components or the name of the VAE model file
+        **kwargs: a dictionary of further parameters, like the percentage of explained variance used to retain the components or the name of the VAE model file, or the file name to save/load the PCA estimator
 
     Returns:
         a numpy.array reduced in the feature space
@@ -361,25 +360,38 @@ def reduce_dim(dt, reshape=&#39;latlon&#39;, method=&#39;PCA&#39;, **kwargs):
     if method == &#39;PCA&#39;:
         if dt.ndim != 2:
             dt = dt.squeeze()
-        pca = wrap(PCA(kwargs[&#34;exp_variance&#34;] if &#34;exp_variance&#34; in kwargs else .95), reshapes=reshape)
-        reduced_dt = pca.fit_transform(dt)
+
+        if &#39; load_est&#39; in kwargs:
+            pca = pickle.load(open(&#39;../models/&#39; + kwargs[&#39;season&#39;] + &#39;/&#39; + kwargs[&#39;load_est&#39;], &#39;rb&#39;))
+            reduced_dt = pca.transform(dt)
+
+        else:
+            pca = wrap(PCA(kwargs[&#34;exp_variance&#34;] if &#34;exp_variance&#34; in kwargs else .95), reshapes=reshape)
+            reduced_dt = pca.fit_transform(dt)
+            if &#39;save_est&#39; in kwargs:
+                pickle.dump(pca, open(&#39;../models/&#39; + kwargs[&#39;season&#39;] + &#39;/&#39; + kwargs[&#39;save_est&#39;], &#39;wb&#39;))
 
     elif method == &#34;VAE&#34;:
         time_idx = dt.coords[&#39;time&#39;]
-        vae = ConvVAE(args = Args())
-        vae.load_state_dict(torch.load(&#39;../models/&#39;+kwargs[&#39;season&#39;]+&#39;/&#39; + kwargs[&#39;model&#39;], map_location=&#39;cpu&#39;))
+        &#39;&#39;&#39;
+        dt = dt.to_array()[0].values
+        tfs = torchvision.transforms.Compose([
+            torchvision.transforms.Resize((240, 480)),
+            ToTensor()])
+        loader = torch.utils.data.DataLoader(GeoDataset(dt, transforms = tfs), batch_size = 256, shuffle = False)
+        &#39;&#39;&#39;
         dt = np.swapaxes(dt.to_array().values, 0, 1)
         dt = torch.from_numpy(dt).type(torch.FloatTensor)
+        vae = ConvVAE(args = Args(z_dim = 5 if &#39;5&#39; in kwargs[&#39;model&#39;] else 7))
+        vae.load_state_dict(torch.load(&#39;../models/&#39;+kwargs[&#39;season&#39;]+&#39;/&#39; + kwargs[&#39;model&#39;], map_location=&#39;cpu&#39;))
         stack = []
-        for i in range(0, len(dt), 256):
+        for i, batch in enumerate(torch.tensor_split(dt, tuple(range(256, len(dt), 256)))):
             print(&#34;\r&#34;, end=&#34;&#34;)
-            print(&#34;Processing batch %d&#34; % (i // 256 + 1), end=&#34;&#34;)
-
-            batch = dt[i:i + 256, ...]
+            print(&#34;Processing batch %d&#34; % (i+ 1), end=&#34;&#34;)
             with torch.no_grad():
                 stack.append(vae(batch)[1])
         reduced_dt = torch.cat(stack).squeeze().detach().numpy()
-        reduced_dt = xr.DataArray(reduced_dt, coords=[time_idx, range(1, reduced_dt.shape[1])])
+        reduced_dt = xr.DataArray(reduced_dt, coords=[time_idx, range(1, reduced_dt.shape[1]+1)])
 
     else:
         pass
@@ -396,7 +408,7 @@ def reduce_dim(dt, reshape=&#39;latlon&#39;, method=&#39;PCA&#39;, **kwargs):
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="modeling.utils.data.build_data"><code class="name flex">
-<span>def <span class="ident">build_data</span></span>(<span>normal='flat')</span>
+<span>def <span class="ident">build_data</span></span>(<span>normal_mode='flat', normal_freq='m')</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Method to build dataframe, including normal and anomaly for each timeframe</p>
@@ -412,7 +424,7 @@ def reduce_dim(dt, reshape=&#39;latlon&#39;, method=&#39;PCA&#39;, **kwargs):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@timing
-def build_data(normal=&#39;flat&#39;):
+def build_data(normal_mode=&#39;flat&#39;, normal_freq = &#39;m&#39;):
     &#39;&#39;&#39;
     Method to build dataframe, including normal and anomaly for each timeframe
     Args:
@@ -450,15 +462,10 @@ def build_data(normal=&#39;flat&#39;):
 
         print(&#34;Evaluating the normal&#34;)
 
-        if normal != &#39;flat&#39;:
-            normal_dt = evaluate_normal(dt, domain=&#39;local&#39;, mode=&#39;dynamic&#39;, freq = &#39;m&#39;,start_date=&#34;01-01-1991&#34;)
-            print(&#34;Evaluating the anomaly&#34;)
-            anomaly_dt = evaluate_anomaly(dt, normal_dt, mode=&#39;dynamic&#39;)
-        else:
-            normal_dt = evaluate_normal(dt, domain=&#39;local&#39;, mode=&#39;flat&#39;, freq = &#39;m&#39;, start_date=&#34;01-01-1991&#34;)
-            # anomaly_dt = xr.apply_ufunc(lambda x, normal: x - normal, dt.groupby(&#39;time&#39;), normal_dt)
-            print(&#34;Evaluating the anomaly&#34;)
-            anomaly_dt = evaluate_anomaly(dt, normal_dt, mode=&#39;flat&#39;, freq = &#39;m&#39;)
+
+        normal_dt = evaluate_normal(dt, domain=&#39;local&#39;, mode=normal_mode, freq = normal_freq, start_date=&#34;01-01-1991&#34;)
+        print(&#34;Evaluating the anomaly&#34;)
+        anomaly_dt = evaluate_anomaly(dt, normal_dt, mode=normal_mode, freq=normal_freq)
 
         print(&#34;Pushing the normal to file&#34;)
         to_nc(normal_dt, variable=&#39;normal&#39;)
@@ -544,6 +551,7 @@ def evaluate_anomaly(observation, normal, mode=&#39;flat&#39;, freq = &#39;m&#39
     &#39;&#39;&#39;
 
     if mode == &#39;flat&#39;:
+        print(&#34;ok&#34;)
         return observation - normal
     else:
         #month_day = pd.MultiIndex.from_arrays([observation[&#39;time.month&#39;].values, observation[&#39;time.day&#39;].values])
@@ -614,6 +622,7 @@ def evaluate_normal(dt, domain=&#39;local&#39;, mode=&#39;flat&#39;, freq = &#39
             return dt.groupby(&#39;time.day&#39;).mean()
 
     elif domain == &#39;local&#39; and mode == &#39;flat&#39;:
+        print(&#34;ok&#34;)
         return dt.mean(dim=[&#34;time&#34;])
 
     elif domain == &#39;global&#39; and mode == &#39;flat&#39;:
@@ -796,7 +805,7 @@ def read_nc(path_to_file):
 <dt><strong><code>method</code></strong></dt>
 <dd>the method used to perform dimensionality reduction, if not specified PCA is used</dd>
 <dt><strong><code>**kwargs</code></strong></dt>
-<dd>a dictionary of further parameters, like the percentage of explained variance used to retain the components or the name of the VAE model file</dd>
+<dd>a dictionary of further parameters, like the percentage of explained variance used to retain the components or the name of the VAE model file, or the file name to save/load the PCA estimator</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <p>a numpy.array reduced in the feature space</p></div>
@@ -810,7 +819,7 @@ def reduce_dim(dt, reshape=&#39;latlon&#39;, method=&#39;PCA&#39;, **kwargs):
     Args:
         df: an xarray Dataset
         method: the method used to perform dimensionality reduction, if not specified PCA is used
-        **kwargs: a dictionary of further parameters, like the percentage of explained variance used to retain the components or the name of the VAE model file
+        **kwargs: a dictionary of further parameters, like the percentage of explained variance used to retain the components or the name of the VAE model file, or the file name to save/load the PCA estimator
 
     Returns:
         a numpy.array reduced in the feature space
@@ -819,25 +828,38 @@ def reduce_dim(dt, reshape=&#39;latlon&#39;, method=&#39;PCA&#39;, **kwargs):
     if method == &#39;PCA&#39;:
         if dt.ndim != 2:
             dt = dt.squeeze()
-        pca = wrap(PCA(kwargs[&#34;exp_variance&#34;] if &#34;exp_variance&#34; in kwargs else .95), reshapes=reshape)
-        reduced_dt = pca.fit_transform(dt)
+
+        if &#39; load_est&#39; in kwargs:
+            pca = pickle.load(open(&#39;../models/&#39; + kwargs[&#39;season&#39;] + &#39;/&#39; + kwargs[&#39;load_est&#39;], &#39;rb&#39;))
+            reduced_dt = pca.transform(dt)
+
+        else:
+            pca = wrap(PCA(kwargs[&#34;exp_variance&#34;] if &#34;exp_variance&#34; in kwargs else .95), reshapes=reshape)
+            reduced_dt = pca.fit_transform(dt)
+            if &#39;save_est&#39; in kwargs:
+                pickle.dump(pca, open(&#39;../models/&#39; + kwargs[&#39;season&#39;] + &#39;/&#39; + kwargs[&#39;save_est&#39;], &#39;wb&#39;))
 
     elif method == &#34;VAE&#34;:
         time_idx = dt.coords[&#39;time&#39;]
-        vae = ConvVAE(args = Args())
-        vae.load_state_dict(torch.load(&#39;../models/&#39;+kwargs[&#39;season&#39;]+&#39;/&#39; + kwargs[&#39;model&#39;], map_location=&#39;cpu&#39;))
+        &#39;&#39;&#39;
+        dt = dt.to_array()[0].values
+        tfs = torchvision.transforms.Compose([
+            torchvision.transforms.Resize((240, 480)),
+            ToTensor()])
+        loader = torch.utils.data.DataLoader(GeoDataset(dt, transforms = tfs), batch_size = 256, shuffle = False)
+        &#39;&#39;&#39;
         dt = np.swapaxes(dt.to_array().values, 0, 1)
         dt = torch.from_numpy(dt).type(torch.FloatTensor)
+        vae = ConvVAE(args = Args(z_dim = 5 if &#39;5&#39; in kwargs[&#39;model&#39;] else 7))
+        vae.load_state_dict(torch.load(&#39;../models/&#39;+kwargs[&#39;season&#39;]+&#39;/&#39; + kwargs[&#39;model&#39;], map_location=&#39;cpu&#39;))
         stack = []
-        for i in range(0, len(dt), 256):
+        for i, batch in enumerate(torch.tensor_split(dt, tuple(range(256, len(dt), 256)))):
             print(&#34;\r&#34;, end=&#34;&#34;)
-            print(&#34;Processing batch %d&#34; % (i // 256 + 1), end=&#34;&#34;)
-
-            batch = dt[i:i + 256, ...]
+            print(&#34;Processing batch %d&#34; % (i+ 1), end=&#34;&#34;)
             with torch.no_grad():
                 stack.append(vae(batch)[1])
         reduced_dt = torch.cat(stack).squeeze().detach().numpy()
-        reduced_dt = xr.DataArray(reduced_dt, coords=[time_idx, range(1, reduced_dt.shape[1])])
+        reduced_dt = xr.DataArray(reduced_dt, coords=[time_idx, range(1, reduced_dt.shape[1]+1)])
 
     else:
         pass

@@ -903,6 +903,7 @@ def plot_dynamics(stats):
     '''
     states = REGIMES
     fig, axs = plt.subplots(1, 3, figsize=(22.5, 7))
+
     for ax, method in zip(axs.flat, stats.index):
         Q = stats.loc[method].values.reshape((4, 4))
         Q = pd.DataFrame(Q, columns=states, index=states)
@@ -950,16 +951,18 @@ def compare_dynamics(predictions, targets, model, title = None, **kwargs):
     fig, ax = plt.subplots(1,1, figsize=(22.5,7))
 
     prob_model = predictions.xs(model, level = 0, axis = 1).drop('Prediction', axis = 1)
-    prob_model.reindex(columns = sorted(prob_model.columns)).plot(kind='line', linewidth = 2.1, ax = ax)
+    prob_model.reindex(columns = sorted(prob_model.columns)).plot(kind='line', linewidth = 3, ax = ax)
     colors = {line.get_label(): line.get_color() for line in ax.get_lines()}
 
     for idx, row in targets.iterrows():
         #print(row['Prediction'])
-        ax.fill_betweenx([0., -0.02], [idx-timedelta(days=1)], [idx], color = colors[row['Prediction']], alpha = 1.)
+        ax.fill_betweenx([0., -0.04], [idx-timedelta(days=1)], [idx], color = colors[row['Prediction']], alpha = 1.)
     ax.tick_params(axis = 'both', which = 'both', labelsize = 16)
-    ax.set_ylabel("Probability", fontsize = 18)
+    ax.set_ylabel("Probability", fontsize = 20)
+    ax.legend(fontsize=20, loc='lower center', bbox_to_anchor=(0.5, -0.33), ncol=4, fancybox=True, shadow=True)
     if title:
         plt.savefig(title)
+
     return fig
 
 '''
@@ -1557,11 +1560,11 @@ def plot_historical_probabilities(targets, pivot = False, title = None, **kwargs
     if targets.columns.nlevels == 2:
         targets.columns = targets.columns.droplevel()
     targets.plot.bar(stacked=True, ax=ax, width=1.0, edgecolor='k')
-    ax.legend(targets.columns, bbox_to_anchor=(1.1, 1.05))
+    ax.legend(targets.columns, fontsize = 20,  loc = 'lower center', bbox_to_anchor=(.5, -0.3), ncol = 4)
     ax.set_ylim(0, 1)
-    ax.set_ylabel("CDF", fontsize=16)
+    ax.set_ylabel("CDF", fontsize=18)
     ax.set_xlabel("")
-    ax.tick_params(axis='both', which='major', labelsize=16)
+    ax.tick_params(axis='both', which='major', labelsize=18)
     ax.set_xticklabels([ts.strftime('%Y') if ts.year != targets.index[idx - 1].year
                         else "" for idx, ts in enumerate(targets.index)])
     ax.figure.autofmt_xdate(rotation=90, ha='center')
@@ -1620,10 +1623,10 @@ def plot_historical_counts(targets, pivot = False, title = None, **kwargs):
     fig, ax = plt.subplots(1, 1, figsize=(30, 7))
     targets.plot.bar(ax=ax, edgecolor='k')
     ax.set_ylim(0, 60)
-    ax.legend(targets.columns, bbox_to_anchor=(1.1, 1.05))
-    ax.set_ylabel("Number of Days", fontsize=16)
+    ax.legend(targets.columns, fontsize = 20,  loc = 'lower center', bbox_to_anchor=(.5, -0.3), ncol = 4)
+    ax.set_ylabel("Number of Days", fontsize=18)
     ax.set_xlabel("")
-    ax.tick_params(axis='both', which = 'major', labelsize = 16)
+    ax.tick_params(axis='both', which = 'major', labelsize = 18)
     if title is not None:
         plt.savefig(title, bbox_inches = 'tight')
     return fig

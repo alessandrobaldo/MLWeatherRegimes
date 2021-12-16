@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import os
 import itertools
+import scipy
 import streamlit as st
 from datetime import timedelta, datetime
 path = "energy_imgs"
@@ -121,7 +122,7 @@ def get_state_transitions(predictions, window=1):
 
     '''
     stats = pd.DataFrame(columns=list(itertools.product(REGIMES, REGIMES)),
-                         index=['K-Means', 'Bayesian-GMM', 'GMM']
+                         index=predictions.columns.get_level_values(0).unique().tolist()
                          )
     stats.columns = pd.MultiIndex.from_tuples(stats.columns)
     stats.fillna(value=0, inplace=True)
@@ -501,13 +502,62 @@ def load_hydro():
     groundwater /= 1e6
     return reservoir, inflow, groundwater
 
-def create_forecast_file(df, subseasonal_df):
-    today = datetime.today().date()
-    forecast = filter_forecast(subseasonal_df, today, backward = False)
-    old_forecast = filter_forecast(subseasonal_df, today - timedelta(days = 3), backward=False)
+def create_moments_file(df, predictions, model = 'GMM', variables = ['Wind Load Factor', 'Solar Load Factor', 'Load', 'Temperature'], filename = None):
+    moments = pd.DataFrame(
+        index = pd.MultiIndex.from_tuples(itertools.product(predictions.index.month.unique(),df['Country'].unique(), ['mean','std'],REGIMES)),
+        columns = variables
+    )
+    for col in variables:
+        for country in df['Country'].unique().tolist() + ['EU-7']:
+            if col == 'Load':
+                if country != 'EU-7':
+                    variable_df = df.loc[
+                        np.logical_and(df['Country'] == country, df.index.map(pd.tseries.offsets.BDay().onOffset)), col]
+                else:
+                    variable_df = df.loc[df.index.map(pd.tseries.offsets.BDay().onOffset), col]
+                    variable_df = variable_df.groupby(variable_df.index).sum()
 
-    distributions = pd.read_csv('moments_4regimes_EU7.csv', index_col = [0,1,2,3], header = 0)
-    distribution_month = min(distributions.index.get_level_values(0), key = lambda x: abs(x - today.month))
+            else:
+                if country != 'EU-7':
+                    variable_df = df.loc[df['Country'] == country, col]
+                else:
+                    variable_df = df.loc[:, col].groupby(df.index).mean()
+
+            variable_df.dropna(inplace=True)
+            for month in predictions.index.month.unique():
+                predictions_month = predictions.loc[predictions.index.month == month]
+                distributions_regimes = {
+                    regime: scipy.stats.gaussian_kde(variable_df.loc[predictions_month.index.intersection(variable_df.index)],
+                                                     weights=predictions_month.loc[
+                                                         predictions_month.index.intersection(variable_df.index), (
+                                                         model, regime)].values,
+                                                     bw_method=.1)
+                    for regime in sorted(REGIMES)}
+
+                points = np.linspace(variable_df.min(), variable_df.max(), 1000)
+
+                means = {k: sum(points * v.pdf(points)) / sum(v.pdf(points))
+                         for k, v in distributions_regimes.items()}
+
+                stds = {k: np.sqrt(np.sum([(p - v) ** 2 for p in points]) / len(points))
+                        for k, v in means.items()}
+
+                for regime in sorted(REGIMES):
+                    moments.loc[(month, country, 'mean',regime), col] = means[regime]
+                    moments.loc[(month, country, 'std', regime), col] = stds[regime]
+
+
+    moments.to_csv(f'W:\\UK\\Research\\Private\\WEATHER\\STAGE_ABALDO\\scripts\\src\\{filename}.csv')
+
+
+
+
+def create_forecast_file(df, subseasonal_df, date, filename):
+    forecast = filter_forecast(subseasonal_df, date, backward = False)
+    old_forecast = filter_forecast(subseasonal_df, date - timedelta(days = 3), backward=False)
+
+    distributions = pd.read_csv(filename, index_col = [0,1,2,3], header = 0)
+    distribution_month = min(distributions.index.get_level_values(0), key = lambda x: abs(x - date.month))
     distributions = distributions.xs(distribution_month, level = 0)
 
     def create_file(df, forecast, distributions, distribution_month):
@@ -541,7 +591,7 @@ def create_forecast_file(df, subseasonal_df):
     old_file = create_file(df, old_forecast, distributions, distribution_month)
     file.loc[file.index.intersection(old_file.index),'Anomaly_old'] = old_file.loc[file.index.intersection(old_file.index),'Anomaly']
     file['Difference'] = file['Anomaly'] - file['Anomaly_old']
-    file.to_csv(f'W:\\UK\\Research\\Private\\WEATHER\\REGULAR_MONITORING\\PBI_UPDATE\\WEATHER_REGIMES\\ARCHIVES\\forecast_{today.strftime("%Y%m%d")}.csv')
+    file.to_csv(f'W:\\UK\\Research\\Private\\WEATHER\\REGULAR_MONITORING\\PBI_UPDATE\\WEATHER_REGIMES\\ARCHIVES\\forecast_{date.strftime("%Y%m%d")}.csv')
     file.to_csv(f'W:\\UK\\Research\\Private\\WEATHER\\REGULAR_MONITORING\\PBI_UPDATE\\WEATHER_REGIMES\\regime_forecast.csv')
 
 

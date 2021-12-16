@@ -145,7 +145,7 @@ def extract_regimes(anomaly, method='kmeans', nb_regimes=5, **kwargs):
         anomaly: a pandas DataFrame containing an historical series of anomalies
         clustering_algo: clustering algorithm to adopt. The class should expose the methods .fit(), .predict(), .fit_predict(), .fit_transform()
         nb_regimes: number of different weather regimes to be identified, if 'estimator' in **kwargs, this parameter is ignored
-        **kwargs: a dictionary of further parameters, like the a pre_trained estimator, or the possibility to do directly inference
+        **kwargs: a dictionary of further parameters, like the a pre_trained estimator
 
     Returns:
         an array of regimes associated to each grid in the time series
@@ -154,25 +154,21 @@ def extract_regimes(anomaly, method='kmeans', nb_regimes=5, **kwargs):
         if 'estimator' not in kwargs:
             clustering_algo = KMeans(n_clusters=nb_regimes, random_state=42,
                                      tol=1e-5, n_init=50)
+            clustering_algo.fit(anomaly)
         else:
             clustering_algo = kwargs['estimator']
-        clustering_algo.fit(anomaly)
-        if 'test' in kwargs:
-            test = kwargs['test']
-            return clustering_algo.predict(test)
-        return clustering_algo.labels_, clustering_algo.inertia_, clustering_algo
+        labels = clustering_algo.predict(anomaly)
+        return labels, clustering_algo.inertia_, clustering_algo
 
     elif method == "kernel_kmeans":
         if 'estimator' not in kwargs:
             clustering_algo = KernelKMeans(n_clusters=nb_regimes, random_state=42,
                                            tol=1e-5, n_init=50)
+            clustering_algo.fit(anomaly)
         else:
             clustering_algo = kwargs['estimator']
-        clustering_algo.fit(anomaly)
-        if 'test' in kwargs:
-            test = kwargs['test']
-            return clustering_algo.predict(test)
-        return clustering_algo.labels_, clustering_algo.inertia_, clustering_algo
+        labels = clustering_algo.predict(anomaly)
+        return labels, clustering_algo.inertia_, clustering_algo
 
     elif method == 'bayesian_gmm':
         if 'estimator' not in kwargs:
@@ -180,13 +176,12 @@ def extract_regimes(anomaly, method='kmeans', nb_regimes=5, **kwargs):
                                                       covariance_type='full' if 'covariance_type' not in kwargs else
                                                       kwargs['covariance_type'],
                                                       reg_covar=1e-3, max_iter=1000)
+            clustering_algo.fit(anomaly)
+
         else:
             clustering_algo = kwargs['estimator']
-        clustering_algo.fit(anomaly)
         probas = clustering_algo.predict_proba(anomaly)
-        if 'test' in kwargs:
-            test = kwargs['test']
-            return clustering_algo.predict(test)
+
         return probas, clustering_algo.lower_bound_, clustering_algo.means_, clustering_algo.covariances_, clustering_algo
 
     elif method == 'gmm':
@@ -195,26 +190,23 @@ def extract_regimes(anomaly, method='kmeans', nb_regimes=5, **kwargs):
                                               covariance_type='full' if 'covariance_type' not in kwargs else kwargs[
                                                   'covariance_type'],
                                               reg_covar=1e-3, max_iter=1000)
+            clustering_algo.fit(anomaly)
         else:
             clustering_algo = kwargs['estimator']
-        clustering_algo.fit(anomaly)
         probas = clustering_algo.predict_proba(anomaly)
-        if 'test' in kwargs:
-            test = kwargs['test']
-            return clustering_algo.predict(test)
+
         return probas, clustering_algo.lower_bound_, clustering_algo.means_, clustering_algo.covariances_, clustering_algo
 
     elif method == 'spectral':
         if 'estimator' not in kwargs:
             clustering_algo = SpectralClustering(n_clusters=nb_regimes, random_state=42, n_init=50,
                                                  affinity='rbf' if 'affinity' not in kwargs else kwargs['affinity'])
+            clustering_algo.fit(anomaly)
+
         else:
             clustering_algo = kwargs['estimator']
-        clustering_algo.fit(anomaly)
-        if 'test' in kwargs:
-            test = kwargs['test']
-            return clustering_algo.predict(test)
-        return clustering_algo.labels_, clustering_algo.affinity_matrix_, clustering_algo
+        labels = clustering_algo.predict(anomaly)
+        return labels, clustering_algo.affinity_matrix_, clustering_algo
 
     else:
         pass
@@ -400,6 +392,7 @@ def cross_val(X, method="kmeans", scoring="score", season = "WINTER", folder = '
     except OSError as oserr:
         pass
     finally:
+        _best_estimator.fit(X)
         with open("../models/" + season + "/" + folder + '/' + method + '_model_' + scoring + '.pkl', 'wb') as f:
             pickle.dump(_best_estimator, f)
 

@@ -248,7 +248,6 @@ def plot_country(country, df, predictions, pcs):
     except OSError as oserr:
         print(oserr)
 
-
     country_df = filter_by_country(df, country)
     columns = country_df.columns
 
@@ -399,8 +398,8 @@ def plot_subseasonal_forecasts(df, subseasonal_df, shortterm_df, predictions):
 
     forecast = filter_forecast(subseasonal_df, date, backward = False)
     st.write(plot_weights_forecast(forecast, date,  os.path.join(path, &#34;Subseasonal_forecast&#34;,&#34;ECMWF_weights&#34;, date.strftime(&#34;%Y%m%d&#34;)+&#34;.png&#34;)))
-    forecast = bayesian_forecasts(subseasonal_df, forecast, predictions, model)
-    st.write(plot_weights_forecast(forecast, date,  os.path.join(path, &#34;Subseasonal_forecast&#34;,&#34;ECMWF_weights&#34;, date.strftime(&#34;%Y%m%d&#34;)+&#34;.png&#34;)))
+    #forecast = bayesian_forecasts(subseasonal_df, forecast, predictions, model)
+    #st.write(plot_weights_forecast(forecast, date,  os.path.join(path, &#34;Subseasonal_forecast&#34;,&#34;ECMWF_weights&#34;, date.strftime(&#34;%Y%m%d&#34;)+&#34;.png&#34;)))
 
     try:
         short_term = shortterm_df.xs(date.strftime(&#34;%Y-%m-%d&#34;), level = 1)
@@ -424,6 +423,7 @@ def plot_MF(df, predictions, targets, reservoir, inflow, groundwater):
 
     targets = targets.xs(&#39;Distance&#39;, level=0, axis=1)
     predictions = predictions.loc[predictions.index.intersection(targets.index)]
+    #predictions = predictions.drop(&#39;K-Means&#39;, axis = 1)
     models = predictions.columns.get_level_values(0).unique().tolist()
 
     st.write(
@@ -469,10 +469,15 @@ def plot_dynamics_model(predictions, targets):
     st.image(image, caption=f&#34;{model} dynamics&#34;)
 
     model = st.selectbox(&#34;Select a model&#34;, [&#39;GMM&#39;, &#39;Bayesian-GMM&#39;])
+    target = st.selectbox(&#34;Select a target model&#34;, [&#39;Meteo-France&#39;,&#39;K-Means&#39;])
+    if target == &#39;Meteo-France&#39;:
+        targets = targets.xs(&#39;Distance&#39;, level = 0, axis = 1)
+    else:
+        targets = predictions.xs(&#39;K-Means&#39;, level = 0, axis = 1)
     year = st.selectbox(&#34;Select a winter&#34;, predictions.index.year.unique()[:-1])
     st.write(
         compare_dynamics(predictions.loc[str(year)+&#34;-12-01&#34;:].iloc[:90],
-                         targets.xs(&#39;Distance&#39;, level = 0, axis = 1).loc[str(year)+&#34;-12-01&#34;:].iloc[:90],
+                         targets.loc[str(year)+&#34;-12-01&#34;:].iloc[:90],
                          model, &#39;../imgs/compare_dynamics_MF.png&#39;))
 
 
@@ -480,16 +485,16 @@ def build_webpage(true_df, synthetic_df, synthetic_mapped, subseasonal_df, short
     st.title(&#34;Energy and Weather Variables Dashboard&#34;)
     countries = synthetic_df.index.get_level_values(0).unique().tolist()
     options = [&#39;EU-7&#39;] + countries + [&#39;Sub-seasonal Forecasts&#39;, &#39;Metéo-France&#39;, &#39;Model Dynamics&#39;, &#39;Comparison True Measurements and Synthetic Data&#39;]
-    sel_opt = st.selectbox(&#34;Select an option&#34;, options)
+    sel_opt = st.selectbox(&#34;Select an option&#34;, options, index=10)
 
     if sel_opt in countries:
-        plot_country(sel_opt, true_df, predictions, pcs)
+        plot_country(sel_opt, synthetic_df, predictions, pcs)
 
     else:
         if sel_opt == &#34;Comparison True Measurements and Synthetic Data&#34;:
             plot_comparison(true_df, synthetic_mapped)
         elif sel_opt == &#34;EU-7&#34;:
-            plot_EU7(synthetic_mapped, predictions, pcs)
+            plot_EU7(synthetic_df, predictions, pcs)
         elif sel_opt == &#34;Sub-seasonal Forecasts&#34;:
             plot_subseasonal_forecasts(synthetic_df, subseasonal_df, shortterm_df, predictions)
         elif sel_opt == &#34;Metéo-France&#34;:
@@ -518,16 +523,16 @@ def build_webpage(true_df, synthetic_df, synthetic_mapped, subseasonal_df, short
     st.title(&#34;Energy and Weather Variables Dashboard&#34;)
     countries = synthetic_df.index.get_level_values(0).unique().tolist()
     options = [&#39;EU-7&#39;] + countries + [&#39;Sub-seasonal Forecasts&#39;, &#39;Metéo-France&#39;, &#39;Model Dynamics&#39;, &#39;Comparison True Measurements and Synthetic Data&#39;]
-    sel_opt = st.selectbox(&#34;Select an option&#34;, options)
+    sel_opt = st.selectbox(&#34;Select an option&#34;, options, index=10)
 
     if sel_opt in countries:
-        plot_country(sel_opt, true_df, predictions, pcs)
+        plot_country(sel_opt, synthetic_df, predictions, pcs)
 
     else:
         if sel_opt == &#34;Comparison True Measurements and Synthetic Data&#34;:
             plot_comparison(true_df, synthetic_mapped)
         elif sel_opt == &#34;EU-7&#34;:
-            plot_EU7(synthetic_mapped, predictions, pcs)
+            plot_EU7(synthetic_df, predictions, pcs)
         elif sel_opt == &#34;Sub-seasonal Forecasts&#34;:
             plot_subseasonal_forecasts(synthetic_df, subseasonal_df, shortterm_df, predictions)
         elif sel_opt == &#34;Metéo-France&#34;:
@@ -698,6 +703,7 @@ def build_webpage(true_df, synthetic_df, synthetic_mapped, subseasonal_df, short
 
     targets = targets.xs(&#39;Distance&#39;, level=0, axis=1)
     predictions = predictions.loc[predictions.index.intersection(targets.index)]
+    #predictions = predictions.drop(&#39;K-Means&#39;, axis = 1)
     models = predictions.columns.get_level_values(0).unique().tolist()
 
     st.write(
@@ -828,7 +834,6 @@ def build_webpage(true_df, synthetic_df, synthetic_mapped, subseasonal_df, short
         os.makedirs(os.path.join(path, country))
     except OSError as oserr:
         print(oserr)
-
 
     country_df = filter_by_country(df, country)
     columns = country_df.columns
@@ -970,10 +975,15 @@ def build_webpage(true_df, synthetic_df, synthetic_mapped, subseasonal_df, short
     st.image(image, caption=f&#34;{model} dynamics&#34;)
 
     model = st.selectbox(&#34;Select a model&#34;, [&#39;GMM&#39;, &#39;Bayesian-GMM&#39;])
+    target = st.selectbox(&#34;Select a target model&#34;, [&#39;Meteo-France&#39;,&#39;K-Means&#39;])
+    if target == &#39;Meteo-France&#39;:
+        targets = targets.xs(&#39;Distance&#39;, level = 0, axis = 1)
+    else:
+        targets = predictions.xs(&#39;K-Means&#39;, level = 0, axis = 1)
     year = st.selectbox(&#34;Select a winter&#34;, predictions.index.year.unique()[:-1])
     st.write(
         compare_dynamics(predictions.loc[str(year)+&#34;-12-01&#34;:].iloc[:90],
-                         targets.xs(&#39;Distance&#39;, level = 0, axis = 1).loc[str(year)+&#34;-12-01&#34;:].iloc[:90],
+                         targets.loc[str(year)+&#34;-12-01&#34;:].iloc[:90],
                          model, &#39;../imgs/compare_dynamics_MF.png&#39;))</code></pre>
 </details>
 </dd>
@@ -1016,8 +1026,8 @@ def build_webpage(true_df, synthetic_df, synthetic_mapped, subseasonal_df, short
 
     forecast = filter_forecast(subseasonal_df, date, backward = False)
     st.write(plot_weights_forecast(forecast, date,  os.path.join(path, &#34;Subseasonal_forecast&#34;,&#34;ECMWF_weights&#34;, date.strftime(&#34;%Y%m%d&#34;)+&#34;.png&#34;)))
-    forecast = bayesian_forecasts(subseasonal_df, forecast, predictions, model)
-    st.write(plot_weights_forecast(forecast, date,  os.path.join(path, &#34;Subseasonal_forecast&#34;,&#34;ECMWF_weights&#34;, date.strftime(&#34;%Y%m%d&#34;)+&#34;.png&#34;)))
+    #forecast = bayesian_forecasts(subseasonal_df, forecast, predictions, model)
+    #st.write(plot_weights_forecast(forecast, date,  os.path.join(path, &#34;Subseasonal_forecast&#34;,&#34;ECMWF_weights&#34;, date.strftime(&#34;%Y%m%d&#34;)+&#34;.png&#34;)))
 
     try:
         short_term = shortterm_df.xs(date.strftime(&#34;%Y-%m-%d&#34;), level = 1)
