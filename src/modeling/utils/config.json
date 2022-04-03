@@ -1,5 +1,5 @@
 {
-  "readpath": "P:/CH/Weather Data/ERA-5/GEOPOTENTIAL",
+  "readpath": "******",
   "variable": "Geopotential-500hPa",
   "frequency": "hourly",
   "months": "DecJanFeb",

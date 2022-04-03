@@ -17,7 +17,7 @@ boto3==1.4.8
 botocore==1.8.50
 branca==0.4.2
 cachetools==4.2.2
-Cartopy @ file:///H:/Documents%20and%20Settings/Personal/My%20Received%20Files/Cartopy-0.18.0-cp36-cp36m-win_amd64.whl
+cartopy==0.18.1
 certifi==2021.5.30
 cffi==1.14.5
 cfgrib==0.9.9.0
@@ -34,7 +34,6 @@ custom-inherit==2.3.2
 cycler==0.10.0
 Cython==0.29.24
 dask==2.19.0
-dataclasses==0.8
 decorator==4.4.2
 defusedxml==0.7.1
 distributed==2.19.0
@@ -48,7 +47,6 @@ filelock==3.0.12
 findlibs==0.0.2
 Flask==2.0.1
 folium==0.12.1
-geoplotlib==0.3.2
 geos==0.2.3
 gitdb==4.0.7
 GitPython==3.1.18
@@ -125,7 +123,7 @@ prompt-toolkit==3.0.19
 protobuf==3.17.3
 psutil==5.8.0
 py-spy==0.3.7
-pyarrow==1.0.0
+pyarrow
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycmap==0.1.10
@@ -150,7 +148,7 @@ PyYAML==5.4.1
 pyzmq==22.1.0
 qtconsole==5.1.1
 QtPy==1.9.0
-ray==1.1.0
+ray
 redis==3.5.3
 requests==2.25.1
 rpyc==4.1.5
@@ -169,7 +167,6 @@ sklearn-xarray==0.4.0
 smmap==4.0.0
 sortedcontainers==2.4.0
 streamlit==0.86.0
-tables==3.6.1
 tblib==1.7.0
 tenacity==8.0.1
 terminado==0.10.1
